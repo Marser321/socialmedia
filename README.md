@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nexo Agency - Plataforma de Transformación Digital
 
-## Getting Started
+Plataforma "Service-as-a-Software" desarrollada con Next.js 15, Tailwind CSS y Framer Motion.
 
-First, run the development server:
+## 🚀 Tecnologías
 
+- **Framework**: Next.js 15 (App Router)
+- **Estilos**: Tailwind CSS + Shadcn/UI
+- **Animaciones**: Framer Motion
+- **Iconos**: Lucide React
+- **Backend (Opcional)**: Supabase
+
+## 🛠️ Instalación Local
+
+1. Clonar el repositorio:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <tu-repositorio>
+cd nexo-agency
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Instalar dependencias:
+```bash
+npm install
+# o
+pnpm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Configurar variables de entorno:
+Crear un archivo `.env.local` basado en el ejemplo (ver abajo).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Iniciar servidor de desarrollo:
+```bash
+npm run dev
+```
 
-## Learn More
+Visita `http://localhost:3000`.
 
-To learn more about Next.js, take a look at the following resources:
+## 📦 Despliegue en Vercel (Recomendado)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+La forma más sencilla de desplegar este proyecto es usando [Vercel](https://vercel.com).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Sube tu código a GitHub/GitLab/Bitbucket.
+2. Importa el proyecto en Vercel.
+3. Vercel detectará automáticamente Next.js.
+4. **IMPORTANTE**: Agrega las variables de entorno en el panel de Vercel (Settings > Environment Variables).
+5. Dale click a "Deploy".
 
-## Deploy on Vercel
+## 🔑 Variables de Entorno
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Si conectas Supabase, necesitarás:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```env
+NEXT_PUBLIC_SUPABASE_URL=usar_url_de_supabase
+NEXT_PUBLIC_SUPABASE_ANON_KEY=usar_key_anonima
+```
+
+## 📂 Estructura del Proyecto
+
+- `/app`: Rutas y layouts (App Router).
+- `/components`: Componentes de UI y secciones.
+  - `/sections`: Bloques principales (Hero, Servicios, etc).
+  - `/ui`: Componentes base (Shadcn).
+- `/lib`: Utilidades y configuraciones (Supabase).
+- `/types`: Definiciones de TypeScript.
