@@ -5,10 +5,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { AnimatedCard } from '@/components/shared/AnimatedCard';
 import { ServiceModal } from '@/components/shared/ServiceModal';
 import { Servicio } from '@/types';
-import { Layers, Monitor, Smartphone, Video, Share2, ChevronRight, ChevronLeft } from 'lucide-react';
+import { Layers, Monitor, Smartphone, Video, Share2, ChevronRight, ChevronLeft, ShoppingCart } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 
+// MOCK DATA
 // MOCK DATA
 const SAMPLE_SERVICES: Servicio[] = [
     {
@@ -17,29 +18,35 @@ const SAMPLE_SERVICES: Servicio[] = [
         tecnologias: ['Next.js 14', 'React Three Fiber', 'Tailwind CSS', 'Supabase']
     },
     {
-        id: '2', nombre: 'Automatización', descripcion: 'Tu negocio operando en piloto automático 24/7.', descripcion_corta: 'Automatización 360', pilar: 'tech', icono: 'Layers', precio_base: 800, tipo_pago: 'mensual', orden: 2,
-        caracteristicas: ['Workflows Multi-etapa', 'Sincronización Bidireccional', 'Bots con IA Generativa'],
-        tecnologias: ['Zapier Enterprise', 'Make (Integromat)', 'OpenAI API', 'Python Scripts']
+        id: '2', nombre: 'E-commerce', descripcion: 'Ventas globales 24/7 con arquitectura escalable.', descripcion_corta: 'Tiendas Online', pilar: 'tech', icono: 'ShoppingCart', precio_base: 3500, tipo_pago: 'unico', orden: 2,
+        caracteristicas: ['Pasarela de Pagos Global', 'Gestión de Inventario', 'Recuperación de Carritos'],
+        tecnologias: ['Shopify Plus', 'Stripe Connect', 'DatoCMS', 'Redis']
     },
     {
-        id: '3', nombre: 'Producción Video', descripcion: 'Narrativa cinematográfica para marcas audaces.', descripcion_corta: 'Video Marketing', pilar: 'media', icono: 'Video', precio_base: 1200, tipo_pago: 'unico', orden: 3,
-        caracteristicas: ['Guión + Storyboard', 'Color Grading HDR', 'Sound Design Inmersivo'],
-        tecnologias: ['DaVinci Resolve Studio', 'Adobe Premiere Pro', 'After Effects', 'Cinema 4D']
+        id: '3', nombre: 'Apps a Medida', descripcion: 'Ecosistemas móviles nativos de alto rendimiento.', descripcion_corta: 'Desarrollo Apps', pilar: 'tech', icono: 'Smartphone', precio_base: 5000, tipo_pago: 'unico', orden: 3,
+        caracteristicas: ['iOS & Android Nativo', 'Offline First', 'Biometría Avanzada'],
+        tecnologias: ['React Native / Expo', 'Firebase', 'Node.js', 'PostgreSQL']
     },
     {
-        id: '4', nombre: 'Growth Social', descripcion: 'Dominio total de la atención en redes sociales.', descripcion_corta: 'Redes Sociales', pilar: 'growth', icono: 'Share2', precio_base: 600, tipo_pago: 'mensual', orden: 4,
+        id: '4', nombre: 'Automatización AI', descripcion: 'Tu negocio operando en piloto automático 24/7.', descripcion_corta: 'Automatización 360', pilar: 'tech', icono: 'Layers', precio_base: 800, tipo_pago: 'mensual', orden: 4,
+        caracteristicas: ['Workflows Multi-etapa', 'Agents Autónomos', 'Integración CRM'],
+        tecnologias: ['Zapier Enterprise', 'Make', 'OpenAI API', 'LangChain']
+    },
+    {
+        id: '5', nombre: 'Social Growth', descripcion: 'Dominio total de la atención en redes sociales.', descripcion_corta: 'Viral Marketing', pilar: 'growth', icono: 'Share2', precio_base: 600, tipo_pago: 'mensual', orden: 5,
         caracteristicas: ['Estrategia Viral', 'Edición Formato Reels', 'Analytics Predictivo'],
         tecnologias: ['Metricool', 'CapCut Pro', 'Canva Enterprise', 'Meta Ads Manager']
     },
     {
-        id: '5', nombre: 'Apps a Medida', descripcion: 'Ecosistemas móviles nativos de alto rendimiento.', descripcion_corta: 'Desarrollo Apps', pilar: 'tech', icono: 'Smartphone', precio_base: 5000, tipo_pago: 'unico', orden: 5,
-        caracteristicas: ['iOS & Android Nativo', 'Offline First', 'Biometría Avanzada'],
-        tecnologias: ['React Native / Expo', 'Firebase', 'Node.js', 'PostgreSQL']
+        id: '6', nombre: 'Producción Media', descripcion: 'Narrativa cinematográfica para marcas audaces.', descripcion_corta: 'Video High-End', pilar: 'media', icono: 'Video', precio_base: 1200, tipo_pago: 'unico', orden: 6,
+        caracteristicas: ['Guión + Storyboard', 'Color Grading HDR', 'Sound Design Inmersivo'],
+        tecnologias: ['DaVinci Resolve', 'Cinema 4D', 'Red Camera', 'Unreal Engine']
     },
 ];
 
 const iconMap: Record<string, React.ReactNode> = {
     Monitor: <Monitor className="w-8 h-8" />,
+    ShoppingCart: <ShoppingCart className="w-8 h-8" />,
     Layers: <Layers className="w-8 h-8" />,
     Video: <Video className="w-8 h-8" />,
     Share2: <Share2 className="w-8 h-8" />,
@@ -48,11 +55,12 @@ const iconMap: Record<string, React.ReactNode> = {
 
 // Map service IDs to specific background images
 const startBackgroundMap: Record<string, string> = {
-    '1': 'tech',
-    '2': 'automation',
-    '3': 'media',
-    '4': 'growth',
-    '5': 'mobile',
+    '1': 'web',
+    '2': 'ecommerce',
+    '3': 'mobile',
+    '4': 'automation',
+    '5': 'growth',
+    '6': 'media',
 };
 
 export function ServicesCatalog() {
