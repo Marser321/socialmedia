@@ -49,7 +49,7 @@ export function ProblemSolution() {
                         className="p-8 rounded-3xl bg-red-950/5 border border-red-900/10 backdrop-blur-sm group hover:bg-red-950/10 transition-colors duration-500"
                     >
                         <div className="flex items-center gap-4 mb-8">
-                            <div className="w-12 h-12 rounded-2xl bg-red-500/10 flex items-center justify-center border border-red-500/20 group-hover:animate-pulse">
+                            <div className="w-12 h-12 rounded-2xl bg-red-950/30 flex items-center justify-center border border-red-500/20 group-hover:animate-pulse">
                                 <Clock className="w-6 h-6 text-red-500" />
                             </div>
                             <h3 className="text-2xl font-bold text-white">Manual & Lento</h3>
