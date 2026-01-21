@@ -70,8 +70,10 @@ export function ServicesCatalog() {
     const [isAtEnd, setIsAtEnd] = React.useState(false);
     const scrollRef = React.useRef<HTMLDivElement>(null);
 
-    // Detección de elemento activo para cambiar el fondo
-    const handleScroll = React.useCallback(() => {
+    const ticking = React.useRef(false);
+
+    // Detección de elemento activo para cambiar el fondo (Throttled with RAF)
+    const updateActiveIndex = React.useCallback(() => {
         if (!scrollRef.current) return;
         const container = scrollRef.current;
         const center = container.scrollLeft + container.clientWidth / 2;
@@ -96,6 +98,16 @@ export function ServicesCatalog() {
             setActiveIndex(closestIndex);
         }
     }, [activeIndex]);
+
+    const handleScroll = React.useCallback(() => {
+        if (!ticking.current) {
+            window.requestAnimationFrame(() => {
+                updateActiveIndex();
+                ticking.current = false;
+            });
+            ticking.current = true;
+        }
+    }, [updateActiveIndex]);
 
     // Scroll vertical passthrough (Anti-Trap V3)
     React.useEffect(() => {
@@ -129,10 +141,10 @@ export function ServicesCatalog() {
             el.removeEventListener('wheel', onWheel);
             el.removeEventListener('scroll', handleScroll);
         };
-    }, [activeIndex, handleScroll]);
+    }, [handleScroll]);
 
     const activeService = SAMPLE_SERVICES[activeIndex] || SAMPLE_SERVICES[0];
-    const backgroundImage = startBackgroundMap[activeService.id] || 'tech';
+    const backgroundImage = startBackgroundMap[activeService.id] || 'web'; // Default to web if not found
 
     const scrollLeft = () => {
         if (scrollRef.current) scrollRef.current.scrollBy({ left: -300, behavior: 'smooth' });
@@ -152,13 +164,16 @@ export function ServicesCatalog() {
                     initial={{ opacity: 0, scale: 1.1 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 1 }}
+                    transition={{ duration: 0.8 }}
+                    style={{ willChange: 'opacity, transform' }}
                     className="absolute inset-0 z-0 pointer-events-none"
                 >
                     <Image
                         src={`/images/backgrounds/${backgroundImage}.png`}
                         alt={`${activeService.nombre} background`}
                         fill
+                        quality={60}
+                        sizes="100vw"
                         className="object-cover opacity-40 mix-blend-screen mask-image-gradient"
                         priority
                     />
