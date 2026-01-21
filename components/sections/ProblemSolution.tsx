@@ -59,9 +59,9 @@ export function ProblemSolution() {
                             <motion.div
                                 variants={itemVariants}
                                 whileHover={{ scale: 0.98, opacity: 0.8 }}
-                                className="flex items-center gap-4 p-4 rounded-xl bg-red-500/5 border border-red-500/10 cursor-not-allowed group/item"
+                                className="flex items-center gap-4 p-4 rounded-xl bg-red-500/10 border border-red-500/20 shadow-lg shadow-black/20 cursor-not-allowed group/item"
                             >
-                                <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-red-500/10 text-red-400">
+                                <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-red-500/20 text-red-500/70">
                                     <FileSpreadsheet className="w-6 h-6 opacity-50" />
                                 </div>
                                 <div>
@@ -73,9 +73,9 @@ export function ProblemSolution() {
                             <motion.div
                                 variants={itemVariants}
                                 whileHover={{ scale: 0.98, opacity: 0.8 }}
-                                className="flex items-center gap-4 p-4 rounded-xl bg-red-500/5 border border-red-500/10 cursor-not-allowed group/item"
+                                className="flex items-center gap-4 p-4 rounded-xl bg-red-500/10 border border-red-500/20 shadow-lg shadow-black/20 cursor-not-allowed group/item"
                             >
-                                <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-yellow-500/10 text-yellow-600/50">
+                                <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-yellow-500/20 text-yellow-600/70">
                                     <Mail className="w-6 h-6 animate-[wiggle_1s_ease-in-out_infinite]" />
                                 </div>
                                 <div>
@@ -87,9 +87,9 @@ export function ProblemSolution() {
                             <motion.div
                                 variants={itemVariants}
                                 whileHover={{ scale: 0.98, opacity: 0.8 }}
-                                className="flex items-center gap-4 p-4 rounded-xl bg-red-500/5 border border-red-500/10 cursor-not-allowed group/item"
+                                className="flex items-center gap-4 p-4 rounded-xl bg-red-500/10 border border-red-500/20 shadow-lg shadow-black/20 cursor-not-allowed group/item"
                             >
-                                <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-red-500/10 text-red-500/50">
+                                <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-red-500/20 text-red-500/70">
                                     <PhoneMissed className="w-6 h-6 animate-pulse" />
                                 </div>
                                 <div>
