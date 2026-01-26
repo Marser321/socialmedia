@@ -5,7 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { AnimatedCard } from '@/components/shared/AnimatedCard';
 import { ServiceModal } from '@/components/shared/ServiceModal';
 import { Servicio } from '@/types';
-import { Layers, Monitor, Smartphone, Video, Share2, ChevronRight, ChevronLeft, ShoppingCart } from 'lucide-react';
+import { Layers, Monitor, Smartphone, Video, Share2, ChevronRight, ChevronLeft, ShoppingCart, Bookmark } from 'lucide-react';
+import { MOCK_SERVICES } from '@/data/services';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 
@@ -64,6 +65,25 @@ const startBackgroundMap: Record<string, string> = {
 };
 
 export function ServicesCatalog() {
+  // Bookmarks state (persisted in localStorage)
+  const [bookmarks, setBookmarks] = React.useState<string[]>(() => {
+    if (typeof window === 'undefined') return [] as string[];
+    try {
+      const raw = localStorage.getItem('nexo_bookmarks');
+      return raw ? (JSON.parse(raw) as string[]) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+    localStorage.setItem('nexo_bookmarks', JSON.stringify(bookmarks));
+  }, [bookmarks]);
+
+  const toggleBookmark = (id: string) => {
+    setBookmarks((prev) => (prev.includes(id) ? prev.filter((b) => b !== id) : [...prev, id]));
+  };
     const [selectedService, setSelectedService] = React.useState<Servicio | null>(null);
     const [activeIndex, setActiveIndex] = React.useState(0);
     const [isAtStart, setIsAtStart] = React.useState(true);
@@ -143,7 +163,7 @@ export function ServicesCatalog() {
         };
     }, [handleScroll]);
 
-    const activeService = SAMPLE_SERVICES[activeIndex] || SAMPLE_SERVICES[0];
+    const activeService = MOCK_SERVICES[activeIndex] || MOCK_SERVICES[0];
     const backgroundImage = startBackgroundMap[activeService.id] || 'web'; // Default to web if not found
 
     const scrollLeft = () => {
@@ -169,10 +189,10 @@ export function ServicesCatalog() {
                     className="absolute inset-0 z-0 pointer-events-none"
                 >
                     <Image
-                        src={`/images/backgrounds/${backgroundImage}.png`}
+                    src={`/images/backgrounds/${backgroundImage}.png`}
                         alt={`${activeService.nombre} background`}
                         fill
-                        quality={60}
+                        quality={75}
                         sizes="100vw"
                         className="object-cover opacity-40 mix-blend-screen mask-image-gradient"
                         priority
@@ -231,7 +251,7 @@ export function ServicesCatalog() {
                     className="flex overflow-x-auto py-12 snap-x snap-mandatory gap-6 px-4 md:px-[calc(50vw-200px)] hide-scrollbar items-center"
                     style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 >
-                    {SAMPLE_SERVICES.map((service, index) => {
+                    {MOCK_SERVICES.map((service, index) => {
                         const isActive = index === activeIndex;
 
                         return (
@@ -249,7 +269,7 @@ export function ServicesCatalog() {
                                 <AnimatedCard
                                     onClick={() => setSelectedService(service)}
                                     className={cn(
-                                        "h-[450px] flex flex-col justify-between group/card transition-all duration-500",
+                                        "h-[450px] flex flex-col justify-between group/card transition-all duration-500 relative",
                                         isActive ? "border-white/20 bg-white/5 shadow-2xl" : "border-transparent bg-transparent shadow-none"
                                     )}
                                     gradientColor={
@@ -258,6 +278,12 @@ export function ServicesCatalog() {
                                                 'from-emerald-500/30 to-teal-500/30'
                                     }
                                 >
+                                    {/* Bookmark button on each card */}
+                                    <div className="absolute top-3 right-3 z-20">
+                                      <button onClick={(e) => { e.stopPropagation(); toggleBookmark(service.id); }} aria-label={bookmarks.includes(service.id) ? 'Eliminar marcador' : 'Guardar como favorito'} className="p-1 rounded-full bg-white/20 hover:bg-white/40 text-white">
+                                        <Bookmark className="w-5 h-5" color={bookmarks.includes(service.id) ? '#facc15' : '#ffffff'} />
+                                      </button>
+                                    </div>
                                     <div>
                                         <div className={cn(
                                             "w-16 h-16 rounded-2xl flex items-center justify-center mb-6 text-white transition-transform duration-500 group-hover/card:scale-110 group-hover/card:rotate-3",

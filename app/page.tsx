@@ -11,7 +11,7 @@ import { ContactForm } from '@/components/sections/ContactForm';
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background relative overflow-hidden">
+    <main id="content" className="min-h-screen bg-background relative overflow-hidden">
       <Navbar />
 
       <HeroSection />

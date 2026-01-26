@@ -4,6 +4,8 @@ import * as React from 'react';
 import Link from 'next/link';
 import { Menu, Rocket } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
+import { SearchBar } from '@/components/ui/SearchBar';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
@@ -59,8 +61,10 @@ export function Navbar() {
                     ))}
                 </nav>
 
-                {/* CTA & Mobile Menu */}
+                {/* CTA, Search, Theme Toggle & Mobile Menu */}
                 <div className="flex items-center gap-4">
+                    <SearchBar />
+                    <ThemeToggle />
                     <Button
                         className="hidden md:flex bg-white/10 hover:bg-white/20 text-white border border-white/10 rounded-full px-6 backdrop-blur-sm transition-all hover:scale-105 active:scale-95"
                     >

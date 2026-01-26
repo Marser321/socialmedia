@@ -17,6 +17,7 @@ export default function RootLayout({
   return (
     <html lang="es" className="dark scroll-smooth">
       <body className={`${inter.className} min-h-screen bg-background text-foreground antialiased selection:bg-cyan-500/30`}>
+        <a href="#content" className="sr-only focus:not-sr-only">Skip to content</a>
         {children}
       </body>
     </html>
