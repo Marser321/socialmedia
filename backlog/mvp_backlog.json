@@ -1,0 +1,233 @@
+[
+  {
+    "id": "UX-01",
+    "title": "Integrar MOCK_SERVICES como fuente de datos para el catálogo",
+    "description": "Usar MOCK_SERVICES en ServicesCatalog para fuente de datos.",
+    "type": "UX",
+    "priority": "high",
+    "status": "completed",
+    "start_date": "2026-01-26",
+    "end_date": "2026-01-27",
+    "dependencies": [],
+    "acceptance_criteria": [
+      "UI renderiza 6 servicios desde MOCK_SERVICES",
+      "no hay errores de compilación",
+      "estructura de datos coincide con types.Servicio"
+    ],
+    "estimate": 6,
+    "assignee": "Unassigned"
+  },
+  {
+    "id": "UX-02",
+    "title": "SearchBar en navbar con filtrado en tiempo real",
+    "description": "Implementar barra de búsqueda que filtra MOCK_SERVICES y muestra resultados en dropdown.",
+    "type": "UX",
+    "priority": "high",
+    "status": "completed",
+    "start_date": "2026-01-28",
+    "end_date": "2026-01-29",
+    "dependencies": ["UX-01"],
+    "acceptance_criteria": [
+      "filtrado correcto por nombre",
+      "resultado visible al escribir",
+      "sin errores UI"
+    ],
+    "estimate": 8,
+    "assignee": "Unassigned"
+  },
+  {
+    "id": "UX-03",
+    "title": "ThemeToggle con persistencia",
+    "description": "Botón para alternar entre dark y light y almacenar preferencia en localStorage.",
+    "type": "UX",
+    "priority": "high",
+    "status": "completed",
+    "start_date": "2026-01-29",
+    "end_date": "2026-01-30",
+    "dependencies": ["UX-01"],
+    "acceptance_criteria": [
+      "cambia tema en UI",
+      "persistencia tras recargas",
+      "aplica a todos los componentes"
+    ],
+    "estimate": 6,
+    "assignee": "Unassigned"
+  },
+  {
+    "id": "UX-04",
+    "title": "Accesibilidad básica: skip-to-content",
+    "description": "Agregar salto rápido y sr-only para lectores de pantalla.",
+    "type": "UX",
+    "priority": "medium",
+    "status": "completed",
+    "start_date": "2026-01-30",
+    "end_date": "2026-01-30",
+    "dependencies": ["UX-01"],
+    "acceptance_criteria": [
+      "el enlace funciona y enfoca el contenido principal"
+    ],
+    "estimate": 3,
+    "assignee": "Unassigned"
+  },
+  {
+    "id": "UX-05",
+    "title": "Bookmark por servicio",
+    "description": "Permitir marcar servicios y guardar en localStorage; mostrar icono de marcado.",
+    "type": "UX",
+    "priority": "medium",
+    "status": "completed",
+    "start_date": "2026-02-01",
+    "end_date": "2026-02-01",
+    "dependencies": ["UX-01"],
+    "acceptance_criteria": [
+      "marcador visible en card",
+      "estado preservado tras recargas"
+    ],
+    "estimate": 6,
+    "assignee": "Unassigned"
+  },
+  {
+    "id": "DB-01",
+    "title": "Crear tabla leads en Supabase",
+    "description": "Tabla leads y seed básica para desarrollo local.",
+    "type": "Backend/DB",
+    "priority": "high",
+    "status": "completed",
+    "start_date": "2026-02-02",
+    "end_date": "2026-02-02",
+    "dependencies": ["UX-01"],
+    "acceptance_criteria": [
+      "tabla leads creada",
+      "seed disponible"
+    ],
+    "estimate": 3,
+    "assignee": "Unassigned"
+  },
+  {
+    "id": "DB-02",
+    "title": "Conectar ContactForm a addLead",
+    "description": "Guardar leads desde formulario en Supabase usando addLead.",
+    "type": "Backend/DB",
+    "priority": "high",
+    "status": "completed",
+    "start_date": "2026-02-03",
+    "end_date": "2026-02-04",
+    "dependencies": ["DB-01"],
+    "acceptance_criteria": [
+      "lead insertado correctamente",
+      "UI muestra confirmación"
+    ],
+    "estimate": 6,
+    "assignee": "Unassigned"
+  },
+  {
+    "id": "DB-03",
+    "title": "Seed leads para desarrollo",
+    "description": "Seed básico para testing.",
+    "type": "Backend/DB",
+    "priority": "medium",
+    "status": "completed",
+    "start_date": "2026-02-05",
+    "end_date": "2026-02-05",
+    "dependencies": ["DB-01"],
+    "acceptance_criteria": [
+      "filas de leads presentes en DB"
+    ],
+    "estimate": 3,
+    "assignee": "Unassigned"
+  },
+  {
+    "id": "TEST-01",
+    "title": "Lead flow end-to-end (manual)",
+    "description": "Enviar lead desde el formulario y verificar que aparece en Supabase.",
+    "type": "Test",
+    "priority": "high",
+    "status": "planned",
+    "start_date": "2026-02-06",
+    "end_date": "2026-02-06",
+    "dependencies": ["DB-02"],
+    "acceptance_criteria": [
+      "lead visible en DB y UI confirma"
+    ],
+    "estimate": 6,
+    "assignee": "Unassigned"
+  },
+  {
+    "id": "TEST-02",
+    "title": "Accesibilidad y navegación (manual)",
+    "description": "Pruebas de A11y y navegación por teclado.",
+    "type": "Test",
+    "priority": "medium",
+    "status": "planned",
+    "start_date": "2026-02-07",
+    "end_date": "2026-02-07",
+    "dependencies": ["UX-04"],
+    "acceptance_criteria": [
+      "cumple criterios básicos de accesibilidad"
+    ],
+    "estimate": 4,
+    "assignee": "Unassigned"
+  },
+  {
+    "id": "DOC-01",
+    "title": "Runbook de desarrollo local",
+    "description": "Guía reproducible para levantar Supabase, seeds y pruebas.",
+    "type": "Docs",
+    "priority": "high",
+    "status": "planned",
+    "start_date": "2026-02-08",
+    "end_date": "2026-02-08",
+    "dependencies": [],
+    "acceptance_criteria": [
+      "pasos reproducibles",
+      "documentación de pasos"
+    ],
+    "estimate": 2,
+    "assignee": "Unassigned"
+  },
+  {
+    "id": "DOC-02",
+    "title": "Documentación de estructuras de datos",
+    "description": "Decisiones de diseño de leads y servicios.",
+    "type": "Docs",
+    "priority": "medium",
+    "status": "planned",
+    "start_date": "2026-02-08",
+    "end_date": "2026-02-08",
+    "dependencies": ["DB-01","DB-02"],
+    "acceptance_criteria": [
+      "diagrama/esquemas claros",
+      "guía de uso de data models"
+    ],
+    "estimate": 2,
+    "assignee": "Unassigned"
+  },
+  {
+    "id": "UX-06",
+    "title": "Breadcrumbs y TOC (planificado para UX)",
+    "description": "Propuesta de navegación avanzada para secciones largas.",
+    "type": "UX",
+    "priority": "low",
+    "status": "planned",
+    "start_date": "2026-02-09",
+    "end_date": "2026-02-10",
+    "dependencies": ["UX-01"],
+    "acceptance_criteria": ["navegación clara en secciones largas"],
+    "estimate": 4,
+    "assignee": "Unassigned"
+  },
+  {
+    "id": "TEST-03",
+    "title": "Pruebas automatizadas de leads (plan)",
+    "description": "Plan para Playwright/Cypress para lead flows.",
+    "type": "Test",
+    "priority": "medium",
+    "status": "planned",
+    "start_date": "2026-02-11",
+    "end_date": "2026-02-12",
+    "dependencies": ["TEST-01","TEST-02"],
+    "acceptance_criteria": ["definiciones de tests","scripts base"],
+    "estimate": 6,
+    "assignee": "Unassigned"
+  }
+]
