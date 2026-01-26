@@ -1,0 +1,98 @@
+MVP Backlog and Schedule
+
+Sprint 1: 2026-01-26 to 2026-02-08
+- MVP-UX-01 Integrar MOCK_SERVICES como fuente de datos para el catálogo
+  - Description: usar MOCK_SERVICES en ServicesCatalog
+  - Acceptance: UI renderiza 6 servicios; datos sincronizados; no errores de compilación
+  - Dependencies: MVP-UX-02 (SearchBar) compatible con datos
+  - Est (h): 6h
+  - Start: 2026-01-26
+  - End: 2026-01-27
+  - Status: Completed
+- MVP-UX-02 SearchBar funcional
+  - Description: barra de búsqueda que filtra MOCK_SERVICES en tiempo real
+  - Acceptance: resultados visibles y filtrado por texto
+  - Dependencies: MVP-UX-01
+  - Est: 8h
+  - Start: 2026-01-28
+  - End: 2026-01-29
+  - Status: Completed
+- MVP-UX-03 ThemeToggle con persistencia
+  - Description: conmutador de tema, guarda en localStorage
+  - Acceptance: tema persiste tras recarga
+  - Dependencies: MVP-UX-01
+  - Est: 6h
+  - Start: 2026-01-29
+  - End: 2026-01-30
+  - Status: Completed
+- MVP-UX-04 Skip-to-content y accesibilidad básica
+  - Description: enlace de salto rápido y utilidades sr-only
+  - Acceptance: navegación accesible via teclado y lectura por screen readers
+  - Dependencies: MVP-UX-01
+  - Est: 3h
+  - Start: 2026-01-30
+  - End: 2026-01-30
+  - Status: Completed
+- MVP-UX-05 Bookmark en tarjetas de servicio
+  - Description: marcador por servicio con persistencia en localStorage
+  - Acceptance: marcador visible, reino tras recarga
+  - Dependencies: MVP-UX-01
+  - Est: 6h
+  - Start: 2026-02-01
+  - End: 2026-02-01
+  - Status: Completed
+- MVP-DB-01 Crear tabla leads en Supabase
+  - Description: seed y estructura para leads
+  - Acceptance: tabla creada y seed disponible
+  - Est: 3h
+  - Start: 2026-02-02
+  - End: 2026-02-02
+  - Status: Completed
+- MVP-DB-02 Conectar ContactForm a addLead
+  - Description: envía leads a Supabase desde formulario
+  - Acceptance: lead insertado correctamente; confirmación de UI
+  - Est: 6h
+  - Start: 2026-02-03
+  - End: 2026-02-04
+  - Status: Completed
+- MVP-DB-03 Seed leads (muestra datos en entorno local)
+  - Description: seed básico para pruebas
+  - Acceptance: lead de muestra visible en DB
+  - Est: 3h
+  - Start: 2026-02-05
+  - End: 2026-02-05
+  - Status: Completed
+- MVP-TEST-01 Flujo Lead end-to-end (manual)
+  - Description: formulario -> lead en Supabase
+  - Acceptance: lead aparece en DB y UI confirma
+  - Est: 6h
+  - Start: 2026-02-06
+  - End: 2026-02-06
+  - Status: Planned
+- MVP-TEST-02 Accesibilidad y navegación por teclado (manual)
+  - Description: pruebas de accesibilidad básicas
+  - Acceptance: sin fallas críticas en A11y
+  - Est: 4h
+  - Start: 2026-02-07
+  - End: 2026-02-07
+  - Status: Planned
+- MVP-DOC-01 Runbook de desarrollo local
+  - Description: pasos para levantar Supabase, seeds y pruebas
+  - Acceptance: runbook claro y reproducible
+  - Est: 2h
+  - Start: 2026-02-08
+  - End: 2026-02-08
+  - Status: Planned
+- MVP-DOC-02 Descripción de estructuras de datos (leads, servicios)
+  - Description: documentación de decisiones y schema
+  - Acceptance: doc clara para onboarding
+  - Est: 2h
+  - Start: 2026-02-08
+  - End: 2026-02-08
+  - Status: Planned
+
+Sprint 2: 2026-02-09 to 2026-02-22
+- MVP-TEST-01 Lead flow E2E (automatizado)
+- MVP-TEST-02 Accessibility E2E (automatizado)
+- MVP-DOC-01 Runbook finalizado y versión estable
+- MVP-DOC-02 Data structures doc final
