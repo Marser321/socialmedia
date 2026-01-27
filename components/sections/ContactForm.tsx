@@ -7,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { submitLead } from '@/actions/submit-lead';
 import type { Lead } from '@/types';
-import { Send, CheckCircle } from 'lucide-react';
+import { Send, CheckCircle, Sparkles } from 'lucide-react';
 
 export function ContactForm() {
     const [isSubmitted, setIsSubmitted] = React.useState(false);
@@ -35,8 +35,10 @@ export function ContactForm() {
             const result = await submitLead(lead);
             if (!result.success) {
                 console.error(result.error);
-                // Simple UX feedback
+                // Simple UX feedback for the user even if table is missing
                 setSubmitting(false);
+                // We'll show success anyway for "Vibe Coding" demo purposes if table is missing? 
+                // No, let's keep it real but clean.
                 return;
             }
             setIsSubmitted(true);
@@ -47,65 +49,95 @@ export function ContactForm() {
     };
 
     return (
-        <section id="contacto" className="py-24 relative">
-            <div className="container mx-auto px-4 max-w-3xl">
-                <div className="bg-[#0F0F1A]/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl">
+        <section id="contacto" className="py-24 relative overflow-hidden">
+            {/* Background Glows */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-emerald-500/5 rounded-full blur-[120px] -z-10" />
 
-                    <div className="text-center mb-10">
-                        <h2 className="text-3xl font-bold text-white mb-4">¿Listo para Escalar?</h2>
-                        <p className="text-white/60">Cuéntanos sobre tu proyecto y construyamos el futuro.</p>
+            <div className="container mx-auto px-4 max-w-4xl relative z-10">
+                <div className="bg-[#0A0A0A]/60 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] p-8 md:p-16 shadow-2xl relative overflow-hidden">
+                    {/* Decorative element */}
+                    <div className="absolute top-0 right-0 p-8 text-emerald-500/10">
+                        <Sparkles className="w-24 h-24" />
                     </div>
 
-                    {isSubmitted ? (
-                        <div className="text-center py-12 animate-in fade-in zoom-in duration-500">
-                            <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                                <CheckCircle className="w-10 h-10 text-green-500" />
+                    <div className="grid lg:grid-cols-5 gap-16 items-start">
+                        <div className="lg:col-span-2 space-y-8">
+                            <div>
+                                <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-white mb-6">
+                                    ¿Listo para <span className="text-emerald-500">Escalar?</span>
+                                </h2>
+                                <p className="text-lg text-white/60 leading-relaxed">
+                                    No somos una agencia más. Somos tu partner tecnológico.
+                                    <br /><br />
+                                    Cuéntanos tu cuello de botella y te construiremos la solución.
+                                </p>
                             </div>
-                            <h3 className="text-2xl font-bold text-white mb-2">¡Mensaje Recibido!</h3>
-                            <p className="text-white/60">Nuestro equipo analizará tu caso y te contactará en menos de 24h.</p>
-                            <Button
-                                onClick={() => setIsSubmitted(false)}
-                                variant="link"
-                                className="mt-6 text-cyan-400"
-                            >
-                                Enviar otro mensaje
-                            </Button>
+
+                            <div className="space-y-4">
+                                <div className="flex items-center gap-4 text-white/40">
+                                    <div className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" />
+                                    <span className="text-sm font-mono uppercase tracking-widest">Respuesta en {`<`} 24h</span>
+                                </div>
+                                <div className="flex items-center gap-4 text-white/40">
+                                    <div className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" />
+                                    <span className="text-sm font-mono uppercase tracking-widest">Auditoría Gratuita</span>
+                                </div>
+                            </div>
                         </div>
-                    ) : (
-                        <form onSubmit={handleSubmit} className="space-y-6">
-                            <div className="grid md:grid-cols-2 gap-6">
-                                <div className="space-y-2">
-                                    <Label htmlFor="name" className="text-white/80">Nombre</Label>
-                                    <Input id="name" value={nombre} onChange={(e) => setNombre(e.target.value)} placeholder="John Doe" className="bg-white/5 border-white/10 text-white focus:border-violet-500" required />
+
+                        <div className="lg:col-span-3">
+                            {isSubmitted ? (
+                                <div className="text-center py-12 animate-in fade-in zoom-in duration-500">
+                                    <div className="w-20 h-20 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                                        <CheckCircle className="w-10 h-10 text-emerald-500" />
+                                    </div>
+                                    <h3 className="text-2xl font-bold text-white mb-2">¡Mensaje Recibido!</h3>
+                                    <p className="text-white/60">Nuestro equipo analizará tu caso y te contactará pronto.</p>
+                                    <Button
+                                        onClick={() => setIsSubmitted(false)}
+                                        variant="link"
+                                        className="mt-6 text-emerald-400"
+                                    >
+                                        Enviar otro mensaje
+                                    </Button>
                                 </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="email" className="text-white/80">Email</Label>
-                                    <Input id="email" value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="john@empresa.com" className="bg-white/5 border-white/10 text-white focus:border-violet-500" required />
-                                </div>
-                            </div>
+                            ) : (
+                                <form onSubmit={handleSubmit} className="space-y-6">
+                                    <div className="grid md:grid-cols-2 gap-4">
+                                        <div className="space-y-2">
+                                            <Label htmlFor="name" className="text-xs font-mono uppercase tracking-widest text-white/40">Nombre</Label>
+                                            <Input id="name" value={nombre} onChange={(e) => setNombre(e.target.value)} placeholder="Ej. Mario" className="bg-white/5 border-white/10 text-white focus:border-emerald-500/50 h-12 rounded-xl" required />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label htmlFor="email" className="text-xs font-mono uppercase tracking-widest text-white/40">Email Corporativo</Label>
+                                            <Input id="email" value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="mario@empresa.com" className="bg-white/5 border-white/10 text-white focus:border-emerald-500/50 h-12 rounded-xl" required />
+                                        </div>
+                                    </div>
 
-                            <div className="space-y-2">
-                                <Label htmlFor="type" className="text-white/80">Interés Principal</Label>
-                                <select id="type" value={interes} onChange={(e) => setInteres(e.target.value)} className="w-full h-10 px-3 rounded-md bg-white/5 border border-white/10 text-white focus:outline-none focus:ring-1 focus:ring-violet-500">
-                                    <option value="web" className="bg-[#0F0F1A]">Desarrollo Web / App</option>
-                                    <option value="media" className="bg-[#0F0F1A]">Producción Audiovisual</option>
-                                    <option value="auto" className="bg-[#0F0F1A]">Automatización</option>
-                                    <option value="full" className="bg-[#0F0F1A]">Solución Completa</option>
-                                </select>
-                            </div>
+                                    <div className="space-y-2">
+                                        <Label htmlFor="type" className="text-xs font-mono uppercase tracking-widest text-white/40">Tu Prioridad</Label>
+                                        <select id="type" value={interes} onChange={(e) => setInteres(e.target.value)} className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:ring-1 focus:ring-emerald-500/50 appearance-none">
+                                            <option value="web" className="bg-[#0A0A0A]">Automatización de Ventas</option>
+                                            <option value="media" className="bg-[#0A0A0A]">Desarrollo Web High-Ticket</option>
+                                            <option value="auto" className="bg-[#0A0A0A]">IA & Chatbots</option>
+                                            <option value="full" className="bg-[#0A0A0A]">Solución Full Infrastructure</option>
+                                        </select>
+                                    </div>
 
-                            <div className="space-y-2">
-                                <Label htmlFor="message" className="text-white/80">Mensaje</Label>
-                                <Textarea id="message" value={mensaje} onChange={(e) => setMensaje(e.target.value)} placeholder="Detalles de tu proyecto..." className="min-h-[120px] bg-white/5 border-white/10 text-white focus:border-violet-500" />
-                            </div>
+                                    <div className="space-y-2">
+                                        <Label htmlFor="message" className="text-xs font-mono uppercase tracking-widest text-white/40">¿Cómo podemos ayudarte?</Label>
+                                        <Textarea id="message" value={mensaje} onChange={(e) => setMensaje(e.target.value)} placeholder="Breve descripción de tu negocio y objetivos..." className="min-h-[120px] bg-white/5 border-white/10 text-white focus:border-emerald-500/50 rounded-xl py-4" />
+                                    </div>
 
-                            <Button type="submit" className="w-full h-12 bg-white text-black hover:bg-white/90 font-medium text-lg mt-4" disabled={submitting}>
-                                {submitting ? 'Enviando...' : 'Enviar Solicitud'}
-                                <Send className="w-4 h-4 ml-2" />
-                            </Button>
-                        </form>
-                    )}
-
+                                    <Button type="submit" className="w-full h-14 bg-emerald-500 text-black hover:bg-emerald-400 font-bold text-lg rounded-xl transition-all shadow-[0_0_20px_rgba(16,185,129,0.2)]" disabled={submitting}>
+                                        {submitting ? 'Analizando...' : 'Solicitar Auditoría Gratuita'}
+                                        <Send className="w-4 h-4 ml-2" />
+                                    </Button>
+                                    <p className="text-[10px] text-center text-white/20 uppercase tracking-[0.2em]">Respuesta garantizada en menos de 24 horas laborables</p>
+                                </form>
+                            )}
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
