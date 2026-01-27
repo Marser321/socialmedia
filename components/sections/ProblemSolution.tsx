@@ -13,13 +13,13 @@ export function ProblemSolution() {
     });
 
     // 10k Dollar Transitions: Interpolations
-    // Modified to "Freeze" the problem layer while the solution layer reveals
-    // We delay the fade-out until AFTER the green layer fully covers it (reveal ends at 0.45)
-    // to prevent the black background from showing through.
-    const problemScale = useTransform(scrollYProgress, [0.8, 1], [1, 0.9]); // Subtle scale at very end
-    const problemBlur = useTransform(scrollYProgress, [0.8, 1], ["blur(0px)", "blur(0px)"]); // No blur needed
-    const problemOpacity = useTransform(scrollYProgress, [0.8, 1], [1, 1]); // Keep opacity 1
-    const problemZ = useTransform(scrollYProgress, [0.8, 1], [0, 0]); // Keep Z static
+    // "Freeze" the problem layer: Keep it fully visible (1 opacity, 1 scale)
+    // while the green solution layer CLIP PATH expands over it.
+    // We only fade it out at the very end (0.9 to 1.0) when it's fully covered.
+    const problemScale = useTransform(scrollYProgress, [0, 0.9], [1, 1]);
+    const problemBlur = useTransform(scrollYProgress, [0, 0.9], ["blur(0px)", "blur(0px)"]);
+    const problemOpacity = useTransform(scrollYProgress, [0, 0.9], [1, 1]);
+    const problemZ = useTransform(scrollYProgress, [0, 0.9], [0, 0]);
 
     // Liquid Wipe ClipPath: Circle expanding from center - Tighter interval
     const revealClipPath = useTransform(
@@ -69,7 +69,7 @@ export function ProblemSolution() {
                         z: problemZ,
                         perspective: "1000px"
                     }}
-                    className="absolute inset-0 z-0 bg-[#0A0000] flex items-center justify-center p-4 md:p-8"
+                    className="absolute inset-0 z-0 bg-gradient-to-b from-[#1a0505] to-[#0A0000] flex items-center justify-center p-4 md:p-8"
                 >
                     <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay pointer-events-none" />
                     <div className="container mx-auto grid lg:grid-cols-2 gap-12 items-center relative z-10">
