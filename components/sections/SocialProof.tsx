@@ -17,7 +17,7 @@ export function SocialProof() {
                     Confían en nosotros:
                 </p>
 
-                <div className="flex-1 overflow-hidden mask-linear-gradient">
+                <div className="flex-1 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_20%,black_80%,transparent)]">
                     <motion.div
                         className="flex gap-12 items-center min-w-max"
                         animate={{ x: [0, -1000] }}
