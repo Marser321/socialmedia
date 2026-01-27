@@ -83,33 +83,30 @@ export function HeroSection() {
             {/* Hero Image with Scroll Effect */}
             <motion.div
                 style={{ y, scale }}
-                className="relative w-full max-w-6xl mx-auto px-4 perspective-1000"
+                className="relative w-full max-w-5xl mx-auto px-4 perspective-2000"
             >
-                <div className="relative aspect-[16/10] rounded-2xl overflow-hidden border border-white/10 shadow-2xl glass-panel group">
-                    {/* Overlay Gradient on Hover */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 z-10" />
+                <div className="relative aspect-[16/10] rounded-3xl overflow-hidden border border-white/10 shadow-2xl glass-panel group bg-[#0A0A0A]">
+                    {/* Subtle Overlay Gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
 
                     <Image
-                        src="/images/stitch-hero.png"
+                        src="/images/stitch-hero-v2.png"
                         alt="Stitch Creative Studio Interface"
                         fill
-                        className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                        className="object-cover object-center transition-transform duration-1000 group-hover:scale-105"
                         priority
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
                     />
 
-                    {/* Floating UI Elements (Parallax) */}
-                    <motion.div
-                        style={{ y: useTransform(scrollYProgress, [0, 1], [0, -50]) }}
-                        className="absolute bottom-8 left-8 z-20 bg-black/50 backdrop-blur-md border border-white/10 p-4 rounded-xl flex items-center gap-4"
-                    >
-                        <div className="w-[1px] h-16 bg-gradient-to-b from-white/0 via-white/50 to-white/0 animate-pulse" />
-                        <div>
-                            <p className="text-xs text-white/60 uppercase tracking-widest">Revenue</p>
-                            <p className="text-xl font-bold text-white">$24,500</p>
-                        </div>
-                    </motion.div>
+                    {/* Floating Pulse Dot */}
+                    <div className="absolute top-6 right-6 z-20 flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
+                        <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
+                        <span className="text-[10px] font-mono text-white/70 uppercase tracking-widest">Live: Conversion System</span>
+                    </div>
                 </div>
+
+                {/* Visual Depth Glow behind image */}
+                <div className="absolute -inset-4 bg-emerald-500/5 blur-[60px] -z-10 rounded-full opacity-50" />
             </motion.div>
 
             {/* Scroll Indicator */}

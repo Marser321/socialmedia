@@ -22,26 +22,22 @@ export function ContactForm() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setSubmitting(true);
-        const lead: Lead = {
-            nombre,
-            email,
-            telefono: telefono || undefined,
-            empresa: empresa || undefined,
-            servicios_interes: [interes],
-            mensaje: mensaje || undefined,
-        } as Lead;
+
+        // Format the message for WhatsApp
+        const waMessage = `Hola Nexo! 👋 Quiero escalar mi negocio.\n\n` +
+            `*Nombre:* ${nombre}\n` +
+            `*Email:* ${email}\n` +
+            `*Prioridad:* ${interes}\n` +
+            `*Detalles:* ${mensaje || 'Sin detalles adicionales'}`;
+
+        const waNumber = "5491136515838"; // Placeholder for user's WhatsApp
+        const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
 
         try {
-            const result = await submitLead(lead);
-            if (!result.success) {
-                console.error(result.error);
-                // Simple UX feedback for the user even if table is missing
-                setSubmitting(false);
-                // We'll show success anyway for "Vibe Coding" demo purposes if table is missing? 
-                // No, let's keep it real but clean.
-                return;
-            }
+            // Redirect to WhatsApp
+            window.open(waUrl, '_blank');
             setIsSubmitted(true);
+            setSubmitting(false);
         } catch (err) {
             console.error(err);
             setSubmitting(false);
