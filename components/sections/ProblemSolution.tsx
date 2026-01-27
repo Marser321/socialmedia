@@ -1,9 +1,9 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useVelocity, useSpring } from 'framer-motion';
 import { Zap, Database, MessageSquare, FileSpreadsheet, Mail, ArrowRight, AlertTriangle, MessageCircleOff, Hourglass, FileWarning } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useRef } from 'react';
+import { useRef, useMemo } from 'react';
 
 export function ProblemSolution() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -13,19 +13,41 @@ export function ProblemSolution() {
     });
 
     // 10k Dollar Transitions: Interpolations
-    const problemScale = useTransform(scrollYProgress, [0, 0.4], [1, 0.8]);
-    const problemBlur = useTransform(scrollYProgress, [0, 0.4], ["blur(0px)", "blur(10px)"]);
-    const problemOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
-    const problemZ = useTransform(scrollYProgress, [0, 0.4], [0, -500]);
+    const problemScale = useTransform(scrollYProgress, [0, 0.3], [1, 0.8]);
+    const problemBlur = useTransform(scrollYProgress, [0, 0.3], ["blur(0px)", "blur(10px)"]);
+    const problemOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
+    const problemZ = useTransform(scrollYProgress, [0, 0.3], [0, -500]);
 
-    // Liquid Wipe ClipPath: Circle expanding from center
+    // Liquid Wipe ClipPath: Circle expanding from center - Tighter interval
     const revealClipPath = useTransform(
         scrollYProgress,
-        [0.2, 0.6],
+        [0.15, 0.45],
         ["circle(0% at 50% 50%)", "circle(150% at 50% 50%)"]
     );
 
-    // Dynamic Text "SCROLL TO EVOLVE"
+    // Light Sweep overlay during reveal
+    const sweepX = useTransform(scrollYProgress, [0.2, 0.4], ["-100%", "200%"]);
+    const sweepOpacity = useTransform(scrollYProgress, [0.2, 0.25, 0.35, 0.4], [0, 1, 1, 0]);
+
+    // Staggered Solution Content
+    const solTitleY = useTransform(scrollYProgress, [0.2, 0.4], [100, 0]);
+    const solTitleOpacity = useTransform(scrollYProgress, [0.2, 0.3], [0, 1]);
+
+    const solParaY = useTransform(scrollYProgress, [0.25, 0.45], [100, 0]);
+    const solParaOpacity = useTransform(scrollYProgress, [0.25, 0.35], [0, 1]);
+
+    const solBtnY = useTransform(scrollYProgress, [0.3, 0.5], [50, 0]);
+    const solBtnOpacity = useTransform(scrollYProgress, [0.3, 0.4], [0, 1]);
+
+    // 3D Card Parallax
+    const cardRotateX = useTransform(scrollYProgress, [0.2, 0.5], [5, -5]);
+    const cardRotateY = useTransform(scrollYProgress, [0.2, 0.5], [10, -10]);
+
+    // Kinetic Magnetic Text
+    const scrollVelocity = useVelocity(scrollYProgress);
+    const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 400 });
+    const textSkewX = useTransform(smoothVelocity, [-0.005, 0, 0.005], [-25, 0, 25]);
+
     const textLetterSpacing = useTransform(scrollYProgress, [0, 0.2], ["0.1em", "1.5em"]);
     const textOpacity = useTransform(scrollYProgress, [0, 0.15, 0.25], [0.4, 1, 0]);
     const textScale = useTransform(scrollYProgress, [0, 0.2], [1, 1.2]);
@@ -85,46 +107,56 @@ export function ProblemSolution() {
                     }}
                     className="z-10 bg-[#022c22] flex items-center justify-center border-t border-emerald-500/10 shadow-[0_-50px_100px_rgba(16,185,129,0.1)]"
                 >
+                    {/* Light Sweep Effect */}
+                    <motion.div
+                        style={{ x: sweepX, opacity: sweepOpacity }}
+                        className="absolute inset-0 pointer-events-none z-50 bg-gradient-to-r from-transparent via-emerald-400/20 to-transparent skew-x-12"
+                    />
+
                     {/* Premium Background for Solution */}
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#064e3b_0%,#022c22_100%)]" />
                     <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-overlay pointer-events-none" />
                     <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
 
                     <div className="container mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center relative z-20">
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                            className="space-y-8"
-                        >
-                            <div className="inline-flex items-center rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-1.5 text-xs text-emerald-400 font-mono tracking-[0.3em] uppercase">
+                        <div className="space-y-8">
+                            <motion.div
+                                style={{ opacity: solTitleOpacity, y: solTitleY }}
+                                className="inline-flex items-center rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-1.5 text-xs text-emerald-400 font-mono tracking-[0.3em] uppercase"
+                            >
                                 <span className="flex h-2 w-2 rounded-full bg-emerald-500 mr-3 shadow-[0_0_12px_#10b981]" />
                                 Next-Gen Infrastructure
-                            </div>
-                            <h2 className="text-6xl md:text-9xl font-black tracking-tighter text-white leading-[0.85]">
+                            </motion.div>
+                            <motion.h2
+                                style={{ opacity: solTitleOpacity, y: solTitleY }}
+                                className="text-6xl md:text-9xl font-black tracking-tighter text-white leading-[0.85]"
+                            >
                                 Libertad <br />
                                 <span className="text-transparent bg-clip-text bg-gradient-to-br from-emerald-400 via-cyan-400 to-blue-500">
                                     Escalable.
                                 </span>
-                            </h2>
-                            <p className="text-xl text-emerald-100/60 leading-relaxed max-w-lg">
-                                Convertimos tu operación en un motor autónomo. Automatización de punta a punta para que dejes de trabajar EN tu negocio y empieces a trabajar SOBRE él.
-                            </p>
-
-                            <Button
-                                onClick={() => document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' })}
-                                className="bg-emerald-500 hover:bg-white text-black font-black rounded-full px-10 py-8 text-xl group transition-all duration-500"
+                            </motion.h2>
+                            <motion.p
+                                style={{ opacity: solParaOpacity, y: solParaY }}
+                                className="text-xl text-emerald-100/60 leading-relaxed max-w-lg"
                             >
-                                ESCALAR AHORA
-                                <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-2 transition-transform" />
-                            </Button>
-                        </motion.div>
+                                Convertimos tu operación en un motor autónomo. Automatización de punta a punta para que dejes de trabajar EN tu negocio y empieces a trabajar SOBRE él.
+                            </motion.p>
+
+                            <motion.div style={{ opacity: solBtnOpacity, y: solBtnY }}>
+                                <Button
+                                    onClick={() => document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' })}
+                                    className="bg-emerald-500 hover:bg-white text-black font-black rounded-full px-10 py-8 text-xl group transition-all duration-500"
+                                >
+                                    ESCALAR AHORA
+                                    <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-2 transition-transform" />
+                                </Button>
+                            </motion.div>
+                        </div>
 
                         {/* Order Metaphor Card */}
                         <motion.div
-                            initial={{ opacity: 0, x: 50, rotateY: -10 }}
-                            whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
-                            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                            style={{ rotateX: cardRotateX, rotateY: cardRotateY, perspective: 1000 }}
                             className="relative perspective-2000"
                         >
                             <div className="absolute -inset-10 bg-emerald-500/20 blur-[120px] rounded-full animate-pulse" />
@@ -139,6 +171,7 @@ export function ProblemSolution() {
                         letterSpacing: textLetterSpacing,
                         opacity: textOpacity,
                         scale: textScale,
+                        skewX: textSkewX,
                         mixBlendMode: "difference"
                     }}
                     className="absolute bottom-12 left-1/2 -translate-x-1/2 text-white font-mono text-xs uppercase tracking-[0.5em] pointer-events-none whitespace-nowrap z-50"
