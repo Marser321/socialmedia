@@ -19,35 +19,37 @@ export function ProblemSolution() {
     const problemScale = useTransform(scrollYProgress, [0, 0.9], [1, 1]);
     const problemBlur = useTransform(scrollYProgress, [0, 0.9], ["blur(0px)", "blur(0px)"]);
     const problemOpacity = useTransform(scrollYProgress, [0, 0.9], [1, 1]);
-    const problemZ = useTransform(scrollYProgress, [0, 0.9], [0, 0]);
+
+    // Slight Z push to ensure it stays behind properly
+    const problemZ = useTransform(scrollYProgress, [0, 1], [0, 0]);
 
     // Liquid Wipe ClipPath: Circle expanding from center
-    // EXTENDED RANGE: Since we reduced height to 200vh, we let this run longer (up to 0.7)
-    // so the user feels the transition happening for a good portion of the scroll.
+    // AGGRESSIVE EXPANSION: Go to 250% to ensure corners are covered immediately.
+    // Start at 0 to feel instant.
     const revealClipPath = useTransform(
         scrollYProgress,
-        [0.1, 0.8],
-        ["circle(0% at 50% 50%)", "circle(150% at 50% 50%)"]
+        [0, 0.9],
+        ["circle(0% at 50% 50%)", "circle(250% at 50% 50%)"]
     );
 
     // Light Sweep overlay during reveal
-    const sweepX = useTransform(scrollYProgress, [0.3, 0.6], ["-100%", "200%"]);
-    const sweepOpacity = useTransform(scrollYProgress, [0.3, 0.45, 0.55, 0.7], [0, 1, 1, 0]);
+    const sweepX = useTransform(scrollYProgress, [0.1, 0.5], ["-100%", "200%"]);
+    const sweepOpacity = useTransform(scrollYProgress, [0.1, 0.3, 0.4, 0.6], [0, 1, 1, 0]);
 
     // Staggered Solution Content
-    // Adjusted timing to match the new clipPath range
-    const solTitleY = useTransform(scrollYProgress, [0.4, 0.7], [100, 0]);
-    const solTitleOpacity = useTransform(scrollYProgress, [0.4, 0.6], [0, 1]);
+    // Adjusted timing to match the new faster scroll
+    const solTitleY = useTransform(scrollYProgress, [0.2, 0.6], [100, 0]);
+    const solTitleOpacity = useTransform(scrollYProgress, [0.2, 0.5], [0, 1]);
 
-    const solParaY = useTransform(scrollYProgress, [0.45, 0.75], [100, 0]);
-    const solParaOpacity = useTransform(scrollYProgress, [0.45, 0.65], [0, 1]);
+    const solParaY = useTransform(scrollYProgress, [0.3, 0.7], [100, 0]);
+    const solParaOpacity = useTransform(scrollYProgress, [0.3, 0.6], [0, 1]);
 
-    const solBtnY = useTransform(scrollYProgress, [0.5, 0.8], [50, 0]);
-    const solBtnOpacity = useTransform(scrollYProgress, [0.5, 0.7], [0, 1]);
+    const solBtnY = useTransform(scrollYProgress, [0.4, 0.8], [50, 0]);
+    const solBtnOpacity = useTransform(scrollYProgress, [0.4, 0.7], [0, 1]);
 
     // 3D Card Parallax
-    const cardRotateX = useTransform(scrollYProgress, [0.2, 0.5], [5, -5]);
-    const cardRotateY = useTransform(scrollYProgress, [0.2, 0.5], [10, -10]);
+    const cardRotateX = useTransform(scrollYProgress, [0.1, 0.5], [5, -5]);
+    const cardRotateY = useTransform(scrollYProgress, [0.1, 0.5], [10, -10]);
 
     // Kinetic Magnetic Text
     const scrollVelocity = useVelocity(scrollYProgress);
@@ -59,7 +61,7 @@ export function ProblemSolution() {
     const textScale = useTransform(scrollYProgress, [0, 0.2], [1, 1.2]);
 
     return (
-        <div ref={containerRef} className="relative w-full h-[200vh] bg-black">
+        <div ref={containerRef} className="relative w-full h-[150vh] bg-black">
             {/* STICKY CONTAINER: Frame for the transition */}
             <div className="sticky top-0 h-screen w-full overflow-hidden">
 

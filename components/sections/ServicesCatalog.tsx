@@ -57,7 +57,7 @@ export function ServicesCatalog() {
     };
 
     return (
-        <section id="servicios" className="py-24 bg-background relative overflow-hidden min-h-screen flex flex-col pt-32">
+        <section id="servicios" className="py-24 bg-background relative overflow-hidden min-h-screen flex flex-col pt-32 -mt-24 z-20">
             {/* Gradient Bridge: Smooth transition from previous black/green section */}
             <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black to-transparent z-0 pointer-events-none" />
 
