@@ -89,19 +89,37 @@ export function ProblemSolution() {
                                 Implementamos Ecosistemas de Automatización que capturan, nutren y cierran ventas 24/7.
                                 <br /><span className="text-white font-medium mt-2 block">Recupera 20h/semana y enfócate en crecer.</span>
                             </p>
-                            <div className="flex gap-6 mt-8 opacity-100">
-                                <div className="flex flex-col items-center gap-2">
+                            <div className="flex gap-6 mt-8">
+                                <motion.div
+                                    style={{
+                                        opacity: useTransform(scrollYProgress, [0.42, 0.47], [0, 1]),
+                                        scale: useTransform(scrollYProgress, [0.42, 0.47], [0.5, 1])
+                                    }}
+                                    className="flex flex-col items-center gap-2"
+                                >
                                     <Zap className="w-8 h-8 text-emerald-400 fill-emerald-400/20" />
-                                    <span className="text-xs text-emerald-400">Instantáneo</span>
-                                </div>
-                                <div className="flex flex-col items-center gap-2">
+                                    <span className="text-xs text-emerald-400 font-semibold uppercase tracking-wider">Instantáneo</span>
+                                </motion.div>
+                                <motion.div
+                                    style={{
+                                        opacity: useTransform(scrollYProgress, [0.44, 0.49], [0, 1]),
+                                        scale: useTransform(scrollYProgress, [0.44, 0.49], [0.5, 1])
+                                    }}
+                                    className="flex flex-col items-center gap-2"
+                                >
                                     <Database className="w-8 h-8 text-emerald-400 fill-emerald-400/20" />
-                                    <span className="text-xs text-emerald-400">Centralizado</span>
-                                </div>
-                                <div className="flex flex-col items-center gap-2">
+                                    <span className="text-xs text-emerald-400 font-semibold uppercase tracking-wider">Centralizado</span>
+                                </motion.div>
+                                <motion.div
+                                    style={{
+                                        opacity: useTransform(scrollYProgress, [0.46, 0.51], [0, 1]),
+                                        scale: useTransform(scrollYProgress, [0.46, 0.51], [0.5, 1])
+                                    }}
+                                    className="flex flex-col items-center gap-2"
+                                >
                                     <MessageSquare className="w-8 h-8 text-emerald-400 fill-emerald-400/20" />
-                                    <span className="text-xs text-emerald-400">Autónomo</span>
-                                </div>
+                                    <span className="text-xs text-emerald-400 font-semibold uppercase tracking-wider">Autónomo</span>
+                                </motion.div>
                             </div>
                         </motion.div>
                     </div>
