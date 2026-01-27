@@ -73,10 +73,17 @@ export function ProblemSolution() {
                     </div>
                 </motion.div>
 
-                {/* 2. LAYER B: SOLUTION (Liquid ClipPath Reveal) */}
+                {/* 2. LAYER B: SOLUTION (Static "Portal" Reveal) */}
                 <motion.div
-                    style={{ clipPath: revealClipPath }}
-                    className="absolute inset-0 z-10 bg-[#022c22] flex items-center justify-center border-t border-emerald-500/10 shadow-[0_-50px_100px_rgba(16,185,129,0.1)]"
+                    style={{
+                        clipPath: revealClipPath,
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0
+                    }}
+                    className="z-10 bg-[#022c22] flex items-center justify-center border-t border-emerald-500/10 shadow-[0_-50px_100px_rgba(16,185,129,0.1)]"
                 >
                     {/* Premium Background for Solution */}
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#064e3b_0%,#022c22_100%)]" />
