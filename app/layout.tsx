@@ -1,24 +1,29 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import { ThemeProvider } from '@/components/theme-provider';
+import { SmoothScroll } from '@/components/providers/SmoothScroll';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Nexo | Transformación Digital & Creatividad',
-  description: 'Agencia híbrida de desarrollo web, automatización y producción audiovisual.',
+  title: 'Nexo Agency | Automatización & Desarrollo Web High-Ticket',
+  description: 'Agencia especializada en funnels de venta, automatización con IA y diseño web estratégico para el mercado LATAM.',
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="es" className="dark scroll-smooth">
-      <body className={`${inter.className} min-h-screen bg-background text-foreground antialiased selection:bg-cyan-500/30`}>
-        <a href="#content" className="sr-only focus:not-sr-only">Skip to content</a>
-        {children}
+    <html lang="es" suppressHydrationWarning>
+      <body className={`${inter.className} antialiased`}>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <SmoothScroll>
+            {children}
+          </SmoothScroll>
+        </ThemeProvider>
       </body>
     </html>
   );

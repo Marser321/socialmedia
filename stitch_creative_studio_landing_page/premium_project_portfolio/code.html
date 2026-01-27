@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Premium Project Portfolio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#2b8cee",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+              "surface-dark": "#1a232e", 
+            },
+            fontFamily: {
+              "display": ["Space Grotesk", "sans-serif"],
+              "body": ["Noto Sans", "sans-serif"],
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        /* Custom scrollbar for a premium feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101922; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2b8cee; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #1d6cb5; 
+        }
+        
+        .masonry-grid {
+            column-count: 1;
+            column-gap: 1.5rem;
+        }
+        @media (min-width: 640px) {
+            .masonry-grid {
+                column-count: 2;
+            }
+        }
+        @media (min-width: 1024px) {
+            .masonry-grid {
+                column-count: 3;
+            }
+        }
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-white antialiased selection:bg-primary selection:text-white">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Navigation -->
+<header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between border-b border-white/5 bg-background-dark/80 backdrop-blur-md px-6 py-4 lg:px-12">
+<div class="flex items-center gap-2 text-white">
+<div class="flex items-center justify-center size-8 bg-primary rounded-lg text-white">
+<span class="material-symbols-outlined text-[20px]">all_inclusive</span>
+</div>
+<h2 class="text-white text-xl font-bold tracking-tight">AGENCY</h2>
+</div>
+<nav class="hidden md:flex flex-1 justify-center gap-10">
+<a class="text-gray-300 hover:text-white text-sm font-medium transition-colors" href="#">Work</a>
+<a class="text-gray-300 hover:text-white text-sm font-medium transition-colors" href="#">About</a>
+<a class="text-gray-300 hover:text-white text-sm font-medium transition-colors" href="#">Services</a>
+<a class="text-gray-300 hover:text-white text-sm font-medium transition-colors" href="#">Insights</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="hidden md:flex items-center justify-center rounded-full border border-white/10 bg-transparent px-6 py-2 text-sm font-medium text-white transition-all hover:bg-white/10 hover:border-white/20">
+                    Client Login
+                </button>
+<button class="flex items-center justify-center rounded-full bg-primary px-6 py-2 text-sm font-bold text-white shadow-[0_0_15px_rgba(43,140,238,0.5)] transition-all hover:shadow-[0_0_25px_rgba(43,140,238,0.6)] hover:scale-105">
+                    Let's Talk
+                </button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow pt-24 pb-12">
+<div class="mx-auto max-w-[1400px] px-6 lg:px-12">
+<!-- Hero Section -->
+<section class="relative py-20 lg:py-32">
+<div class="flex flex-col gap-6 max-w-4xl">
+<div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-primary w-fit">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+                            Available for new projects
+                        </div>
+<h1 class="text-5xl font-bold leading-[1.1] tracking-tight text-white sm:text-7xl lg:text-8xl">
+                            We Craft <br/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500">Digital Legacies.</span>
+</h1>
+<p class="max-w-xl text-lg text-gray-400 font-body leading-relaxed">
+                            Premium creative agency specializing in high-end social media strategy, cinematic filmmaking, and bespoke software development.
+                        </p>
+</div>
+</section>
+<!-- Filter / Chips -->
+<section class="sticky top-[80px] z-40 mb-12 flex flex-wrap items-center justify-between gap-4 py-4 bg-background-dark/95 backdrop-blur-sm border-b border-white/5">
+<div class="flex flex-wrap gap-2">
+<button class="group relative flex h-9 items-center justify-center gap-x-2 rounded-full bg-primary px-5 transition-all hover:bg-primary/90">
+<span class="text-white text-sm font-medium">All Projects</span>
+</button>
+<button class="group relative flex h-9 items-center justify-center gap-x-2 rounded-full bg-surface-dark border border-white/5 px-5 transition-all hover:bg-white/5 hover:border-white/10">
+<span class="text-gray-300 text-sm font-medium group-hover:text-white">Filmmaking</span>
+</button>
+<button class="group relative flex h-9 items-center justify-center gap-x-2 rounded-full bg-surface-dark border border-white/5 px-5 transition-all hover:bg-white/5 hover:border-white/10">
+<span class="text-gray-300 text-sm font-medium group-hover:text-white">Social Media</span>
+</button>
+<button class="group relative flex h-9 items-center justify-center gap-x-2 rounded-full bg-surface-dark border border-white/5 px-5 transition-all hover:bg-white/5 hover:border-white/10">
+<span class="text-gray-300 text-sm font-medium group-hover:text-white">Development</span>
+</button>
+</div>
+<div class="flex items-center gap-2 text-sm text-gray-500 font-body hidden sm:flex">
+<span>Sort by:</span>
+<button class="flex items-center gap-1 text-white font-medium hover:text-primary transition-colors">
+                            Relevance <span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+</div>
+</section>
+<!-- Masonry Grid -->
+<section class="masonry-grid pb-20">
+<!-- Item 1: Large Vertical -->
+<div class="masonry-item group relative overflow-hidden rounded-xl bg-surface-dark">
+<div class="aspect-[3/4] w-full overflow-hidden">
+<div class="h-full w-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="Modern architecture skyscraper looking up with blue sky reflection" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDBXo5EJ3dGAlVIJXEL2B_6xJBnQoMJXrOho7tIFL824jtTmvSC0Z946wf1R5Dfs7wdHJIX7FCIEKtmItcamm5FExjjnVG9ycgPiXYGUpglJ5R7NdEXGwGU-OueesdyVEn5ODlOLKtKF6jBRqgk96zK4vv11XGqKZzfdU7lFnZW5xF57xWyG5C_HRa8LCvMt--s0DUcoSuAwHgyTlxMSfasi5O2EbaxWg1Tz72Di1kkcNqajpV206H7Uv_3W_gt58Ij3rbeIeGWOjE");'></div>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 transition-opacity duration-300"></div>
+<div class="absolute top-4 right-4 flex items-center justify-center size-10 rounded-full bg-white/10 backdrop-blur-md opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2">
+<span class="material-symbols-outlined text-white text-[20px]">arrow_outward</span>
+</div>
+<div class="absolute bottom-0 left-0 w-full p-6 translate-y-2 transition-transform duration-300 group-hover:translate-y-0">
+<span class="mb-2 inline-block text-xs font-bold tracking-widest text-primary uppercase">Architecture</span>
+<h3 class="text-2xl font-bold text-white mb-1">Skyline Zenith</h3>
+<p class="text-sm text-gray-300 line-clamp-2 opacity-0 h-0 group-hover:opacity-100 group-hover:h-auto transition-all duration-300 delay-75">Full rebranding and digital presence for the city's newest architectural marvel.</p>
+</div>
+</div>
+<!-- Item 2: Square -->
+<div class="masonry-item group relative overflow-hidden rounded-xl bg-surface-dark">
+<div class="aspect-square w-full overflow-hidden">
+<div class="h-full w-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="Abstract colorful digital flowing art representing software data" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDs3h0U14hHyBa1VJ1wuWwKVNLzs05EFdpGfAKSC3aA5Krl2-x_QKMzzJDrPNfm3Zg_1gimuknIc1bwLdkgcHt9nNI1lZwK9hMYMVglrAqkxJkBq1Kt6eBpdoCt1AiIm2qrUe_T2nFV49JVrI_6bT1OzsnkumE_oC43sKQDgFG366LTBGv66dNRON318y7x7UZojnPecDjy8o-aCKJOHaMmeCjZRuDw6f5d_cQsheXgFfXondBEd4AEQaJLlkaSw8nrn2KAQRUw28o");'></div>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 transition-opacity duration-300"></div>
+<div class="absolute top-4 right-4 flex items-center justify-center size-10 rounded-full bg-white/10 backdrop-blur-md opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2">
+<span class="material-symbols-outlined text-white text-[20px]">arrow_outward</span>
+</div>
+<div class="absolute bottom-0 left-0 w-full p-6 translate-y-2 transition-transform duration-300 group-hover:translate-y-0">
+<span class="mb-2 inline-block text-xs font-bold tracking-widest text-primary uppercase">SaaS Platform</span>
+<h3 class="text-2xl font-bold text-white mb-1">Nexus Flow</h3>
+<p class="text-sm text-gray-300 line-clamp-2 opacity-0 h-0 group-hover:opacity-100 group-hover:h-auto transition-all duration-300 delay-75">Next-gen dashboard interface design for enterprise data management.</p>
+</div>
+</div>
+<!-- Item 3: Landscape Video/Image -->
+<div class="masonry-item group relative overflow-hidden rounded-xl bg-surface-dark">
+<div class="aspect-video w-full overflow-hidden">
+<div class="h-full w-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="Photographer taking picture of mountain landscape at sunset" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBKt7eQcy3WTwvrRwdHMAhKKhIm2v3yZytVkSnWZydF8wqY9TZ549WcSnWPc43NNLxHjIPDew48jRya1iq8LDIVRSg2Mbj91tpgi5pJ10zSebHG8hR12b29YucFYx0sbmMrzatpq8LRE50ndxWMSewoPELR92aBI4b4NJzboqXySctwq08vH0DTQMobU8YHCfQYbP3kG-mbXyBAFwzVCFSU2Sx0D4i_M9twSfLQdyZsOMzT3XFcHivDEkSGHhddlMO_6o2KwDatqRg");'></div>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 transition-opacity duration-300"></div>
+<div class="absolute top-4 right-4 flex items-center justify-center size-10 rounded-full bg-white/10 backdrop-blur-md opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2">
+<span class="material-symbols-outlined text-white text-[20px]">play_arrow</span>
+</div>
+<div class="absolute bottom-0 left-0 w-full p-6 translate-y-2 transition-transform duration-300 group-hover:translate-y-0">
+<span class="mb-2 inline-block text-xs font-bold tracking-widest text-primary uppercase">Filmmaking</span>
+<h3 class="text-2xl font-bold text-white mb-1">Wilderness Doc</h3>
+<p class="text-sm text-gray-300 line-clamp-2 opacity-0 h-0 group-hover:opacity-100 group-hover:h-auto transition-all duration-300 delay-75">Award-winning documentary exploring the untouched corners of the Pacific Northwest.</p>
+</div>
+</div>
+<!-- Item 4: Tall Vertical -->
+<div class="masonry-item group relative overflow-hidden rounded-xl bg-surface-dark">
+<div class="aspect-[2/3] w-full overflow-hidden">
+<div class="h-full w-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="Fashion model in dark minimalist studio lighting" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCDnNVMd3_KbNboTCRqURciEFwREoglcTa7c4mge9-S0nd7enu93KI9kJvcWsr4XWX4V0uCvZFFTq9rI1vi88HRaNC-fcVGLbkzvCiMf2dmlxmffeJlPQ1WXvuIY7ICqvm8iPvazte4Jkui1DiqZSKuW0zinat0iBkktGUaLbv69Pnte1sXU0J30ccQxwBlLxCLTHAQO7xQYYa_oRI2TsAzZl3TbBhzdOaj5ZXRHzbQ041NfuxBxrsTxa6SKFwqLcgv6HakC5TTCcE");'></div>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 transition-opacity duration-300"></div>
+<div class="absolute top-4 right-4 flex items-center justify-center size-10 rounded-full bg-white/10 backdrop-blur-md opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2">
+<span class="material-symbols-outlined text-white text-[20px]">arrow_outward</span>
+</div>
+<div class="absolute bottom-0 left-0 w-full p-6 translate-y-2 transition-transform duration-300 group-hover:translate-y-0">
+<span class="mb-2 inline-block text-xs font-bold tracking-widest text-primary uppercase">Social Media</span>
+<h3 class="text-2xl font-bold text-white mb-1">Vogue Noir</h3>
+<p class="text-sm text-gray-300 line-clamp-2 opacity-0 h-0 group-hover:opacity-100 group-hover:h-auto transition-all duration-300 delay-75">High-fashion social campaign strategy for the fall collection launch.</p>
+</div>
+</div>
+<!-- Item 5: Square -->
+<div class="masonry-item group relative overflow-hidden rounded-xl bg-surface-dark">
+<div class="aspect-square w-full overflow-hidden">
+<div class="h-full w-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="Retro gaming setup with neon lights and computer screen" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA3ymYiqOiRcw4H-n6Sj2cHlCksGv3REIuqdmdJT3CZulme15GnezG1y-eG4-KiOZy_gSKvl9cZN8Ey99EgI2xaeaGx-xj8K-yqkLDELQJh9VH8RKSdZQwcNNQGdyk2xI9AXW5W_gT6VO3U-FAUD0DA2jQUMBsj-enV0-LTAY1sCAvNskvnwm82q0-pQKB9_dAFNsrykGsc3EK-UthNuAvuLdk4j7h6j6RwQgOw9KfUOk25LC5hIRzS3CZnI7CILSbfQExtdiiGccQ");'></div>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 transition-opacity duration-300"></div>
+<div class="absolute top-4 right-4 flex items-center justify-center size-10 rounded-full bg-white/10 backdrop-blur-md opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2">
+<span class="material-symbols-outlined text-white text-[20px]">code</span>
+</div>
+<div class="absolute bottom-0 left-0 w-full p-6 translate-y-2 transition-transform duration-300 group-hover:translate-y-0">
+<span class="mb-2 inline-block text-xs font-bold tracking-widest text-primary uppercase">Web Development</span>
+<h3 class="text-2xl font-bold text-white mb-1">Retro Arcade</h3>
+<p class="text-sm text-gray-300 line-clamp-2 opacity-0 h-0 group-hover:opacity-100 group-hover:h-auto transition-all duration-300 delay-75">Immersive WebGL experience for a vintage gaming museum.</p>
+</div>
+</div>
+<!-- Item 6: Landscape -->
+<div class="masonry-item group relative overflow-hidden rounded-xl bg-surface-dark">
+<div class="aspect-[16/10] w-full overflow-hidden">
+<div class="h-full w-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="Modern clean conference room with glass walls" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCn-5N03WD4bk70xm4ZNdnB6s5BWCr0pzqMhhi0FPnjsIiyGibjQ6JYyGSHGJnBxPzJOT_s0lN6eT1M0CFIG7MbbwEjhgA7HHTx34eEcp-jGtnMHGbLV9kLhjKBdsSwIbsssuHgSFHKssCZBpPuswlhzcUBHJX77sTjOJDaYEbes7vLxcqF7Udv3PH77N_YL_Yb8LfUMqYqSP4SisB7tYPQQveQitFUeTDpyBNDByEmSgvI-TOeTuGajVmtEq-w2McTwIn2-b0Wb1Y");'></div>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 transition-opacity duration-300"></div>
+<div class="absolute top-4 right-4 flex items-center justify-center size-10 rounded-full bg-white/10 backdrop-blur-md opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2">
+<span class="material-symbols-outlined text-white text-[20px]">arrow_outward</span>
+</div>
+<div class="absolute bottom-0 left-0 w-full p-6 translate-y-2 transition-transform duration-300 group-hover:translate-y-0">
+<span class="mb-2 inline-block text-xs font-bold tracking-widest text-primary uppercase">Corporate Identity</span>
+<h3 class="text-2xl font-bold text-white mb-1">Apex Systems</h3>
+<p class="text-sm text-gray-300 line-clamp-2 opacity-0 h-0 group-hover:opacity-100 group-hover:h-auto transition-all duration-300 delay-75">Complete brand overhaul for a leading fintech security firm.</p>
+</div>
+</div>
+</section>
+<!-- Footer CTA -->
+<section class="mb-20 rounded-2xl bg-gradient-to-br from-surface-dark to-background-dark border border-white/5 p-12 text-center lg:p-20 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none" style="background: radial-gradient(circle at 50% 0%, #2b8cee 0%, transparent 70%);"></div>
+<div class="relative z-10 flex flex-col items-center gap-6">
+<h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">Ready to build something extraordinary?</h2>
+<p class="max-w-2xl text-gray-400">Let's collaborate to bring your vision to life with precision, creativity, and technical excellence.</p>
+<button class="mt-4 flex items-center justify-center rounded-full bg-white px-8 py-4 text-base font-bold text-background-dark transition-all hover:bg-gray-200 hover:scale-105">
+                            Start a Project
+                        </button>
+</div>
+</section>
+<!-- Simple Footer -->
+<footer class="border-t border-white/5 pt-12 pb-12">
+<div class="flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-2 text-white">
+<div class="size-6">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_6_535)">
+<path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fill-rule="evenodd"></path>
+</g>
+<defs>
+<clippath id="clip0_6_535"><rect fill="white" height="48" width="48"></rect></clippath>
+</defs>
+</svg>
+</div>
+<span class="text-lg font-bold">AGENCY</span>
+</div>
+<div class="flex gap-8 text-sm text-gray-400">
+<a class="hover:text-white transition-colors" href="#">Instagram</a>
+<a class="hover:text-white transition-colors" href="#">LinkedIn</a>
+<a class="hover:text-white transition-colors" href="#">Twitter</a>
+<a class="hover:text-white transition-colors" href="#">Behance</a>
+</div>
+<div class="text-sm text-gray-500">
+                            © 2024 Agency Inc. All rights reserved.
+                        </div>
+</div>
+</footer>
+</div>
+</main>
+</div>
+</body></html>

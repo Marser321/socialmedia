@@ -1,49 +1,13 @@
 'use client';
 
 import * as React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { AnimatedCard } from '@/components/shared/AnimatedCard';
+import { motion } from 'framer-motion';
 import { ServiceModal } from '@/components/shared/ServiceModal';
 import { Servicio } from '@/types';
 import { Layers, Monitor, Smartphone, Video, Share2, ChevronRight, ChevronLeft, ShoppingCart, Bookmark } from 'lucide-react';
 import { MOCK_SERVICES } from '@/data/services';
 import { cn } from '@/lib/utils';
-import Image from 'next/image';
 
-// MOCK DATA
-// MOCK DATA
-const SAMPLE_SERVICES: Servicio[] = [
-    {
-        id: '1', nombre: 'Desarrollo Web', descripcion: 'Experiencias digitales inmersivas que convierten.', descripcion_corta: 'Web de alto impacto', pilar: 'tech', icono: 'Monitor', precio_base: 1500, tipo_pago: 'unico', orden: 1,
-        caracteristicas: ['Diseño 3D Interactivo', 'SEO Técnico Avanzado', 'CMS Headless'],
-        tecnologias: ['Next.js 14', 'React Three Fiber', 'Tailwind CSS', 'Supabase']
-    },
-    {
-        id: '2', nombre: 'E-commerce', descripcion: 'Ventas globales 24/7 con arquitectura escalable.', descripcion_corta: 'Tiendas Online', pilar: 'tech', icono: 'ShoppingCart', precio_base: 3500, tipo_pago: 'unico', orden: 2,
-        caracteristicas: ['Pasarela de Pagos Global', 'Gestión de Inventario', 'Recuperación de Carritos'],
-        tecnologias: ['Shopify Plus', 'Stripe Connect', 'DatoCMS', 'Redis']
-    },
-    {
-        id: '3', nombre: 'Apps a Medida', descripcion: 'Ecosistemas móviles nativos de alto rendimiento.', descripcion_corta: 'Desarrollo Apps', pilar: 'tech', icono: 'Smartphone', precio_base: 5000, tipo_pago: 'unico', orden: 3,
-        caracteristicas: ['iOS & Android Nativo', 'Offline First', 'Biometría Avanzada'],
-        tecnologias: ['React Native / Expo', 'Firebase', 'Node.js', 'PostgreSQL']
-    },
-    {
-        id: '4', nombre: 'Automatización AI', descripcion: 'Tu negocio operando en piloto automático 24/7.', descripcion_corta: 'Automatización 360', pilar: 'tech', icono: 'Layers', precio_base: 800, tipo_pago: 'mensual', orden: 4,
-        caracteristicas: ['Workflows Multi-etapa', 'Agents Autónomos', 'Integración CRM'],
-        tecnologias: ['Zapier Enterprise', 'Make', 'OpenAI API', 'LangChain']
-    },
-    {
-        id: '5', nombre: 'Social Growth', descripcion: 'Dominio total de la atención en redes sociales.', descripcion_corta: 'Viral Marketing', pilar: 'growth', icono: 'Share2', precio_base: 600, tipo_pago: 'mensual', orden: 5,
-        caracteristicas: ['Estrategia Viral', 'Edición Formato Reels', 'Analytics Predictivo'],
-        tecnologias: ['Metricool', 'CapCut Pro', 'Canva Enterprise', 'Meta Ads Manager']
-    },
-    {
-        id: '6', nombre: 'Producción Media', descripcion: 'Narrativa cinematográfica para marcas audaces.', descripcion_corta: 'Video High-End', pilar: 'media', icono: 'Video', precio_base: 1200, tipo_pago: 'unico', orden: 6,
-        caracteristicas: ['Guión + Storyboard', 'Color Grading HDR', 'Sound Design Inmersivo'],
-        tecnologias: ['DaVinci Resolve', 'Cinema 4D', 'Red Camera', 'Unreal Engine']
-    },
-];
 
 const iconMap: Record<string, React.ReactNode> = {
     Monitor: <Monitor className="w-8 h-8" />,
@@ -54,282 +18,163 @@ const iconMap: Record<string, React.ReactNode> = {
     Smartphone: <Smartphone className="w-8 h-8" />,
 };
 
-// Map service IDs to specific background images
-const startBackgroundMap: Record<string, string> = {
-    '1': 'web',
-    '2': 'ecommerce',
-    '3': 'mobile',
-    '4': 'automation',
-    '5': 'growth',
-    '6': 'media',
-};
-
 export function ServicesCatalog() {
-  // Bookmarks state (persisted in localStorage)
-  const [bookmarks, setBookmarks] = React.useState<string[]>(() => {
-    if (typeof window === 'undefined') return [] as string[];
-    try {
-      const raw = localStorage.getItem('nexo_bookmarks');
-      return raw ? (JSON.parse(raw) as string[]) : [];
-    } catch {
-      return [];
-    }
-  });
+    const [bookmarks, setBookmarks] = React.useState<string[]>(() => {
+        if (typeof window === 'undefined') return [] as string[];
+        try {
+            const raw = localStorage.getItem('nexo_bookmarks');
+            return raw ? (JSON.parse(raw) as string[]) : [];
+        } catch {
+            return [];
+        }
+    });
 
-  React.useEffect(() => {
-    if (typeof window === 'undefined') return;
-    localStorage.setItem('nexo_bookmarks', JSON.stringify(bookmarks));
-  }, [bookmarks]);
+    React.useEffect(() => {
+        if (typeof window === 'undefined') return;
+        localStorage.setItem('nexo_bookmarks', JSON.stringify(bookmarks));
+    }, [bookmarks]);
 
-  const toggleBookmark = (id: string) => {
-    setBookmarks((prev) => (prev.includes(id) ? prev.filter((b) => b !== id) : [...prev, id]));
-  };
+    const toggleBookmark = (id: string) => {
+        setBookmarks((prev) => (prev.includes(id) ? prev.filter((b) => b !== id) : [...prev, id]));
+    };
     const [selectedService, setSelectedService] = React.useState<Servicio | null>(null);
-    const [activeIndex, setActiveIndex] = React.useState(0);
-    const [isAtStart, setIsAtStart] = React.useState(true);
-    const [isAtEnd, setIsAtEnd] = React.useState(false);
+    // Track mouse position for spotlight effect
+    const [mousePosition, setMousePosition] = React.useState({ x: 0, y: 0 });
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        setMousePosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    };
+
     const scrollRef = React.useRef<HTMLDivElement>(null);
 
-    const ticking = React.useRef(false);
-
-    // Detección de elemento activo para cambiar el fondo (Throttled with RAF)
-    const updateActiveIndex = React.useCallback(() => {
-        if (!scrollRef.current) return;
-        const container = scrollRef.current;
-        const center = container.scrollLeft + container.clientWidth / 2;
-
-        setIsAtStart(container.scrollLeft <= 10);
-        setIsAtEnd(container.scrollLeft + container.clientWidth >= container.scrollWidth - 10);
-
-        const children = Array.from(container.children) as HTMLElement[];
-        let closestIndex = activeIndex;
-        let closestDistance = Infinity;
-
-        children.forEach((child, index) => {
-            const childCenter = child.offsetLeft + child.offsetWidth / 2;
-            const distance = Math.abs(center - childCenter);
-            if (distance < closestDistance) {
-                closestDistance = distance;
-                closestIndex = index;
-            }
-        });
-
-        if (closestIndex !== activeIndex) {
-            setActiveIndex(closestIndex);
-        }
-    }, [activeIndex]);
-
-    const handleScroll = React.useCallback(() => {
-        if (!ticking.current) {
-            window.requestAnimationFrame(() => {
-                updateActiveIndex();
-                ticking.current = false;
-            });
-            ticking.current = true;
-        }
-    }, [updateActiveIndex]);
-
-    // Scroll vertical passthrough (Anti-Trap V3)
-    React.useEffect(() => {
-        const el = scrollRef.current;
-        if (!el) return;
-
-        const onWheel = (e: WheelEvent) => {
-            if (e.deltaY === 0) return;
-
-            const isEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 2;
-            const isStart = el.scrollLeft <= 2;
-
-            // Si intenta ir más allá del final -> dejar al navegador hacer scroll vertical
-            if (isEnd && e.deltaY > 0) return;
-            // Si intenta ir antes del principio -> dejar al navegador hacer scroll vertical
-            if (isStart && e.deltaY < 0) return;
-
-            // En el medio -> scroll horizontal
-            e.preventDefault();
-            el.scrollBy({
-                left: e.deltaY,
-                behavior: 'auto'
-            });
-        };
-
-        el.addEventListener('wheel', onWheel, { passive: false });
-        // Asegurar que el evento scroll llame a handleScroll
-        el.addEventListener('scroll', handleScroll, { passive: true });
-
-        return () => {
-            el.removeEventListener('wheel', onWheel);
-            el.removeEventListener('scroll', handleScroll);
-        };
-    }, [handleScroll]);
-
-    const activeService = MOCK_SERVICES[activeIndex] || MOCK_SERVICES[0];
-    const backgroundImage = startBackgroundMap[activeService.id] || 'web'; // Default to web if not found
-
     const scrollLeft = () => {
-        if (scrollRef.current) scrollRef.current.scrollBy({ left: -300, behavior: 'smooth' });
+        if (scrollRef.current) scrollRef.current.scrollBy({ left: -400, behavior: 'smooth' });
     };
 
     const scrollRight = () => {
-        if (scrollRef.current) scrollRef.current.scrollBy({ left: 300, behavior: 'smooth' });
+        if (scrollRef.current) scrollRef.current.scrollBy({ left: 400, behavior: 'smooth' });
     };
 
     return (
-        <section id="servicios" className="py-12 md:py-24 bg-background relative overflow-hidden min-h-[90vh] flex flex-col justify-center">
+        <section id="servicios" className="py-24 bg-background relative overflow-hidden min-h-screen flex flex-col justify-center">
 
-            {/* Dynamic Image Background */}
-            <AnimatePresence mode="popLayout">
-                <motion.div
-                    key={backgroundImage}
-                    initial={{ opacity: 0, scale: 1.1 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.8 }}
-                    style={{ willChange: 'opacity, transform' }}
-                    className="absolute inset-0 z-0 pointer-events-none"
-                >
-                    <Image
-                    src={`/images/backgrounds/${backgroundImage}.png`}
-                        alt={`${activeService.nombre} background`}
-                        fill
-                        quality={75}
-                        sizes="100vw"
-                        className="object-cover opacity-40 mix-blend-screen mask-image-gradient"
-                        priority
-                    />
-                    <div className="absolute inset-0 bg-background/60 backdrop-blur-[2px]" />
-                    {/* Gradients to fade edges */}
-                    <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-background to-transparent" />
-                    <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent" />
-                </motion.div>
-            </AnimatePresence>
+            {/* Ambient Background */}
+            <div className="absolute inset-0 bg-background">
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px]" />
+                <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[120px]" />
+            </div>
 
             {/* Content Container */}
-            <div className="container mx-auto px-4 mb-8 md:mb-12 relative z-10">
+            <div className="container mx-auto px-4 mb-16 relative z-10">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     className="text-center max-w-3xl mx-auto"
                 >
+                    <div className="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-500/10 rounded-full border border-blue-500/20">
+                        Nuestras Capacidades
+                    </div>
                     <h2 className="text-4xl md:text-7xl font-black text-white mb-6 tracking-tighter uppercase relative z-10">
-                        ECOSISTEMA <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-violet-400 to-emerald-400 animate-gradient-x bg-[length:200%_auto]">DIGITAL</span>
+                        ecosistema <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-violet-400 to-emerald-400 animate-gradient-x bg-[length:200%_auto]">digital</span>
                     </h2>
-                    <p className="text-xl text-white/80 font-light leading-relaxed max-w-2xl mx-auto">
-                        Fusionamos <span className="font-semibold text-blue-300">creatividad estratégica</span> con <span className="font-semibold text-emerald-300">ingeniería de software</span>.
-                        Explora nuestros módulos de alto rendimiento diseñados para escalar.
+                    <p className="text-xl text-white/60 font-light leading-relaxed max-w-2xl mx-auto">
+                        Módulos de alto rendimiento diseñados para integrarse y escalar.
                     </p>
                 </motion.div>
             </div>
 
-            {/* Scroll Container - Increased padding to prevent clipping */}
-            <div className="relative w-full z-20 group/scroll">
+            {/* Scroll Container */}
+            <div className="relative w-full z-20 group/scroll pl-4 md:pl-[10vw]">
 
-                {/* Navigation Hints (Desktop) */}
-                <button
-                    onClick={scrollLeft}
-                    className={cn(
-                        "hidden md:flex absolute left-8 top-1/2 -translate-y-1/2 z-30 transition-all duration-300 items-center justify-center hover:scale-110",
-                        isAtStart ? "opacity-0 pointer-events-none" : "opacity-100"
-                    )}
-                >
-                    <ChevronLeft className="w-12 h-12 text-white/40 hover:text-white" />
-                </button>
-                <button
-                    onClick={scrollRight}
-                    className={cn(
-                        "hidden md:flex absolute right-8 top-1/2 -translate-y-1/2 z-30 transition-all duration-300 items-center justify-center hover:scale-110",
-                        isAtEnd ? "opacity-0 pointer-events-none" : "opacity-100"
-                    )}
-                >
-                    <ChevronRight className="w-12 h-12 text-white/40 hover:text-white" />
-                </button>
+                {/* Navigation Buttons */}
+                <div className="flex justify-end gap-2 pr-4 md:pr-[10vw] mb-4">
+                    <button onClick={scrollLeft} className="p-3 rounded-full border border-white/10 hover:bg-white/10 transition-colors">
+                        <ChevronLeft className="w-6 h-6 text-white" />
+                    </button>
+                    <button onClick={scrollRight} className="p-3 rounded-full border border-white/10 hover:bg-white/10 transition-colors">
+                        <ChevronRight className="w-6 h-6 text-white" />
+                    </button>
+                </div>
 
                 <div
                     ref={scrollRef}
-                    onScroll={handleScroll}
-                    className="flex overflow-x-auto py-12 snap-x snap-mandatory gap-6 px-4 md:px-[calc(50vw-200px)] hide-scrollbar items-center"
+                    className="flex overflow-x-auto pb-12 snap-x snap-mandatory gap-6 px-4 pr-[20vw] hide-scrollbar"
                     style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 >
-                    {MOCK_SERVICES.map((service, index) => {
-                        const isActive = index === activeIndex;
-
-                        return (
-                            <motion.div
-                                key={service.id}
-                                className="snap-center shrink-0 w-[85vw] sm:w-[350px] md:w-[400px] first:pl-0 last:pr-0"
-                                animate={{
-                                    scale: isActive ? 1 : 0.9,
-                                    opacity: isActive ? 1 : 0.4,
-                                    filter: isActive ? 'blur(0px)' : 'blur(2px)',
-                                    y: isActive ? 0 : 20
-                                }}
-                                transition={{ duration: 0.5, ease: "easeOut" }}
+                    {MOCK_SERVICES.map((service, index) => (
+                        <motion.div
+                            key={service.id}
+                            className="snap-start shrink-0 w-[300px] md:w-[400px]"
+                            initial={{ opacity: 0, x: 50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ delay: index * 0.1 }}
+                            viewport={{ once: true }}
+                        >
+                            <div
+                                className="group/card relative h-[500px] bg-white/5 border border-white/10 rounded-3xl overflow-hidden hover:border-white/20 transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/10"
+                                onMouseMove={handleMouseMove}
                             >
-                                <AnimatedCard
-                                    onClick={() => setSelectedService(service)}
-                                    className={cn(
-                                        "h-[450px] flex flex-col justify-between group/card transition-all duration-500 relative",
-                                        isActive ? "border-white/20 bg-white/5 shadow-2xl" : "border-transparent bg-transparent shadow-none"
-                                    )}
-                                    gradientColor={
-                                        service.pilar === 'tech' ? 'from-blue-600/30 to-cyan-500/30' :
-                                            service.pilar === 'media' ? 'from-violet-600/30 to-purple-500/30' :
-                                                'from-emerald-500/30 to-teal-500/30'
-                                    }
-                                >
-                                    {/* Bookmark button on each card */}
-                                    <div className="absolute top-3 right-3 z-20">
-                                      <button onClick={(e) => { e.stopPropagation(); toggleBookmark(service.id); }} aria-label={bookmarks.includes(service.id) ? 'Eliminar marcador' : 'Guardar como favorito'} className="p-1 rounded-full bg-white/20 hover:bg-white/40 text-white">
-                                        <Bookmark className="w-5 h-5" color={bookmarks.includes(service.id) ? '#facc15' : '#ffffff'} />
-                                      </button>
-                                    </div>
-                                    <div>
+                                {/* Spotlight Effect */}
+                                <div
+                                    className="pointer-events-none absolute -inset-px opacity-0 group-hover/card:opacity-100 transition duration-300"
+                                    style={{
+                                        background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255,255,255,0.06), transparent 40%)`
+                                    }}
+                                />
+
+                                <div className="p-8 h-full flex flex-col relative z-10">
+                                    <div className="flex justify-between items-start mb-8">
                                         <div className={cn(
-                                            "w-16 h-16 rounded-2xl flex items-center justify-center mb-6 text-white transition-transform duration-500 group-hover/card:scale-110 group-hover/card:rotate-3",
-                                            service.pilar === 'tech' ? 'bg-blue-500/20 shadow-[0_0_20px_rgba(59,130,246,0.3)]' :
-                                                service.pilar === 'media' ? 'bg-violet-500/20 shadow-[0_0_20px_rgba(124,58,237,0.3)]' : 'bg-emerald-500/20 shadow-[0_0_20px_rgba(16,185,129,0.3)]'
+                                            "w-14 h-14 rounded-2xl flex items-center justify-center text-white transition-all duration-500 group-hover/card:scale-110",
+                                            service.pilar === 'tech' ? 'bg-blue-500/20 text-blue-400' :
+                                                service.pilar === 'media' ? 'bg-violet-500/20 text-violet-400' : 'bg-emerald-500/20 text-emerald-400'
                                         )}>
-                                            {iconMap[service.icono] || <Layers className="w-8 h-8" />}
+                                            {iconMap[service.icono]}
                                         </div>
+                                        <button
+                                            onClick={(e) => { e.stopPropagation(); toggleBookmark(service.id); }}
+                                            className="p-2 rounded-full hover:bg-white/10 transition-colors"
+                                        >
+                                            <Bookmark className={cn("w-5 h-5", bookmarks.includes(service.id) ? "fill-yellow-400 text-yellow-400" : "text-white/40")} />
+                                        </button>
+                                    </div>
 
-                                        <h3 className="text-3xl font-black mb-3 text-transparent bg-clip-text bg-gradient-to-r from-white to-white/70 tracking-tight leading-none filter drop-shadow-sm">
-                                            {service.nombre}
-                                        </h3>
-                                        <p className="text-white/80 font-medium leading-relaxed mb-6 text-base border-l-2 border-white/20 pl-3">
-                                            {service.descripcion}
-                                        </p>
+                                    <h3 className="text-3xl font-bold text-white mb-2 group-hover/card:text-transparent group-hover/card:bg-clip-text group-hover/card:bg-gradient-to-r group-hover/card:from-white group-hover/card:to-white/70 transition-all">
+                                        {service.nombre}
+                                    </h3>
 
-                                        <div className="space-y-2">
-                                            {service.caracteristicas.slice(0, 3).map((feature, i) => (
-                                                <div key={i} className="flex items-center gap-2 text-sm text-white/50">
-                                                    <div className={cn("w-1.5 h-1.5 rounded-full",
-                                                        service.pilar === 'tech' ? 'bg-blue-400' :
-                                                            service.pilar === 'media' ? 'bg-violet-400' : 'bg-emerald-400'
-                                                    )} />
+                                    <p className="text-white/60 mb-8 line-clamp-3">
+                                        {service.descripcion}
+                                    </p>
+
+                                    <div className="mt-auto space-y-4">
+                                        <div className="flex flex-wrap gap-2">
+                                            {service.caracteristicas.slice(0, 2).map((feature, i) => (
+                                                <span key={i} className="text-xs px-2 py-1 rounded border border-white/10 text-white/50 bg-white/5">
                                                     {feature}
-                                                </div>
+                                                </span>
                                             ))}
                                         </div>
-                                    </div>
 
-                                    <div className="mt-6 pt-6 border-t border-white/5 flex items-center justify-between">
-                                        <span className={cn(
-                                            "text-xs font-bold uppercase tracking-widest px-2 py-1 rounded",
-                                            service.pilar === 'tech' ? 'bg-blue-500/10 text-blue-400' :
-                                                service.pilar === 'media' ? 'bg-violet-500/10 text-violet-400' : 'bg-emerald-500/10 text-emerald-400'
-                                        )}>
-                                            {service.pilar}
-                                        </span>
-                                        <div className="flex items-center gap-1 text-white/40 group-hover/card:text-white transition-all">
-                                            <span className="text-sm">Explorar</span>
-                                            <ChevronRight className="w-4 h-4 group-hover/card:translate-x-1 transition-transform" />
+                                        <div className="pt-6 border-t border-white/10 flex items-center justify-between">
+                                            <div className="flex flex-col">
+                                                <span className="text-xs text-white/40 uppercase tracking-wider">Desde</span>
+                                                <span className="text-xl font-bold text-white">${service.precio_base}</span>
+                                            </div>
+                                            <button
+                                                onClick={() => setSelectedService(service)}
+                                                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover/card:bg-white group-hover/card:text-black transition-all"
+                                            >
+                                                <ChevronRight className="w-5 h-5" />
+                                            </button>
                                         </div>
                                     </div>
-                                </AnimatedCard>
-                            </motion.div>
-                        );
-                    })}
+                                </div>
+                            </div>
+                        </motion.div>
+                    ))}
                 </div>
             </div>
 

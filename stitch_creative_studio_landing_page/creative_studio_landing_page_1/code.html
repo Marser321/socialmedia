@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Creative Studio Landing Page</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#2b8cee",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+              "glass": "rgba(255, 255, 255, 0.05)",
+              "glass-border": "rgba(255, 255, 255, 0.1)",
+            },
+            fontFamily: {
+              "display": ["Space Grotesk", "sans-serif"]
+            },
+            backgroundImage: {
+              'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101922; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2b8cee; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #1a6fb0; 
+        }
+
+        /* Glassmorphism utilities */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .glass-header {
+            background: rgba(16, 25, 34, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Ambient Glow */
+        .glow-orb {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(43, 140, 238, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111418] dark:text-white font-display overflow-x-hidden antialiased">
+<!-- Ambient Background Glows -->
+<div class="fixed top-[-100px] left-[-100px] glow-orb blur-3xl opacity-60"></div>
+<div class="fixed bottom-[10%] right-[-100px] glow-orb blur-3xl opacity-40" style="background: radial-gradient(circle, rgba(140, 43, 238, 0.15) 0%, rgba(0, 0, 0, 0) 70%);"></div>
+<div class="relative flex min-h-screen w-full flex-col group/design-root">
+<!-- Navigation -->
+<header class="fixed top-0 left-0 right-0 z-50 glass-header px-6 py-4 transition-all duration-300">
+<div class="mx-auto flex max-w-[1280px] items-center justify-between">
+<div class="flex items-center gap-3 text-white">
+<div class="flex h-8 w-8 items-center justify-center rounded bg-primary/20 text-primary">
+<span class="material-symbols-outlined" style="font-size: 20px;">shutter_speed</span>
+</div>
+<h2 class="text-white text-lg font-bold tracking-tight">LUMOS STUDIO</h2>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-gray-300 hover:text-white text-sm font-medium transition-colors" href="#work">Work</a>
+<a class="text-gray-300 hover:text-white text-sm font-medium transition-colors" href="#services">Services</a>
+<a class="text-gray-300 hover:text-white text-sm font-medium transition-colors" href="#about">About</a>
+<a class="text-gray-300 hover:text-white text-sm font-medium transition-colors" href="#contact">Contact</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center rounded-lg h-9 px-4 bg-primary hover:bg-primary/90 transition-colors text-white text-sm font-bold tracking-wide shadow-[0_0_15px_rgba(43,140,238,0.3)]">
+<span class="truncate">Start Project</span>
+</button>
+<!-- Mobile Menu Icon -->
+<button class="md:hidden text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Hero Section -->
+<section class="relative flex h-screen min-h-[600px] w-full items-center justify-center overflow-hidden pt-16">
+<!-- Background Image with Overlay -->
+<div class="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat" data-alt="Abstract dark cinematic background with subtle light flares" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDN2SYzkSEqKRcvinVkXKedSPM5BCA8Nk18aLtgktkXYs6dOlEX5Q5tLcSChXsP8bIGwlMGQaWWcUijmGkOKe9BRvRZyYFa1Y4EBbcz4ttrtrNdjtipfO3R4y8c9p8sGnjivtAjr_mvIeeWi90IINBvZKRRqRlxVj5HTV942znPyI1h9-Nc8BjV3qgtTCP89AGOl8M6Brhj6JOankQ5EhmPFh5ccwokG2NA2yV-y9RegjV17VqP6-CvwguHxIvSG0G2FWgZbEVJ7zg");'>
+<div class="absolute inset-0 bg-gradient-to-b from-background-dark/80 via-background-dark/60 to-background-dark"></div>
+</div>
+<div class="relative z-10 mx-auto flex max-w-[1280px] flex-col items-center justify-center px-4 text-center">
+<div class="animate-fade-in-up">
+<div class="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium uppercase tracking-widest text-primary backdrop-blur-sm">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+                        Available for new projects
+                    </div>
+<h1 class="mx-auto max-w-4xl text-5xl font-black uppercase leading-tight tracking-[-0.02em] text-white sm:text-7xl md:text-8xl lg:leading-[0.9]">
+                        Crafting <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-500">Digital</span><br/>
+<span class="text-primary">Excellence</span>
+</h1>
+<p class="mx-auto mt-6 max-w-2xl text-lg font-light text-gray-300 md:text-xl">
+                        We build brands through lens and code. A multidisciplinary studio merging cinematic storytelling with cutting-edge software.
+                    </p>
+<div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+<button class="group relative flex h-12 w-full min-w-[160px] items-center justify-center overflow-hidden rounded-lg bg-white px-6 text-sm font-bold text-black transition-all hover:bg-gray-200 sm:w-auto">
+<span class="relative z-10 flex items-center gap-2">
+                                View Our Work
+                                <span class="material-symbols-outlined transition-transform duration-300 group-hover:translate-x-1" style="font-size: 18px;">arrow_forward</span>
+</span>
+</button>
+<button class="flex h-12 w-full min-w-[160px] items-center justify-center rounded-lg border border-white/20 bg-transparent px-6 text-sm font-bold text-white transition-all hover:bg-white/5 sm:w-auto">
+                            Contact Us
+                        </button>
+</div>
+</div>
+</div>
+<!-- Scroll Indicator -->
+<div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce text-white/50">
+<span class="material-symbols-outlined">keyboard_arrow_down</span>
+</div>
+</section>
+<!-- Intro Text Section -->
+<section class="relative w-full py-24 md:py-32" id="about">
+<div class="mx-auto max-w-[1280px] px-6">
+<div class="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+<h2 class="max-w-4xl text-3xl font-bold leading-tight tracking-tight text-white md:text-5xl lg:text-6xl">
+                        We are a multidisciplinary <span class="text-primary">design studio</span> merging high-end art and modern technology.
+                    </h2>
+<div class="h-[1px] flex-1 bg-white/10 md:mb-4 md:ml-8"></div>
+</div>
+</div>
+</section>
+<!-- Services Section (Glassmorphism) -->
+<section class="relative w-full py-20 bg-background-dark" id="services">
+<!-- Background Glow Effect behind cards -->
+<div class="absolute left-1/2 top-1/2 h-[500px] w-full max-w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/5 blur-[100px]"></div>
+<div class="mx-auto max-w-[1280px] px-6 relative z-10">
+<div class="mb-16 flex flex-col gap-4">
+<span class="text-sm font-bold uppercase tracking-widest text-primary">Our Expertise</span>
+<h2 class="text-4xl font-bold text-white">Comprehensive Solutions</h2>
+</div>
+<div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+<!-- Card 1 -->
+<div class="glass-card group flex flex-col justify-between rounded-xl p-8 transition-all duration-300 hover:bg-white/5 hover:translate-y-[-4px]">
+<div>
+<div class="mb-6 flex h-14 w-14 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+<span class="material-symbols-outlined" style="font-size: 28px;">movie</span>
+</div>
+<h3 class="mb-3 text-xl font-bold text-white">Filmmaking</h3>
+<p class="text-gray-400">High-end commercial production, music videos, and narrative storytelling crafted with cinematic precision.</p>
+</div>
+<div class="mt-8">
+<a class="inline-flex items-center text-sm font-bold text-white opacity-60 transition-opacity hover:opacity-100" href="#">
+                                Learn more <span class="material-symbols-outlined ml-1 text-base">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="glass-card group flex flex-col justify-between rounded-xl p-8 transition-all duration-300 hover:bg-white/5 hover:translate-y-[-4px]">
+<div>
+<div class="mb-6 flex h-14 w-14 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+<span class="material-symbols-outlined" style="font-size: 28px;">share</span>
+</div>
+<h3 class="mb-3 text-xl font-bold text-white">Social Strategy</h3>
+<p class="text-gray-400">Data-driven content creation and community management that amplifies your brand's voice across platforms.</p>
+</div>
+<div class="mt-8">
+<a class="inline-flex items-center text-sm font-bold text-white opacity-60 transition-opacity hover:opacity-100" href="#">
+                                Learn more <span class="material-symbols-outlined ml-1 text-base">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="glass-card group flex flex-col justify-between rounded-xl p-8 transition-all duration-300 hover:bg-white/5 hover:translate-y-[-4px]">
+<div>
+<div class="mb-6 flex h-14 w-14 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+<span class="material-symbols-outlined" style="font-size: 28px;">code</span>
+</div>
+<h3 class="mb-3 text-xl font-bold text-white">Development</h3>
+<p class="text-gray-400">Custom web applications and mobile experiences built with scalable, modern architectures.</p>
+</div>
+<div class="mt-8">
+<a class="inline-flex items-center text-sm font-bold text-white opacity-60 transition-opacity hover:opacity-100" href="#">
+                                Learn more <span class="material-symbols-outlined ml-1 text-base">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Selected Work Section -->
+<section class="relative w-full py-24" id="work">
+<div class="mx-auto max-w-[1280px] px-6">
+<div class="mb-12 flex items-end justify-between">
+<div>
+<span class="text-sm font-bold uppercase tracking-widest text-primary">Portfolio</span>
+<h2 class="mt-2 text-4xl font-bold text-white md:text-5xl">Selected Work</h2>
+</div>
+<a class="hidden items-center gap-1 text-sm font-bold text-white md:flex hover:text-primary transition-colors" href="#">
+                        View all projects <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</div>
+<div class="grid gap-8 md:grid-cols-2 lg:grid-cols-2">
+<!-- Project 1 (Large) -->
+<div class="group relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-gray-900 md:aspect-[16/10]">
+<div class="absolute inset-0 transition-transform duration-700 group-hover:scale-105" data-alt="Photographer taking picture of mountains" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBi83v76LjN5eRlA4kqjmIBdPiJCO53jyfsJl2jibr8N8XwHvDgG0lPMnXwLLQYtRZj-xBryuARB409PCvsCmYNnUv2BPwCqHI8y_I1Y3jJv7muNZDgi324A4LHVwWKTyijjGb_c1StNBwwFGpWhOiSMA090_oeZNNxPsYmD-_6KG63IsGA6MmOe8J8a8fTdEsPC6VA0FGpWlgeEya6AW_rB46rBJGRQwY23YxHyKQ6d1AInSUIPHSj2tQh2DF1X7RbI7LXggN8VBw"); background-size: cover; background-position: center;'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-80"></div>
+<div class="absolute bottom-0 left-0 p-6 md:p-10">
+<div class="mb-2 text-xs font-bold uppercase tracking-wider text-primary">Campaign</div>
+<h3 class="text-2xl font-bold text-white md:text-3xl">Alpine Adventures</h3>
+<p class="mt-2 max-w-md text-sm text-gray-300 opacity-0 transition-all duration-300 group-hover:opacity-100 md:text-base">
+                                A full-scale brand campaign featuring cinematic drone footage and social strategy.
+                            </p>
+</div>
+</div>
+<!-- Project 2 -->
+<div class="group relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-gray-900">
+<div class="absolute inset-0 transition-transform duration-700 group-hover:scale-105" data-alt="Modern smartphone showing mobile application interface" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCV6fq3Dv95SmcADgoz5eBckUvKu5Tr8T6vs-esOXLGkYmigJLkCIdKsORp5g_965v0GzIJ8U4hUfwzeAc8qACAUFgsRQIBTFMAt1e4_FVZMty9ZHpolMmeMSfjhxGr3WfKLh6wMNpE-HHFlBrn6YfDN3-oulz4OD-qimFn2ln0HAExlrJlYtvVvulBnp_ckxmdjxe0PUxmyvJKx7tAQDZvWWHqxiYd5GJEXt25LsWiqmj7Tif8NV5x8N6oPsxxKniKsn5ceH6qFOQ"); background-size: cover; background-position: center;'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-80"></div>
+<div class="absolute bottom-0 left-0 p-6 md:p-10">
+<div class="mb-2 text-xs font-bold uppercase tracking-wider text-primary">App Development</div>
+<h3 class="text-2xl font-bold text-white md:text-3xl">FinTech Flow</h3>
+<p class="mt-2 max-w-md text-sm text-gray-300 opacity-0 transition-all duration-300 group-hover:opacity-100 md:text-base">
+                                UX/UI design and full-stack development for a next-gen finance app.
+                            </p>
+</div>
+</div>
+<!-- Project 3 -->
+<div class="group relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-gray-900">
+<div class="absolute inset-0 transition-transform duration-700 group-hover:scale-105" data-alt="Digital art dashboard setup on multiple monitors" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAvyZhcYfbtx_hykoAWfCC71dWjKgBUzngT0lHWy49Dum7v6mqumKqtHmLgMXU1quxbTvZCUsYi-ctmxvZ13k4akSwg_YahmXGjijZpeOFx6l0kYuvMvQ0gUxmqLD6KRqfcmOcppprSe16oB9bUbiL6UZxsyvu-Yaeefr6oMav443pF5ovqd6bMJz5fQGJa2XUtzMmVsgQDZ8oCzjKEfPoH5_cT_8_mTv0lA4ZVk-SeCyC1bEh41vTnXez1zUSt6GV2Ue0BMUI6zQc"); background-size: cover; background-position: center;'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-80"></div>
+<div class="absolute bottom-0 left-0 p-6 md:p-10">
+<div class="mb-2 text-xs font-bold uppercase tracking-wider text-primary">Web Platform</div>
+<h3 class="text-2xl font-bold text-white md:text-3xl">Creator's Hub</h3>
+<p class="mt-2 max-w-md text-sm text-gray-300 opacity-0 transition-all duration-300 group-hover:opacity-100 md:text-base">
+                                A community platform for digital artists to share and monetize assets.
+                            </p>
+</div>
+</div>
+<!-- Project 4 -->
+<div class="group relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-gray-900 md:aspect-[16/10]">
+<div class="absolute inset-0 transition-transform duration-700 group-hover:scale-105" data-alt="Camera filming a scene on set" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDyqqM95qeKd-un6Px-HepkKUJ96OWmCY3rKuy-J7hs3lQ52JgySS4EB01QHvdr_1txOcNvnKmpOyyG1Oh-mUG7VFith2rjV058mmNDD7QcKj5NjWvhmZkBDAykevJWcNKKIIPYycwfGIYZBqt0swqhiff4WkehPJuPT6wjId96G8WpAFMcau7dFBXOUKelBB-PE29MYEc9klpj3zik2ZNEI6NixFYoVOVQwYENpuguQrEdFabUAlZEE2JFcM2jgNqPCnTJe0U-jBY"); background-size: cover; background-position: center;'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-80"></div>
+<div class="absolute bottom-0 left-0 p-6 md:p-10">
+<div class="mb-2 text-xs font-bold uppercase tracking-wider text-primary">Production</div>
+<h3 class="text-2xl font-bold text-white md:text-3xl">Neon Nights</h3>
+<p class="mt-2 max-w-md text-sm text-gray-300 opacity-0 transition-all duration-300 group-hover:opacity-100 md:text-base">
+                                Music video production featuring advanced VFX and color grading.
+                            </p>
+</div>
+</div>
+</div>
+<div class="mt-8 flex justify-center md:hidden">
+<a class="flex items-center gap-1 text-sm font-bold text-white hover:text-primary" href="#">
+                        View all projects <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Clients/Social Proof Marquee -->
+<section class="w-full border-y border-white/5 bg-background-dark py-12 overflow-hidden">
+<div class="mx-auto max-w-[1280px] px-6 text-center mb-8">
+<p class="text-sm font-medium uppercase tracking-widest text-gray-500">Trusted by Innovative Brands</p>
+</div>
+<div class="relative flex overflow-x-hidden">
+<div class="animate-marquee whitespace-nowrap flex gap-16 md:gap-32 items-center opacity-40 hover:opacity-100 transition-opacity duration-300">
+<span class="text-2xl font-bold text-white font-display">ACME CORP</span>
+<span class="text-2xl font-bold text-white font-display">GLOBAL TECH</span>
+<span class="text-2xl font-bold text-white font-display">NEXUS AI</span>
+<span class="text-2xl font-bold text-white font-display">VANGUARD MEDIA</span>
+<span class="text-2xl font-bold text-white font-display">HORIZON</span>
+<span class="text-2xl font-bold text-white font-display">ELEVATE</span>
+<!-- Duplicate for infinite scroll illusion -->
+<span class="text-2xl font-bold text-white font-display">ACME CORP</span>
+<span class="text-2xl font-bold text-white font-display">GLOBAL TECH</span>
+<span class="text-2xl font-bold text-white font-display">NEXUS AI</span>
+<span class="text-2xl font-bold text-white font-display">VANGUARD MEDIA</span>
+<span class="text-2xl font-bold text-white font-display">HORIZON</span>
+<span class="text-2xl font-bold text-white font-display">ELEVATE</span>
+</div>
+</div>
+</section>
+<!-- CTA / Footer -->
+<section class="relative w-full bg-[#0b0e12] py-24" id="contact">
+<div class="absolute right-0 bottom-0 h-[400px] w-[400px] rounded-full bg-primary/5 blur-[120px]"></div>
+<div class="mx-auto max-w-[1280px] px-6 relative z-10">
+<div class="grid gap-12 lg:grid-cols-2">
+<div class="flex flex-col justify-between">
+<div>
+<h2 class="text-5xl font-bold tracking-tight text-white md:text-7xl">
+                                Let's build<br/>
+                                something <span class="text-gray-600">legendary.</span>
+</h2>
+<p class="mt-6 max-w-md text-lg text-gray-400">
+                                Ready to elevate your brand? Drop us a line and let's discuss how we can help you achieve your digital goals.
+                            </p>
+</div>
+<div class="mt-12 flex flex-col gap-4">
+<a class="text-2xl font-bold text-white hover:text-primary transition-colors" href="mailto:hello@lumos.studio">hello@lumos.studio</a>
+<p class="text-gray-500">+1 (555) 123-4567</p>
+<p class="text-gray-500">123 Creative Blvd, Los Angeles, CA</p>
+</div>
+</div>
+<div class="rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm">
+<form class="flex flex-col gap-6">
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-gray-300">Name</label>
+<input class="rounded-lg border border-white/10 bg-black/40 px-4 py-3 text-white placeholder-gray-600 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary" placeholder="Jane Doe" type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-gray-300">Email</label>
+<input class="rounded-lg border border-white/10 bg-black/40 px-4 py-3 text-white placeholder-gray-600 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary" placeholder="jane@example.com" type="email"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-gray-300">Project Type</label>
+<select class="rounded-lg border border-white/10 bg-black/40 px-4 py-3 text-white focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary">
+<option>Filmmaking</option>
+<option>Web Development</option>
+<option>Social Media</option>
+<option>Other</option>
+</select>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-gray-300">Message</label>
+<textarea class="rounded-lg border border-white/10 bg-black/40 px-4 py-3 text-white placeholder-gray-600 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary" placeholder="Tell us about your project..." rows="4"></textarea>
+</div>
+<button class="mt-2 rounded-lg bg-primary py-4 text-center text-sm font-bold text-white transition-colors hover:bg-primary/90" type="button">
+                                Send Message
+                            </button>
+</form>
+</div>
+</div>
+<div class="mt-24 flex flex-col items-center justify-between gap-6 border-t border-white/10 pt-8 md:flex-row">
+<p class="text-sm text-gray-500">© 2024 Lumos Studio. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="text-gray-500 hover:text-white transition-colors" href="#">
+<span class="sr-only">Instagram</span>
+<svg aria-hidden="true" class="h-5 w-5" fill="currentColor" viewbox="0 0 24 24"><path clip-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.468.465c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" fill-rule="evenodd"></path></svg>
+</a>
+<a class="text-gray-500 hover:text-white transition-colors" href="#">
+<span class="sr-only">Twitter</span>
+<svg aria-hidden="true" class="h-5 w-5" fill="currentColor" viewbox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path></svg>
+</a>
+<a class="text-gray-500 hover:text-white transition-colors" href="#">
+<span class="sr-only">LinkedIn</span>
+<svg aria-hidden="true" class="h-5 w-5" fill="currentColor" viewbox="0 0 24 24"><path clip-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" fill-rule="evenodd"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</section>
+</div>
+<script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body></html>

@@ -1,84 +1,119 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, PlayCircle } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import Image from 'next/image';
+import { useRef } from 'react';
 
 export function HeroSection() {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ['start start', 'end start'],
+    });
+
+    const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
+    const scale = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
+    const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
     return (
-        <section className="relative min-h-[85vh] w-full overflow-hidden flex items-center justify-center py-20">
-            {/* Background Video Placeholder or Animation */}
-            <div className="absolute inset-0 z-0 bg-background">
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-violet-900/40 via-background to-background" />
-                {/* Animated Grid Background */}
-                <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
+        <section ref={containerRef} className="relative h-[120vh] overflow-hidden flex flex-col items-center pt-32">
+            {/* Background Gradients (Glow) */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-blue-500/20 rounded-full blur-[120px] -z-10" />
+            <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-[100px] -z-10" />
 
-                {/* Floating Light Orbs */}
-                <motion.div
-                    animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-                    transition={{ duration: 8, repeat: Infinity }}
-                    className="absolute top-1/4 left-1/3 w-96 h-96 bg-violet-600/20 rounded-full blur-[100px]"
-                />
-                <motion.div
-                    animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.4, 0.2] }}
-                    transition={{ duration: 10, repeat: Infinity, delay: 1 }}
-                    className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-blue-600/20 rounded-full blur-[100px]"
-                />
-            </div>
-
-            {/* Content */}
-            <div className="relative z-10 container mx-auto px-4 text-center">
+            <motion.div
+                style={{ opacity }}
+                className="container px-4 md:px-6 relative z-10 text-center mb-12"
+            >
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    className="max-w-4xl mx-auto space-y-8"
+                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 >
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm mb-6">
-                        <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-                        <span className="text-sm font-medium text-cyan-100">Agencia Digital de Nueva Generación</span>
-                    </div>
-
-                    <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white leading-tight">
-                        No solo te hacemos ver bien,{' '}
-                        <span className="text-transparent bg-clip-text bg-gradient-brand animate-pulse">
-                            te ayudamos a operar mejor
-                        </span>
-                        .
-                    </h1>
-
-                    <p className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto">
-                        Fusionamos diseño de alto impacto con automatización inteligente para escalar tu negocio sin esfuerzo.
-                    </p>
-
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8">
-                        <Button
-                            size="lg"
-                            className="w-full sm:w-auto bg-white text-black hover:bg-white/90 rounded-full h-12 px-8 text-base font-medium transition-transform hover:scale-105"
-                        >
-                            Descubre tu Solución
-                            <ArrowRight className="w-4 h-4 ml-2" />
-                        </Button>
-                        <Button
-                            size="lg"
-                            variant="outline"
-                            className="w-full sm:w-auto h-12 px-8 rounded-full border-white/10 text-white hover:bg-white/5 backdrop-blur-sm"
-                        >
-                            <PlayCircle className="w-4 h-4 mr-2" />
-                            Ver Showreel
-                        </Button>
+                    <div className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-white backdrop-blur-xl mb-6">
+                        <span className="flex h-2 w-2 rounded-full bg-emerald-500 mr-2 animate-pulse" />
+                        Agencia Certificada en Automatización
                     </div>
                 </motion.div>
-            </div>
+
+                <motion.h1
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                    className="text-5xl md:text-8xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60 mb-6 max-w-5xl mx-auto"
+                >
+                    Transformamos Tráfico en <br />
+                    <span className="text-white">Dinero en el Banco.</span>
+                </motion.h1>
+
+                <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                    className="mx-auto max-w-[700px] text-lg md:text-xl text-white/70 mb-8 leading-relaxed"
+                >
+                    No somos otra agencia de "diseño bonito". Somos ingenieros de conversión.
+                    Creamos sistemas de venta automatizados y webs que venden por ti 24/7.
+                </motion.p>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                    className="flex flex-col sm:flex-row gap-4 justify-center"
+                >
+                    <Button size="lg" className="h-12 px-8 text-base bg-white text-black hover:bg-white/90 rounded-full transition-all hover:scale-105">
+                        Agendar Auditoría (15 min)
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                    <Button size="lg" variant="outline" className="h-12 px-8 text-base border-white/20 hover:bg-white/10 rounded-full backdrop-blur-sm">
+                        Ver Casos de Éxito
+                        <Sparkles className="ml-2 h-4 w-4" />
+                    </Button>
+                </motion.div>
+            </motion.div>
+
+            {/* Hero Image with Scroll Effect */}
+            <motion.div
+                style={{ y, scale }}
+                className="relative w-full max-w-6xl mx-auto px-4 perspective-1000"
+            >
+                <div className="relative aspect-[16/10] rounded-2xl overflow-hidden border border-white/10 shadow-2xl glass-panel group">
+                    {/* Overlay Gradient on Hover */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 z-10" />
+
+                    <Image
+                        src="/images/stitch-hero.png"
+                        alt="Stitch Creative Studio Interface"
+                        fill
+                        className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                        priority
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
+                    />
+
+                    {/* Floating UI Elements (Parallax) */}
+                    <motion.div
+                        style={{ y: useTransform(scrollYProgress, [0, 1], [0, -50]) }}
+                        className="absolute bottom-8 left-8 z-20 bg-black/50 backdrop-blur-md border border-white/10 p-4 rounded-xl flex items-center gap-4"
+                    >
+                        <div className="w-[1px] h-16 bg-gradient-to-b from-white/0 via-white/50 to-white/0 animate-pulse" />
+                        <div>
+                            <p className="text-xs text-white/60 uppercase tracking-widest">Revenue</p>
+                            <p className="text-xl font-bold text-white">$24,500</p>
+                        </div>
+                    </motion.div>
+                </div>
+            </motion.div>
 
             {/* Scroll Indicator */}
             <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1, duration: 1 }}
-                className="absolute bottom-10 left-1/2 -translate-x-1/2"
+                style={{ opacity: useTransform(scrollYProgress, [0, 0.2], [1, 0]) }}
+                className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40"
             >
-                <div className="w-[1px] h-16 bg-gradient-to-b from-white/0 via-white/50 to-white/0 animate-pulse" />
+                <span className="text-xs uppercase tracking-widest">Scroll</span>
+                <div className="w-[1px] h-12 bg-gradient-to-b from-white/40 to-transparent" />
             </motion.div>
         </section>
     );
