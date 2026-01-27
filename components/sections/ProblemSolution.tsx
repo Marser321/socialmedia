@@ -12,8 +12,13 @@ export function ProblemSolution() {
     });
 
     // Background Color Transition: Red (Problem) -> Emerald (Solution)
-    const bgColor = useTransform(scrollYProgress, [0, 0.45, 1],
-        ['rgba(20, 0, 0, 1)', 'rgba(0, 20, 10, 1)', 'rgba(2, 44, 34, 1)'] // Brighter Emerald (emerald-950/900 mix)
+    const bgColor = useTransform(scrollYProgress, [0, 0.4, 0.6, 1],
+        [
+            'rgba(40, 0, 0, 1)',   // Red-950 (Starting darker red)
+            'rgba(0, 20, 10, 1)',  // Transition Dark
+            'rgba(6, 78, 59, 1)',  // Emerald-900 (Much brighter green)
+            'rgba(6, 78, 59, 1)'   // Stay Green
+        ]
     );
     const background = useMotionTemplate`linear-gradient(to bottom, ${bgColor}, #020617)`;
 
