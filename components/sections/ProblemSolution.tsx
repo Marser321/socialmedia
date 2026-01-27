@@ -42,10 +42,10 @@ export function ProblemSolution() {
                         {/* PROBLEM STATE */}
                         <motion.div
                             style={{
-                                opacity: useTransform(scrollYProgress, [0, 0.35, 0.45], [1, 1, 0]),
-                                y: useTransform(scrollYProgress, [0, 0.35, 0.45], [0, 0, -20]),
-                                scale: useTransform(scrollYProgress, [0, 0.35, 0.45], [1, 1, 0.95]),
-                                filter: useTransform(scrollYProgress, [0.35, 0.45], ["blur(0px)", "blur(10px)"])
+                                opacity: useTransform(scrollYProgress, [0, 0.3, 0.4], [1, 1, 0]),
+                                y: useTransform(scrollYProgress, [0, 0.3, 0.4], [0, 0, -20]),
+                                scale: useTransform(scrollYProgress, [0, 0.3, 0.4], [1, 1, 0.95]),
+                                filter: useTransform(scrollYProgress, [0.3, 0.4], ["blur(0px)", "blur(10px)"])
                             }}
                             className="bg-red-950/20 border border-red-500/20 backdrop-blur-md p-8 rounded-3xl w-full absolute top-0 left-0 shadow-[0_0_60px_rgba(239,68,68,0.1)]"
                         >
@@ -75,10 +75,10 @@ export function ProblemSolution() {
                         {/* SOLUTION STATE */}
                         <motion.div
                             style={{
-                                opacity: useTransform(scrollYProgress, [0.45, 0.55, 1], [0, 1, 1]),
-                                y: useTransform(scrollYProgress, [0.45, 0.55], [20, 0]),
-                                scale: useTransform(scrollYProgress, [0.45, 0.55], [0.95, 1]),
-                                filter: useTransform(scrollYProgress, [0.45, 0.55], ["blur(10px)", "blur(0px)"])
+                                opacity: useTransform(scrollYProgress, [0.4, 0.5, 1], [0, 1, 1]),
+                                y: useTransform(scrollYProgress, [0.4, 0.5], [20, 0]),
+                                scale: useTransform(scrollYProgress, [0.4, 0.5], [0.95, 1]),
+                                filter: useTransform(scrollYProgress, [0.4, 0.5], ["blur(10px)", "blur(0px)"])
                             }}
                             className="bg-emerald-950/30 border border-emerald-500/30 backdrop-blur-md p-8 rounded-3xl shadow-[0_0_80px_rgba(16,185,129,0.2)] w-full absolute top-0 left-0"
                         >
@@ -111,10 +111,10 @@ export function ProblemSolution() {
                         {/* Chaos State */}
                         <motion.div
                             style={{
-                                opacity: useTransform(scrollYProgress, [0, 0.35, 0.45], [1, 1, 0]),
-                                rotate: useTransform(scrollYProgress, [0, 0.35, 0.45], [0, 20, 90]),
-                                scale: useTransform(scrollYProgress, [0, 0.35, 0.45], [1, 0.8, 0.4]),
-                                filter: useTransform(scrollYProgress, [0.35, 0.45], ["blur(0px)", "blur(20px)"])
+                                opacity: useTransform(scrollYProgress, [0, 0.3, 0.4], [1, 1, 0]),
+                                rotate: useTransform(scrollYProgress, [0, 0.3, 0.4], [0, 20, 90]),
+                                scale: useTransform(scrollYProgress, [0, 0.3, 0.4], [1, 0.8, 0.4]),
+                                filter: useTransform(scrollYProgress, [0.3, 0.4], ["blur(0px)", "blur(20px)"])
                             }}
                             className="absolute inset-0 flex items-center justify-center"
                         >
@@ -133,9 +133,9 @@ export function ProblemSolution() {
                         {/* Order State */}
                         <motion.div
                             style={{
-                                opacity: useTransform(scrollYProgress, [0.45, 0.55, 1], [0, 1, 1]),
-                                scale: useTransform(scrollYProgress, [0.45, 0.55], [0.8, 1]),
-                                filter: useTransform(scrollYProgress, [0.45, 0.55], ["blur(10px)", "blur(0px)"])
+                                opacity: useTransform(scrollYProgress, [0.4, 0.5, 1], [0, 1, 1]),
+                                scale: useTransform(scrollYProgress, [0.4, 0.5], [0.8, 1]),
+                                filter: useTransform(scrollYProgress, [0.4, 0.5], ["blur(10px)", "blur(0px)"])
                             }}
                             className="absolute inset-0 flex items-center justify-center"
                         >
