@@ -13,10 +13,13 @@ export function ProblemSolution() {
     });
 
     // 10k Dollar Transitions: Interpolations
-    const problemScale = useTransform(scrollYProgress, [0, 0.3], [1, 0.8]);
-    const problemBlur = useTransform(scrollYProgress, [0, 0.3], ["blur(0px)", "blur(10px)"]);
-    const problemOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
-    const problemZ = useTransform(scrollYProgress, [0, 0.3], [0, -500]);
+    // Modified to "Freeze" the problem layer while the solution layer reveals
+    // We delay the fade-out until AFTER the green layer fully covers it (reveal ends at 0.45)
+    // to prevent the black background from showing through.
+    const problemScale = useTransform(scrollYProgress, [0.8, 1], [1, 0.9]); // Subtle scale at very end
+    const problemBlur = useTransform(scrollYProgress, [0.8, 1], ["blur(0px)", "blur(0px)"]); // No blur needed
+    const problemOpacity = useTransform(scrollYProgress, [0.8, 1], [1, 1]); // Keep opacity 1
+    const problemZ = useTransform(scrollYProgress, [0.8, 1], [0, 0]); // Keep Z static
 
     // Liquid Wipe ClipPath: Circle expanding from center - Tighter interval
     const revealClipPath = useTransform(
