@@ -9,12 +9,16 @@ import { PricingTable } from '@/components/sections/PricingTable';
 import { Portfolio } from '@/components/sections/Portfolio';
 import { ContactForm } from '@/components/sections/ContactForm';
 
+import { SocialProof } from '@/components/sections/SocialProof';
+
 export default function Home() {
   return (
     <main id="content" className="min-h-screen bg-background relative overflow-hidden">
       <Navbar />
 
       <HeroSection />
+
+      <SocialProof />
 
       <ProblemSolution />
 

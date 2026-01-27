@@ -9,10 +9,10 @@ import { ArrowUpRight } from 'lucide-react';
 const CATEGORIES = ['Todos', 'Web', 'Media', 'Apps'];
 
 const PROJECTS = [
-    { id: 1, title: 'Neon Market', category: 'Web', image: '/portfolio/1.jpg', desc: 'E-commerce Futurista' },
-    { id: 2, title: 'Lumina App', category: 'Apps', image: '/portfolio/2.jpg', desc: 'Gestión Inteligente' },
-    { id: 3, title: 'TecnoFest', category: 'Media', image: '/portfolio/3.jpg', desc: 'Cobertura Evento' },
-    { id: 4, title: 'Alpha Bank', category: 'Web', image: '/portfolio/4.jpg', desc: 'Banca Digital' },
+    { id: 1, title: 'Neon Market', category: 'Web', image: '/portfolio/1.jpg', desc: 'E-commerce Futurista', metric: '+240% Sales' },
+    { id: 2, title: 'Lumina App', category: 'Apps', image: '/portfolio/2.jpg', desc: 'Gestión Inteligente', metric: '10k+ Users' },
+    { id: 3, title: 'TecnoFest', category: 'Media', image: '/portfolio/3.jpg', desc: 'Cobertura Evento', metric: '5M Views' },
+    { id: 4, title: 'Alpha Bank', category: 'Web', image: '/portfolio/4.jpg', desc: 'Banca Digital', metric: '-40% Churn' },
 ];
 
 export function Portfolio() {
@@ -69,6 +69,9 @@ export function Portfolio() {
                                         <span className="text-cyan-400 text-sm font-medium mb-2 uppercase tracking-wider">{project.category}</span>
                                         <h3 className="text-3xl font-bold text-white mb-1 group-hover:translate-x-2 transition-transform">{project.title}</h3>
                                         <p className="text-white/60 mb-6">{project.desc}</p>
+                                        <div className="absolute top-8 left-8 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold px-3 py-1 rounded-full backdrop-blur-md">
+                                            {project.metric}
+                                        </div>
 
                                         <div className="absolute top-8 right-8 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-md">
                                             <ArrowUpRight className="text-white w-5 h-5" />

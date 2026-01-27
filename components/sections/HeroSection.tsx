@@ -62,16 +62,21 @@ export function HeroSection() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                    className="flex flex-col sm:flex-row gap-4 justify-center"
+                    className="flex flex-col items-center gap-6"
                 >
-                    <Button size="lg" className="h-12 px-8 text-base bg-white text-black hover:bg-white/90 rounded-full transition-all hover:scale-105">
-                        Agendar Auditoría (15 min)
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                    <Button size="lg" variant="outline" className="h-12 px-8 text-base border-white/20 hover:bg-white/10 rounded-full backdrop-blur-sm">
-                        Ver Casos de Éxito
-                        <Sparkles className="ml-2 h-4 w-4" />
-                    </Button>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                        <Button size="lg" className="h-12 px-8 text-base bg-white text-black hover:bg-white/90 rounded-full transition-all hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+                            Agendar Auditoría (15 min)
+                            <ArrowRight className="ml-2 h-4 w-4" />
+                        </Button>
+                        <Button size="lg" variant="outline" className="h-12 px-8 text-base border-white/20 hover:bg-white/10 rounded-full backdrop-blur-sm">
+                            Ver Casos de Éxito
+                            <Sparkles className="ml-2 h-4 w-4" />
+                        </Button>
+                    </div>
+                    <p className="text-xs text-white/40 font-light tracking-wide">
+                        *Plazas limitadas para Q1 2026. <span className="text-emerald-400 font-medium">Garantía de Resultados por Contrato.</span>
+                    </p>
                 </motion.div>
             </motion.div>
 
