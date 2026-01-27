@@ -57,18 +57,18 @@ export function ServicesCatalog() {
     };
 
     return (
-        <section id="servicios" className="py-24 bg-background relative overflow-hidden min-h-screen flex flex-col pt-32 -mt-24 z-20">
-            {/* Gradient Bridge: Smooth transition from previous black/green section */}
-            <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black to-transparent z-0 pointer-events-none" />
+        <section id="servicios" className="py-24 bg-transparent relative overflow-hidden min-h-screen flex flex-col pt-32 -mt-[40vh] z-20 pointer-events-none">
+            {/* Gradient Bridge: Smoother fade from transparent to black */}
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/60 to-background z-0 pointer-events-none" />
 
-            {/* Ambient Background */}
-            <div className="absolute inset-0 bg-background">
+            {/* Ambient Background - Push down to start where background becomes solid */}
+            <div className="absolute inset-0 top-[20vh]">
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px]" />
                 <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[120px]" />
             </div>
 
-            {/* Content Container */}
-            <div className="container mx-auto px-4 mb-16 relative z-10">
+            {/* Content Container - Restore Pointer Events */}
+            <div className="container mx-auto px-4 mb-16 relative z-10 pointer-events-auto">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -88,7 +88,7 @@ export function ServicesCatalog() {
             </div>
 
             {/* Scroll Container */}
-            <div className="relative w-full z-20 group/scroll pl-4 md:pl-[10vw]">
+            <div className="relative w-full z-20 group/scroll pl-4 md:pl-[10vw] pointer-events-auto">
 
                 {/* Navigation Buttons */}
                 <div className="flex justify-end gap-2 pr-4 md:pr-[10vw] mb-4">

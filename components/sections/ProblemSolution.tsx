@@ -61,7 +61,7 @@ export function ProblemSolution() {
     const textScale = useTransform(scrollYProgress, [0, 0.2], [1, 1.2]);
 
     return (
-        <div ref={containerRef} className="relative w-full h-[150vh] bg-black">
+        <div ref={containerRef} className="relative w-full h-[200vh] bg-black">
             {/* STICKY CONTAINER: Frame for the transition */}
             <div className="sticky top-0 h-screen w-full overflow-hidden">
 
