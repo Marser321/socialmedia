@@ -1,141 +1,141 @@
 'use client';
 
-import { motion, useScroll, useTransform, useMotionTemplate } from 'framer-motion';
-import { useRef } from 'react';
-import { Zap, Database, MessageSquare, Clock, FileSpreadsheet, Mail, PhoneMissed, ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Zap, Database, MessageSquare, FileSpreadsheet, Mail, ArrowRight, AlertTriangle, MessageCircleOff, Hourglass, FileWarning } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export function ProblemSolution() {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ['start start', 'end end']
-    });
-
-    // MASK ANIMATION: 0% -> 150% (Full Reveal)
-    // Starts at 10% scroll, finishes at 80% scroll
-    const maskSize = useTransform(scrollYProgress, [0.1, 0.8], [0, 150]);
-    const clipPath = useMotionTemplate`circle(${maskSize}% at 50% 50%)`;
-
     return (
-        <section ref={containerRef} className="relative h-[300vh] bg-black">
-            <div className="sticky top-0 h-screen w-full overflow-hidden">
-
-                {/* LAYER A: PROBLEM (Base Layer) */}
-                <div className="absolute inset-0 bg-[#0F0505] flex items-center justify-center z-0">
-                    <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-10" />
-                    <div className="container mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center">
-                        <div className="space-y-8">
-                            <div className="inline-flex items-center rounded-full border border-red-500/20 bg-red-500/10 px-3 py-1 text-sm text-red-400">
-                                <span className="flex h-2 w-2 rounded-full bg-red-500 mr-2 animate-pulse" />
-                                Situación Actual
-                            </div>
-                            <h2 className="text-5xl md:text-7xl font-black tracking-tighter text-white">
-                                El <span className="text-red-500">Caos</span> Operativo
-                            </h2>
-                            <p className="text-xl text-white/60 leading-relaxed max-w-lg">
-                                Tu negocio depende 100% de ti. Leads perdidos en WhatsApp, seguimiento manual en Excel y horas quemadas en tareas repetitivas.
-                            </p>
-                            <div className="grid grid-cols-3 gap-4 border-t border-white/10 pt-8">
-                                <ProblemItem icon={FileSpreadsheet} label="Excel Manual" />
-                                <ProblemItem icon={PhoneMissed} label="Ventas Perdidas" />
-                                <ProblemItem icon={Mail} label="Lento" />
-                            </div>
+        <div className="relative w-full bg-[#0A0A0A]">
+            {/* 1. LAYER A: PROBLEM (Sticky Bottom Layer) */}
+            {/* Stays stuck at the viewport top while the user scrolls. */}
+            <div className="sticky top-0 z-0 h-screen w-full overflow-hidden bg-[#1A0505] flex items-center justify-center">
+                <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-20" />
+                <div className="container mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center relative z-10">
+                    <div className="space-y-8">
+                        <div className="inline-flex items-center rounded-full border border-red-500/20 bg-red-500/10 px-3 py-1 text-sm text-red-400">
+                            <span className="flex h-2 w-2 rounded-full bg-red-500 mr-2 animate-pulse" />
+                            Situación Actual
                         </div>
-                        {/* Visual Metaphor Chaos */}
-                        <div className="relative aspect-square flex items-center justify-center">
-                            <div className="absolute inset-0 bg-red-500/10 blur-[100px] rounded-full" />
-                            <div className="relative grid grid-cols-2 gap-4 animate-[spin_40s_linear_infinite] opacity-50 grayscale hover:grayscale-0 transition-all">
-                                {[1, 2, 3, 4].map((i) => (
-                                    <div key={i} className="w-32 h-32 bg-red-950/20 border border-red-500/20 rounded-2xl flex items-center justify-center animate-pulse">
-                                        <Clock className="w-8 h-8 text-red-500" />
+                        <h2 className="text-5xl md:text-7xl font-black tracking-tighter text-white">
+                            Atrapado en el <span className="text-red-500">Autoempleo</span>
+                        </h2>
+                        <p className="text-xl text-white/60 leading-relaxed max-w-lg">
+                            Tu negocio no escala porque eres el cuello de botella. Vives apagando fuegos, contestando WhatsApps y perdiendo vida entre hojas de cálculo.
+                            <br /><span className="text-red-400 font-medium mt-2 block">Eso no es libertad, es una jaula dorada.</span>
+                        </p>
+                        <div className="grid grid-cols-3 gap-4 border-t border-white/10 pt-8">
+                            <ProblemItem icon={FileSpreadsheet} label="Excel Caos" />
+                            <ProblemItem icon={MessageCircleOff} label="Leads Fríos" />
+                            <ProblemItem icon={Hourglass} label="Sin Tiempo" />
+                        </div>
+                    </div>
+
+                    {/* Visual Metaphor Chaos - Distinct Icons */}
+                    <div className="relative aspect-square flex items-center justify-center">
+                        <div className="absolute inset-0 bg-red-500/10 blur-[100px] rounded-full" />
+                        <div className="relative grid grid-cols-2 gap-4 animate-[spin_60s_linear_infinite] opacity-60 hover:opacity-100 transition-opacity">
+                            <ChaosCard icon={FileWarning} delay={0} />
+                            <ChaosCard icon={MessageCircleOff} delay={1} />
+                            <ChaosCard icon={Hourglass} delay={2} />
+                            <ChaosCard icon={AlertTriangle} delay={3} />
+                        </div>
+                    </div>
+                </div>
+                {/* Overlay to subtly darken problem as it sits behind */}
+                <div className="absolute inset-0 bg-black/20 pointer-events-none" />
+            </div>
+
+            {/* 2. LAYER B: SOLUTION (Physical Scroll Overlay) */}
+            {/* This layer is relative and has a higher Z-index. It naturally scrolls UP over the sticky problem layer. */}
+            <div className="relative z-10 h-screen w-full overflow-hidden bg-[#022c22] flex items-center justify-center shadow-[0_-50px_100px_rgba(0,0,0,0.5)] border-t border-emerald-900/50">
+                {/* Brighter Green Background for 'Wow' effect */}
+                <div className="absolute inset-0 bg-gradient-to-b from-emerald-950 via-[#064e3b] to-emerald-950 opacity-90" />
+                <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-30" />
+
+                {/* Top fade for smooth entry */}
+                <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black/50 to-transparent pointer-events-none" />
+
+                {/* Central Glow */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] bg-emerald-500/20 blur-[120px] rounded-full pointer-events-none" />
+
+                <div className="container mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center relative z-20">
+                    <div className="space-y-8">
+                        <div className="inline-flex items-center rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-sm text-emerald-400">
+                            <span className="flex h-2 w-2 rounded-full bg-emerald-500 mr-2 shadow-[0_0_10px_#10b981]" />
+                            Nexo System v2.0
+                        </div>
+                        <h2 className="text-5xl md:text-7xl font-black tracking-tighter text-white">
+                            Libertad <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Absoluta</span>
+                        </h2>
+                        <p className="text-xl text-white/80 leading-relaxed max-w-lg">
+                            Construimos la infraestructura digital que trabaja por ti. Tu negocio factura, nutre leads y cierra ventas mientras tú recuperas tu vida.
+                        </p>
+
+                        <div className="grid grid-cols-3 gap-4 border-t border-emerald-500/20 pt-8">
+                            <SolutionItem icon={Zap} label="Instantáneo" delay={0} />
+                            <SolutionItem icon={Database} label="Centralizado" delay={0.1} />
+                            <SolutionItem icon={MessageSquare} label="Autónomo" delay={0.2} />
+                        </div>
+
+                        <Button className="bg-emerald-500 hover:bg-emerald-600 text-black font-bold rounded-full px-8 py-6 text-lg group">
+                            Ver Demo
+                            <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                        </Button>
+                    </div>
+
+                    {/* Visual Metaphor Order */}
+                    <div className="relative aspect-square flex items-center justify-center">
+                        <div className="absolute inset-0 bg-emerald-500/30 blur-[100px] rounded-full" />
+                        <div className="relative w-full max-w-md bg-black/80 backdrop-blur-xl border border-emerald-500/30 rounded-3xl p-8 shadow-2xl shadow-emerald-900/40">
+                            <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/5">
+                                <div className="flex gap-2">
+                                    <div className="w-3 h-3 rounded-full bg-red-500/50" />
+                                    <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
+                                    <div className="w-3 h-3 rounded-full bg-green-500 text-[10px] flex items-center justify-center font-bold text-black/50">OK</div>
+                                </div>
+                                <div className="text-xs font-mono text-emerald-400">SYSTEM: OPTIMIZED</div>
+                            </div>
+                            <div className="space-y-4">
+                                {[1, 2, 3].map((i) => (
+                                    <div key={i} className="flex items-center gap-4">
+                                        <div className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" />
+                                        <div className="flex-1 h-2 bg-emerald-900/30 rounded-full overflow-hidden">
+                                            <motion.div
+                                                initial={{ width: 0 }}
+                                                whileInView={{ width: "100%" }}
+                                                transition={{ duration: 1.5, delay: i * 0.2, repeat: Infinity, repeatDelay: 2 }}
+                                                className="h-full bg-emerald-500"
+                                            />
+                                        </div>
+                                        <span className="text-xs text-emerald-400 font-mono">100%</span>
                                     </div>
                                 ))}
+                            </div>
+                            <div className="mt-8 pt-4 border-t border-white/5 flex justify-between items-end">
+                                <div>
+                                    <div className="text-sm text-white/40 mb-1">Crecimiento Mensual</div>
+                                    <div className="text-3xl font-bold text-white">$24,500</div>
+                                </div>
+                                <div className="text-emerald-400 text-sm font-bold bg-emerald-400/10 px-2 py-1 rounded border border-emerald-500/20">+240%</div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                {/* LAYER B: SOLUTION (Overlay Layer) */}
-                <motion.div
-                    style={{ clipPath }}
-                    className="absolute inset-0 bg-[#020D08] flex items-center justify-center z-10"
-                >
-                    <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-20" />
-                    {/* Glow effect matching mask center roughly */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none" />
-
-                    <div className="container mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center relative z-20">
-                        <div className="space-y-8">
-                            <div className="inline-flex items-center rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-sm text-emerald-400">
-                                <span className="flex h-2 w-2 rounded-full bg-emerald-500 mr-2 shadow-[0_0_10px_#10b981]" />
-                                Nexo System v2.0
-                            </div>
-                            <h2 className="text-5xl md:text-7xl font-black tracking-tighter text-white">
-                                Libertad <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Escalable</span>
-                            </h2>
-                            <p className="text-xl text-white/80 leading-relaxed max-w-lg">
-                                Implementamos ecosistemas de automatización que capturan, nutren y cierran ventas 24/7. Recupera 20h a la semana.
-                            </p>
-
-                            <div className="grid grid-cols-3 gap-4 border-t border-emerald-500/20 pt-8">
-                                <SolutionItem icon={Zap} label="Instantáneo" delay={0} />
-                                <SolutionItem icon={Database} label="Centralizado" delay={0.1} />
-                                <SolutionItem icon={MessageSquare} label="Autónomo" delay={0.2} />
-                            </div>
-
-                            <Button className="bg-emerald-500 hover:bg-emerald-600 text-black font-bold rounded-full px-8 py-6 text-lg group">
-                                Ver Demo
-                                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                            </Button>
-                        </div>
-
-                        {/* Visual Metaphor Order */}
-                        <div className="relative aspect-square flex items-center justify-center">
-                            <div className="absolute inset-0 bg-emerald-500/20 blur-[100px] rounded-full" />
-                            <div className="relative w-full max-w-md bg-black/80 backdrop-blur-xl border border-emerald-500/30 rounded-3xl p-8 shadow-2xl shadow-emerald-900/40">
-                                <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/5">
-                                    <div className="flex gap-2">
-                                        <div className="w-3 h-3 rounded-full bg-red-500/50" />
-                                        <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
-                                        <div className="w-3 h-3 rounded-full bg-green-500" />
-                                    </div>
-                                    <div className="text-xs font-mono text-emerald-400">STATUS: ONLINE</div>
-                                </div>
-                                <div className="space-y-4">
-                                    {[1, 2, 3].map((i) => (
-                                        <div key={i} className="flex items-center gap-4">
-                                            <div className="h-2 w-2 rounded-full bg-emerald-500" />
-                                            <div className="flex-1 h-2 bg-emerald-900/30 rounded-full overflow-hidden">
-                                                <motion.div
-                                                    initial={{ width: 0 }}
-                                                    whileInView={{ width: "100%" }}
-                                                    transition={{ duration: 1.5, delay: i * 0.2, repeat: Infinity, repeatDelay: 2 }}
-                                                    className="h-full bg-emerald-500"
-                                                />
-                                            </div>
-                                            <span className="text-xs text-emerald-400 font-mono">DONE</span>
-                                        </div>
-                                    ))}
-                                </div>
-                                <div className="mt-8 pt-4 border-t border-white/5 flex justify-between items-end">
-                                    <div>
-                                        <div className="text-sm text-white/40 mb-1">Total Revenue</div>
-                                        <div className="text-3xl font-bold text-white">$24,500</div>
-                                    </div>
-                                    <div className="text-emerald-400 text-sm font-bold bg-emerald-400/10 px-2 py-1 rounded">+240%</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </motion.div>
-
             </div>
-            {/* Scroll Indicator at bottom of track to signal end */}
-            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/20 text-sm font-mono z-0">
-                SCROLL TO CONTINUE
+
+            <div className="absolute top-[95vh] left-1/2 -translate-x-1/2 text-white/20 text-sm font-mono z-20 pointer-events-none mix-blend-difference">
+                SCROLL TO EVOLVE
             </div>
-        </section>
+        </div>
+    );
+}
+
+function ChaosCard({ icon: Icon, delay }: { icon: React.ElementType, delay: number }) {
+    return (
+        <div className="w-32 h-32 bg-red-950/20 border border-red-500/20 rounded-2xl flex items-center justify-center animate-pulse" style={{ animationDelay: `${delay}s` }}>
+            <Icon className="w-8 h-8 text-red-500" />
+        </div>
     );
 }
 
