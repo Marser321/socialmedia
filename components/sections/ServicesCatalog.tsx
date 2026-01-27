@@ -57,9 +57,9 @@ export function ServicesCatalog() {
     };
 
     return (
-        <section id="servicios" className="py-24 bg-transparent relative overflow-hidden min-h-screen flex flex-col pt-32 -mt-[40vh] z-20 pointer-events-none">
-            {/* Gradient Bridge: Smoother fade from transparent to black */}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/60 to-background z-0 pointer-events-none" />
+        <section id="servicios" className="py-24 bg-transparent relative overflow-hidden min-h-screen flex flex-col pt-32 -mt-[50vh] z-20 pointer-events-none">
+            {/* Gradient Bridge: Pure fade, no dark overlay mid-screen */}
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background z-0 pointer-events-none" />
 
             {/* Ambient Background - Push down to start where background becomes solid */}
             <div className="absolute inset-0 top-[20vh]">
