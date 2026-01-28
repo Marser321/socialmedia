@@ -5,6 +5,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 import { submitLead } from '@/actions/submit-lead';
 import type { Lead } from '@/types';
 import { Send, CheckCircle, Sparkles } from 'lucide-react';
@@ -129,12 +136,17 @@ export function ContactForm() {
 
                                     <div className="space-y-2">
                                         <Label htmlFor="type" className="text-xs font-mono uppercase tracking-widest text-white/40">Tu Prioridad</Label>
-                                        <select id="type" value={interes} onChange={(e) => setInteres(e.target.value)} className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:ring-1 focus:ring-emerald-500/50 appearance-none">
-                                            <option value="web" className="bg-[#0A0A0A]">Automatización de Ventas</option>
-                                            <option value="media" className="bg-[#0A0A0A]">Desarrollo Web High-Ticket</option>
-                                            <option value="auto" className="bg-[#0A0A0A]">IA & Chatbots</option>
-                                            <option value="full" className="bg-[#0A0A0A]">Solución Full Infrastructure</option>
-                                        </select>
+                                        <Select value={interes} onValueChange={setInteres}>
+                                            <SelectTrigger id="type" className="w-full h-12 px-4 rounded-xl bg-white/5 border-white/10 text-white focus:ring-1 focus:ring-emerald-500/50">
+                                                <SelectValue placeholder="Selecciona una opción" />
+                                            </SelectTrigger>
+                                            <SelectContent className="bg-[#0A0A0A] border-white/10 text-white">
+                                                <SelectItem value="web">Automatización de Ventas</SelectItem>
+                                                <SelectItem value="media">Desarrollo Web High-Ticket</SelectItem>
+                                                <SelectItem value="auto">IA & Chatbots</SelectItem>
+                                                <SelectItem value="full">Solución Full Infrastructure</SelectItem>
+                                            </SelectContent>
+                                        </Select>
                                     </div>
 
                                     <div className="space-y-2">
