@@ -3,7 +3,7 @@
 import { motion, useScroll, useTransform, useVelocity, useSpring } from 'framer-motion';
 import { Zap, Database, MessageSquare, FileSpreadsheet, Mail, ArrowRight, AlertTriangle, MessageCircleOff, Hourglass, FileWarning } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useState, useEffect } from 'react';
 
 export function ProblemSolution() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -39,13 +39,13 @@ export function ProblemSolution() {
     // Staggered Solution Content
     // Adjusted timing to match the new faster scroll
     // Added Drift: [Start, Settle, Drift Down]
-    const solTitleY = useTransform(scrollYProgress, [0.2, 0.6, 1], [100, 0, 50]);
+    const solTitleY = useTransform(scrollYProgress, [0.2, 0.6, 1], [100, 0, 80]);
     const solTitleOpacity = useTransform(scrollYProgress, [0.2, 0.5], [0, 1]);
 
-    const solParaY = useTransform(scrollYProgress, [0.3, 0.7, 1], [100, 0, 50]);
+    const solParaY = useTransform(scrollYProgress, [0.3, 0.7, 1], [100, 0, 80]);
     const solParaOpacity = useTransform(scrollYProgress, [0.3, 0.6], [0, 1]);
 
-    const solBtnY = useTransform(scrollYProgress, [0.4, 0.8, 1], [50, 0, 50]);
+    const solBtnY = useTransform(scrollYProgress, [0.4, 0.8, 1], [50, 0, 80]);
     const solBtnOpacity = useTransform(scrollYProgress, [0.4, 0.7], [0, 1]);
 
     // 3D Card Parallax
@@ -62,9 +62,9 @@ export function ProblemSolution() {
     const textScale = useTransform(scrollYProgress, [0, 0.2], [1, 1.2]);
 
     return (
-        <div ref={containerRef} className="relative w-full h-[200vh] bg-[#022c22]">
+        <div ref={containerRef} className="relative w-full h-[135dvh] bg-[#022c22] mb-[-1px]">
             {/* STICKY CONTAINER: Frame for the transition */}
-            <div className="sticky top-0 h-screen w-full overflow-hidden">
+            <div className="sticky top-0 h-[100dvh] w-full overflow-hidden">
 
                 {/* 1. LAYER A: PROBLEM (Receding 3D) */}
                 <motion.div
@@ -149,7 +149,7 @@ export function ProblemSolution() {
                             </motion.h2>
                             <motion.p
                                 style={{ opacity: solParaOpacity, y: solParaY }}
-                                className="text-xl text-emerald-100/60 leading-relaxed max-w-lg"
+                                className="text-xl text-emerald-50 leading-relaxed max-w-lg"
                             >
                                 Convertimos tu operación en un motor autónomo. Automatización de punta a punta para que dejes de trabajar EN tu negocio y empieces a trabajar SOBRE él.
                             </motion.p>
@@ -194,27 +194,64 @@ export function ProblemSolution() {
     );
 }
 
-function ChaosGroup({ scrollYProgress }: { scrollYProgress: any }) {
-    // Independent parallax for chaos elements
-    const y1 = useTransform(scrollYProgress, [0, 0.4], [0, -200]);
-    const x1 = useTransform(scrollYProgress, [0, 0.4], [0, -100]);
-    const r1 = useTransform(scrollYProgress, [0, 0.4], [0, 45]);
+const DEBRIS_COUNT = 15;
 
-    const y2 = useTransform(scrollYProgress, [0, 0.4], [0, 150]);
-    const x2 = useTransform(scrollYProgress, [0, 0.4], [0, 120]);
-    const r2 = useTransform(scrollYProgress, [0, 0.4], [0, -30]);
+function ChaosGroup({ scrollYProgress }: { scrollYProgress: any }) {
+    const [debris, setDebris] = useState<any[]>([]);
+
+    useEffect(() => {
+        const newDebris = Array.from({ length: DEBRIS_COUNT }).map((_, i) => ({
+            id: i,
+            // Random start position (Spread across screen instead of clumped)
+            xStart: (Math.random() - 0.5) * 600,
+            yStart: (Math.random() - 0.5) * 400,
+            // Random explosion destination (Even further out)
+            xEnd: (Math.random() - 0.5) * 1200,
+            yEnd: (Math.random() - 0.5) * 1200,
+            // Random rotations
+            rStart: Math.random() * 360,
+            rEnd: Math.random() * 720 * (Math.random() > 0.5 ? 1 : -1),
+            // Random scales
+            scaleStart: 0.5 + Math.random() * 0.5,
+            scaleEnd: Math.random() * 0.5, // Shrink as they fly out
+            // Icon selection
+            Icon: [FileWarning, MessageCircleOff, Hourglass, AlertTriangle, Database, Zap, FileSpreadsheet][i % 7],
+            // Delay for staggered effect (optional, keep tight for explosion)
+            size: Math.random() > 0.7 ? "lg" : "md",
+            zDepth: Math.random() * 500
+        }));
+        setDebris(newDebris);
+    }, []);
+
+    const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
     return (
-        <div className="relative w-full h-full flex items-center justify-center">
-            <motion.div style={{ x: x1, y: y1, rotate: r1 }} className="absolute top-10 left-10">
-                <ChaosCard icon={FileWarning} delay={0} />
-            </motion.div>
-            <motion.div style={{ x: x2, y: y2, rotate: r2 }} className="absolute bottom-10 right-10">
-                <ChaosCard icon={MessageCircleOff} delay={0.2} />
-            </motion.div>
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-red-600/10 blur-[80px] rounded-full" />
-            <ChaosCard icon={Hourglass} delay={0.4} size="lg" />
+        <div className="relative w-full h-full flex items-center justify-center pointer-events-none" style={{ perspective: "1000px" }}>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-red-600/10 blur-[120px] rounded-full animate-pulse" />
+
+            {debris.map((item) => (
+                <DebrisItem key={item.id} item={item} scrollYProgress={scrollYProgress} />
+            ))}
         </div>
+    );
+}
+
+function DebrisItem({ item, scrollYProgress }: { item: any, scrollYProgress: any }) {
+    const x = useTransform(scrollYProgress, [0, 1], [item.xStart, item.xEnd]);
+    const y = useTransform(scrollYProgress, [0, 1], [item.yStart, item.yEnd]);
+    const rotate = useTransform(scrollYProgress, [0, 1], [item.rStart, item.rEnd]);
+    const scale = useTransform(scrollYProgress, [0, 0.5, 1], [item.scaleStart, item.scaleStart * 1.5, item.scaleEnd]);
+    const z = useTransform(scrollYProgress, [0, 1], [0, item.zDepth]); // Fly towards/away camera
+
+    return (
+        <motion.div
+            style={{ x, y, rotate, scale, z, position: 'absolute' }}
+            className="will-change-transform"
+        >
+            <div className={`${item.size === 'lg' ? 'w-24 h-24' : 'w-16 h-16'} bg-red-950/40 border border-red-500/30 backdrop-blur-md rounded-2xl flex items-center justify-center shadow-2xl`}>
+                <item.Icon className="text-red-500/80 w-1/2 h-1/2" />
+            </div>
+        </motion.div>
     );
 }
 
