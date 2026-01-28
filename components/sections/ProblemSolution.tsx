@@ -38,13 +38,14 @@ export function ProblemSolution() {
 
     // Staggered Solution Content
     // Adjusted timing to match the new faster scroll
-    const solTitleY = useTransform(scrollYProgress, [0.2, 0.6], [100, 0]);
+    // Added Drift: [Start, Settle, Drift Down]
+    const solTitleY = useTransform(scrollYProgress, [0.2, 0.6, 1], [100, 0, 50]);
     const solTitleOpacity = useTransform(scrollYProgress, [0.2, 0.5], [0, 1]);
 
-    const solParaY = useTransform(scrollYProgress, [0.3, 0.7], [100, 0]);
+    const solParaY = useTransform(scrollYProgress, [0.3, 0.7, 1], [100, 0, 50]);
     const solParaOpacity = useTransform(scrollYProgress, [0.3, 0.6], [0, 1]);
 
-    const solBtnY = useTransform(scrollYProgress, [0.4, 0.8], [50, 0]);
+    const solBtnY = useTransform(scrollYProgress, [0.4, 0.8, 1], [50, 0, 50]);
     const solBtnOpacity = useTransform(scrollYProgress, [0.4, 0.7], [0, 1]);
 
     // 3D Card Parallax
