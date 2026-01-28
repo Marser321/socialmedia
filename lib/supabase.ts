@@ -8,6 +8,6 @@ export const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Backend helper: add a new lead to Supabase
 export async function addLead(lead: Lead) {
-  const { data, error } = await supabase.from<Lead>('leads').insert([lead]);
+  const { data, error } = await supabase.from('leads').insert([lead]);
   return { data, error };
 }
