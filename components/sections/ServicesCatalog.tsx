@@ -19,20 +19,27 @@ const iconMap: Record<string, React.ReactNode> = {
 };
 
 export function ServicesCatalog() {
-    const [bookmarks, setBookmarks] = React.useState<string[]>(() => {
-        if (typeof window === 'undefined') return [] as string[];
-        try {
-            const raw = localStorage.getItem('nexo_bookmarks');
-            return raw ? (JSON.parse(raw) as string[]) : [];
-        } catch {
-            return [];
-        }
-    });
+    const [bookmarks, setBookmarks] = React.useState<string[]>([]);
+    const [isLoaded, setIsLoaded] = React.useState(false);
 
     React.useEffect(() => {
         if (typeof window === 'undefined') return;
+        try {
+            const raw = localStorage.getItem('nexo_bookmarks');
+            if (raw) {
+                setBookmarks(JSON.parse(raw) as string[]);
+            }
+        } catch {
+            // ignore error
+        } finally {
+            setIsLoaded(true);
+        }
+    }, []);
+
+    React.useEffect(() => {
+        if (!isLoaded) return;
         localStorage.setItem('nexo_bookmarks', JSON.stringify(bookmarks));
-    }, [bookmarks]);
+    }, [bookmarks, isLoaded]);
 
     const toggleBookmark = (id: string) => {
         setBookmarks((prev) => (prev.includes(id) ? prev.filter((b) => b !== id) : [...prev, id]));
