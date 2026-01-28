@@ -68,15 +68,16 @@ function MobileCard({
             viewport={{ once: true, margin: "-50px" }}
             transition={{ delay: index * 0.1 }}
             className={cn(
-                "relative rounded-3xl border overflow-hidden backdrop-blur-sm",
+                "relative rounded-3xl border overflow-hidden backdrop-blur-md",
                 borderColor,
-                bgColor,
+                // Solid dark background for contrast, tinted by pillar color
+                isTech ? "bg-slate-950/80" : isMedia ? "bg-fuchsia-950/80" : "bg-emerald-950/80",
                 "shadow-lg", glowColor
             )}
         >
-            {/* Static Background Glow for Mobile Performance */}
+            {/* Static Background Glow - Moved to bottom and reduced opacity to avoid text conflict */}
             <div className={cn(
-                "absolute top-0 right-0 w-32 h-32 rounded-full blur-[60px] opacity-20",
+                "absolute -bottom-10 -right-10 w-48 h-48 rounded-full blur-[80px] opacity-15 pointer-events-none",
                 isTech ? "bg-blue-500" : isMedia ? "bg-violet-500" : "bg-emerald-500"
             )} />
 
@@ -84,7 +85,7 @@ function MobileCard({
                 {/* Header: Icon + Bookmark */}
                 <div className="flex justify-between items-start">
                     <div className={cn(
-                        "w-12 h-12 rounded-xl flex items-center justify-center border",
+                        "w-12 h-12 rounded-xl flex items-center justify-center border backdrop-blur-md",
                         borderColor,
                         isTech ? "bg-blue-500/10" : isMedia ? "bg-violet-500/10" : "bg-emerald-500/10",
                         textColor
@@ -102,13 +103,13 @@ function MobileCard({
                 {/* Content */}
                 <div>
                     <h3 className="text-2xl font-black text-white mb-2 leading-tight">{service.nombre}</h3>
-                    <p className="text-white/60 text-sm leading-relaxed">{service.descripcion}</p>
+                    <p className="text-gray-200 text-sm leading-relaxed font-medium">{service.descripcion}</p>
                 </div>
 
                 {/* Features (Wrap) */}
                 <div className="flex flex-wrap gap-2">
                     {service.caracteristicas.slice(0, 3).map((f, i) => (
-                        <span key={i} className="text-[10px] font-mono uppercase px-2 py-1 rounded bg-black/20 border border-white/10 text-white/50">
+                        <span key={i} className="text-[10px] font-bold tracking-wide uppercase px-2 py-1 rounded bg-black/40 border border-white/10 text-white/70">
                             {f}
                         </span>
                     ))}
@@ -117,14 +118,14 @@ function MobileCard({
                 {/* Footer: Price + Action */}
                 <div className="pt-4 mt-2 border-t border-white/10 flex items-center justify-between">
                     <div>
-                        <div className="text-[10px] uppercase text-white/30 tracking-wider font-bold">Inversión</div>
-                        <div className={cn("text-xl font-black", textColor)}>${service.precio_base}</div>
+                        <div className="text-[10px] uppercase text-white/50 tracking-wider font-bold">Inversión</div>
+                        <div className={cn("text-xl font-black text-white")}>${service.precio_base}</div>
                     </div>
                     <button
                         onClick={onSelect}
                         className={cn(
-                            "flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-black transition-transform active:scale-95",
-                            isTech ? "bg-blue-400" : isMedia ? "bg-violet-400" : "bg-emerald-400"
+                            "flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold text-black transition-transform active:scale-95 shadow-lg",
+                            isTech ? "bg-blue-400 shadow-blue-500/20" : isMedia ? "bg-violet-400 shadow-violet-500/20" : "bg-emerald-400 shadow-emerald-500/20"
                         )}
                     >
                         Ver Detalles
