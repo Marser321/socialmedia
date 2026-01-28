@@ -2,9 +2,12 @@
 
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { m, useScroll, useTransform, LazyMotion } from 'framer-motion';
 import Image from 'next/image';
 import { useRef } from 'react';
+
+const loadFeatures = () =>
+    import('framer-motion').then((res) => res.domAnimation);
 
 export function HeroSection() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -18,105 +21,107 @@ export function HeroSection() {
     const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
     return (
-        <section ref={containerRef} className="relative h-[120vh] overflow-hidden flex flex-col items-center pt-32">
-            {/* Background Gradients (Glow) */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-blue-500/20 rounded-full blur-[120px] -z-10" />
-            <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-[100px] -z-10" />
+        <LazyMotion features={loadFeatures}>
+            <section ref={containerRef} className="relative h-[120vh] overflow-hidden flex flex-col items-center pt-32">
+                {/* Background Gradients (Glow) */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-blue-500/20 rounded-full blur-[120px] -z-10" />
+                <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-[100px] -z-10" />
 
-            <motion.div
-                style={{ opacity }}
-                className="container px-4 md:px-6 relative z-10 text-center mb-12"
-            >
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                <m.div
+                    style={{ opacity }}
+                    className="container px-4 md:px-6 relative z-10 text-center mb-12"
                 >
-                    <div className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-white backdrop-blur-xl mb-6">
-                        <span className="flex h-2 w-2 rounded-full bg-emerald-500 mr-2 animate-pulse" />
-                        Growth Partner Certificado
+                    <m.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    >
+                        <div className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-white backdrop-blur-xl mb-6">
+                            <span className="flex h-2 w-2 rounded-full bg-emerald-500 mr-2 animate-pulse" />
+                            Growth Partner Certificado
+                        </div>
+                    </m.div>
+
+                    <m.h1
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                        className="text-5xl md:text-8xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60 mb-6 max-w-5xl mx-auto"
+                    >
+                        Arquitectura Digital que <br />
+                        <span className="text-white">Domina Mercados.</span>
+                    </m.h1>
+
+                    <m.p
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                        className="mx-auto max-w-[700px] text-lg md:text-xl text-white/70 mb-8 leading-relaxed font-light"
+                    >
+                        Diseñamos ecosistemas de conversión y automatizamos tu crecimiento.
+                        Dejarás de competir por precio para convertirte en la <span className="text-white font-medium">única opción lógica</span>.
+                    </m.p>
+
+                    <m.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                        className="flex flex-col items-center gap-6"
+                    >
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                            <Button size="lg" className="h-12 px-8 text-base bg-white text-black hover:bg-white/90 rounded-full transition-all hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+                                Iniciar Proyecto
+                                <ArrowRight className="ml-2 h-4 w-4" />
+                            </Button>
+                            <Button size="lg" variant="outline" className="h-12 px-8 text-base border-white/20 hover:bg-white/10 rounded-full backdrop-blur-sm">
+                                Ver Ecosistemas
+                                <Sparkles className="ml-2 h-4 w-4" />
+                            </Button>
+                        </div>
+                        <p className="text-xs text-white/40 font-light tracking-wide">
+                            *Aceptamos solo 4 nuevos partners por trimestre para garantizar <span className="text-emerald-400 font-medium">calidad obsesiva.</span>
+                        </p>
+                    </m.div>
+                </m.div>
+
+                {/* Hero Image with Scroll Effect */}
+                <m.div
+                    style={{ y, scale }}
+                    className="relative w-full max-w-5xl mx-auto px-4 perspective-2000"
+                >
+                    <div className="relative aspect-[16/10] rounded-3xl overflow-hidden border border-white/10 shadow-2xl glass-panel group bg-[#0A0A0A]">
+                        {/* Subtle Overlay Gradient */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
+
+                        <Image
+                            src="/images/stitch-hero-v2.png"
+                            alt="Stitch Creative Studio Interface"
+                            fill
+                            className="object-cover object-center transition-transform duration-1000 group-hover:scale-105"
+                            priority
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
+                        />
+
+                        {/* Floating Pulse Dot */}
+                        <div className="absolute top-6 right-6 z-20 flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
+                            <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
+                            <span className="text-[10px] font-mono text-white/70 uppercase tracking-widest">System Active: Scaling</span>
+                        </div>
                     </div>
-                </motion.div>
 
-                <motion.h1
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-5xl md:text-8xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60 mb-6 max-w-5xl mx-auto"
+                    {/* Visual Depth Glow behind image */}
+                    <div className="absolute -inset-4 bg-emerald-500/5 blur-[60px] -z-10 rounded-full opacity-50" />
+                </m.div>
+
+                {/* Scroll Indicator */}
+                <m.div
+                    style={{ opacity: useTransform(scrollYProgress, [0, 0.2], [1, 0]) }}
+                    className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40"
                 >
-                    Arquitectura Digital que <br />
-                    <span className="text-white">Domina Mercados.</span>
-                </motion.h1>
-
-                <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                    className="mx-auto max-w-[700px] text-lg md:text-xl text-white/70 mb-8 leading-relaxed font-light"
-                >
-                    Diseñamos ecosistemas de conversión y automatizamos tu crecimiento.
-                    Dejarás de competir por precio para convertirte en la <span className="text-white font-medium">única opción lógica</span>.
-                </motion.p>
-
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                    className="flex flex-col items-center gap-6"
-                >
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Button size="lg" className="h-12 px-8 text-base bg-white text-black hover:bg-white/90 rounded-full transition-all hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
-                            Iniciar Proyecto
-                            <ArrowRight className="ml-2 h-4 w-4" />
-                        </Button>
-                        <Button size="lg" variant="outline" className="h-12 px-8 text-base border-white/20 hover:bg-white/10 rounded-full backdrop-blur-sm">
-                            Ver Ecosistemas
-                            <Sparkles className="ml-2 h-4 w-4" />
-                        </Button>
-                    </div>
-                    <p className="text-xs text-white/40 font-light tracking-wide">
-                        *Aceptamos solo 4 nuevos partners por trimestre para garantizar <span className="text-emerald-400 font-medium">calidad obsesiva.</span>
-                    </p>
-                </motion.div>
-            </motion.div>
-
-            {/* Hero Image with Scroll Effect */}
-            <motion.div
-                style={{ y, scale }}
-                className="relative w-full max-w-5xl mx-auto px-4 perspective-2000"
-            >
-                <div className="relative aspect-[16/10] rounded-3xl overflow-hidden border border-white/10 shadow-2xl glass-panel group bg-[#0A0A0A]">
-                    {/* Subtle Overlay Gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
-
-                    <Image
-                        src="/images/stitch-hero-v2.png"
-                        alt="Stitch Creative Studio Interface"
-                        fill
-                        className="object-cover object-center transition-transform duration-1000 group-hover:scale-105"
-                        priority
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
-                    />
-
-                    {/* Floating Pulse Dot */}
-                    <div className="absolute top-6 right-6 z-20 flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
-                        <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
-                        <span className="text-[10px] font-mono text-white/70 uppercase tracking-widest">System Active: Scaling</span>
-                    </div>
-                </div>
-
-                {/* Visual Depth Glow behind image */}
-                <div className="absolute -inset-4 bg-emerald-500/5 blur-[60px] -z-10 rounded-full opacity-50" />
-            </motion.div>
-
-            {/* Scroll Indicator */}
-            <motion.div
-                style={{ opacity: useTransform(scrollYProgress, [0, 0.2], [1, 0]) }}
-                className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40"
-            >
-                <span className="text-xs uppercase tracking-widest">Scroll</span>
-                <div className="w-[1px] h-12 bg-gradient-to-b from-white/40 to-transparent" />
-            </motion.div>
-        </section>
+                    <span className="text-xs uppercase tracking-widest">Scroll</span>
+                    <div className="w-[1px] h-12 bg-gradient-to-b from-white/40 to-transparent" />
+                </m.div>
+            </section>
+        </LazyMotion>
     );
 }
