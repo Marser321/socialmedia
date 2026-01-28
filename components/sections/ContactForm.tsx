@@ -43,17 +43,16 @@ export function ContactForm() {
         const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
 
         try {
-            // Save to DB in background or await? "MVP DB" implies we want it saved.
-            // We await to ensure we capture the lead before redirecting off page (though _blank opens new tab).
+            // Redirect to WhatsApp immediately
+            window.open(waUrl, '_blank');
+
+            // Save to DB
             const result = await submitLead(leadData);
 
             if (!result.success) {
                 console.error("Failed to save lead:", result.error);
-                // We proceed to WhatsApp anyway as fallback
             }
 
-            // Redirect to WhatsApp
-            window.open(waUrl, '_blank');
             setIsSubmitted(true);
         } catch (err) {
             console.error(err);
