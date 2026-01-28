@@ -110,6 +110,7 @@ function ProjectCard({ project }: { project: typeof PROJECTS[0] }) {
                         src={project.image}
                         alt={project.title}
                         fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
                         className="object-cover opacity-60 group-hover:scale-110 transition-transform duration-700"
                     />
                     <div className={cn("absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent", project.color)} />
