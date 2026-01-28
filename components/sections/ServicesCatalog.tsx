@@ -7,9 +7,12 @@ import { Servicio } from '@/types';
 import { Layers, Monitor, Smartphone, Video, Share2, ChevronRight, ChevronLeft, ShoppingCart, Bookmark } from 'lucide-react';
 import { MOCK_SERVICES } from '@/data/services';
 import { cn } from '@/lib/utils';
-import { ReflectionFloor } from '@/components/ui/ReflectionFloor';
+import dynamic from 'next/dynamic';
 
-
+const ReflectionFloor = dynamic(() => import('@/components/ui/ReflectionFloor').then(mod => mod.ReflectionFloor), {
+    ssr: false,
+    loading: () => <div className="h-[40vh]" /> // Placeholder
+});
 import { MobileServiceStack } from '@/components/sections/MobileServiceStack';
 
 const iconMap: Record<string, React.ReactNode> = {
