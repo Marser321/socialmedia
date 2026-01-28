@@ -85,7 +85,7 @@ export function ServicesCatalog() {
             <div className="relative w-full z-20 group/scroll pl-4 md:pl-[10vw] pointer-events-auto">
 
                 {/* Navigation Buttons */}
-                <div className="flex justify-end gap-2 pr-4 md:pr-[10vw] mb-4">
+                <div className="hidden md:flex justify-end gap-2 pr-4 md:pr-[10vw] mb-4">
                     <button onClick={scrollLeft} className="p-3 rounded-full border border-white/10 hover:bg-white/10 transition-colors">
                         <ChevronLeft className="w-6 h-6 text-white" />
                     </button>
@@ -143,13 +143,12 @@ function ServiceCard({
         mouseY.set(clientY - top);
     };
 
-    const color = service.pilar === 'tech' ? 'blue' : service.pilar === 'media' ? 'violet' : 'emerald';
     const borderClass = service.pilar === 'tech' ? 'group-hover/card:border-blue-500/50' : service.pilar === 'media' ? 'group-hover/card:border-violet-500/50' : 'group-hover/card:border-emerald-500/50';
     const shadowClass = service.pilar === 'tech' ? 'group-hover/card:shadow-blue-500/20' : service.pilar === 'media' ? 'group-hover/card:shadow-violet-500/20' : 'group-hover/card:shadow-emerald-500/20';
 
     return (
         <motion.div
-            className="snap-start shrink-0 w-[300px] md:w-[400px] h-full"
+            className="snap-start shrink-0 w-[85vw] md:w-[400px] h-full"
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ delay: index * 0.1, duration: 0.5 }}

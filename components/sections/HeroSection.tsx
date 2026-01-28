@@ -18,7 +18,7 @@ export function HeroSection() {
     const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
     return (
-        <section ref={containerRef} className="relative h-[120vh] overflow-hidden flex flex-col items-center pt-32">
+        <section ref={containerRef} className="relative min-h-[100svh] overflow-hidden flex flex-col items-center pt-24 md:pt-32">
             {/* Background Gradients (Glow) */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-blue-500/20 rounded-full blur-[120px] -z-10" />
             <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-[100px] -z-10" />
@@ -42,7 +42,7 @@ export function HeroSection() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-5xl md:text-8xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60 mb-6 max-w-5xl mx-auto"
+                    className="text-4xl md:text-8xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60 mb-6 max-w-5xl mx-auto"
                 >
                     Arquitectura Digital que <br />
                     <span className="text-white">Domina Mercados.</span>

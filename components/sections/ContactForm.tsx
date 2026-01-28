@@ -68,7 +68,7 @@ export function ContactForm() {
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-emerald-500/5 rounded-full blur-[120px] -z-10" />
 
             <div className="container mx-auto px-4 max-w-4xl relative z-10">
-                <div className="bg-[#0A0A0A]/60 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] p-8 md:p-16 shadow-2xl relative overflow-hidden">
+                <div className="bg-[#0A0A0A]/60 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] p-6 md:p-16 shadow-2xl relative overflow-hidden">
                     {/* Decorative element */}
                     <div className="absolute top-0 right-0 p-8 text-emerald-500/10">
                         <Sparkles className="w-24 h-24" />
