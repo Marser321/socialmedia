@@ -18,24 +18,31 @@ const navItems = [
 
 export function Navbar() {
     const [isScrolled, setIsScrolled] = React.useState(false);
+    const sentinelRef = React.useRef<HTMLDivElement>(null);
 
     React.useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+        const observer = new IntersectionObserver(([entry]) => {
+            setIsScrolled(!entry.isIntersecting);
+        });
+
+        if (sentinelRef.current) {
+            observer.observe(sentinelRef.current);
+        }
+
+        return () => observer.disconnect();
     }, []);
 
     return (
-        <header
-            className={cn(
-                'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-                isScrolled
-                    ? 'py-4 bg-[#0A0A0A]/80 backdrop-blur-xl border-b border-white/5 shadow-2xl'
-                    : 'py-6 bg-transparent'
-            )}
-        >
+        <>
+            <div ref={sentinelRef} className="absolute top-0 w-full h-[50px] pointer-events-none bg-transparent" aria-hidden="true" />
+            <header
+                className={cn(
+                    'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+                    isScrolled
+                        ? 'py-4 bg-[#0A0A0A]/80 backdrop-blur-xl border-b border-white/5 shadow-2xl'
+                        : 'py-6 bg-transparent'
+                )}
+            >
             <div className="container mx-auto px-4 flex items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2 group">
@@ -100,5 +107,6 @@ export function Navbar() {
                 </div>
             </div>
         </header>
+        </>
     );
 }
