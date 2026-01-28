@@ -6,11 +6,11 @@ import { cn } from '@/lib/utils';
 
 export function Automations() {
     const steps = [
-        { icon: Mail, label: 'Lead entra por Web', color: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/20', shadow: 'shadow-blue-500/20' },
-        { icon: Database, label: 'CRM Automático', color: 'text-violet-400', bg: 'bg-violet-500/10', border: 'border-violet-500/20', shadow: 'shadow-violet-500/20' },
-        { icon: MessageSquare, label: 'WhatsApp Bienvenida', color: 'text-green-400', bg: 'bg-green-500/10', border: 'border-green-500/20', shadow: 'shadow-green-500/20' },
-        { icon: Calendar, label: 'Agenda Cita', color: 'text-orange-400', bg: 'bg-orange-500/10', border: 'border-orange-500/20', shadow: 'shadow-orange-500/20' },
-        { icon: DollarSign, label: 'Cierre Venta', color: 'text-cyan-400', bg: 'bg-cyan-500/10', border: 'border-cyan-500/20', shadow: 'shadow-cyan-500/20' },
+        { icon: Mail, label: 'Captura Validada', color: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/20', shadow: 'shadow-blue-500/20' },
+        { icon: Database, label: 'Nurture Intelligence', color: 'text-violet-400', bg: 'bg-violet-500/10', border: 'border-violet-500/20', shadow: 'shadow-violet-500/20' },
+        { icon: MessageSquare, label: 'Conversión Directa', color: 'text-green-400', bg: 'bg-green-500/10', border: 'border-green-500/20', shadow: 'shadow-green-500/20' },
+        { icon: Calendar, label: 'Agenda Calificada', color: 'text-orange-400', bg: 'bg-orange-500/10', border: 'border-orange-500/20', shadow: 'shadow-orange-500/20' },
+        { icon: DollarSign, label: 'Revenue System', color: 'text-cyan-400', bg: 'bg-cyan-500/10', border: 'border-cyan-500/20', shadow: 'shadow-cyan-500/20' },
     ];
 
     return (
@@ -41,13 +41,13 @@ export function Automations() {
                     >
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-md">
                             <Sparkles className="w-4 h-4 text-blue-400" />
-                            <span className="text-sm font-bold text-white uppercase tracking-widest">Sistemas Autónomos</span>
+                            <span className="text-sm font-bold text-white uppercase tracking-widest">Infraestructura de Escalamiento</span>
                         </div>
                         <h2 className="text-5xl md:text-8xl font-black text-white mb-8 tracking-tighter uppercase leading-none">
-                            Piloto <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-emerald-500 to-cyan-500">Automático</span>
+                            Ecosistema <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-emerald-500 to-cyan-500">Autónomo</span>
                         </h2>
                         <p className="text-xl text-white/40 max-w-2xl mx-auto font-light leading-relaxed">
-                            Diseñamos ecosistemas digitales que <span className="text-white font-medium">piensan y ejecutan</span> por ti, permitiéndote escalar sin límites.
+                            No es magia, es ingeniería. Implementamos <span className="text-white font-medium">sistemas de revenue operation</span> que nutren a tus leads mientras duermes.
                         </p>
                     </motion.div>
                 </div>

@@ -4,12 +4,9 @@ import { HeroSection } from '@/components/sections/HeroSection';
 import { ProblemSolution } from '@/components/sections/ProblemSolution';
 import { ServicesCatalog } from '@/components/sections/ServicesCatalog';
 import { Automations } from '@/components/sections/Automations';
-
 import { PricingTable } from '@/components/sections/PricingTable';
 import { Portfolio } from '@/components/sections/Portfolio';
 import { ContactForm } from '@/components/sections/ContactForm';
-
-import { SocialProof } from '@/components/sections/SocialProof';
 
 export default function Home() {
   return (
@@ -18,15 +15,11 @@ export default function Home() {
 
       <HeroSection />
 
-      <SocialProof />
-
       <ProblemSolution />
 
       <ServicesCatalog />
 
       <Automations />
-
-
 
       <PricingTable />
 

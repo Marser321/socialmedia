@@ -34,7 +34,7 @@ export function HeroSection() {
                 >
                     <div className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-white backdrop-blur-xl mb-6">
                         <span className="flex h-2 w-2 rounded-full bg-emerald-500 mr-2 animate-pulse" />
-                        Agencia Certificada en Automatización
+                        Growth Partner Certificado
                     </div>
                 </motion.div>
 
@@ -44,18 +44,18 @@ export function HeroSection() {
                     transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
                     className="text-5xl md:text-8xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60 mb-6 max-w-5xl mx-auto"
                 >
-                    Transformamos Tráfico en <br />
-                    <span className="text-white">Dinero en el Banco.</span>
+                    Arquitectura Digital que <br />
+                    <span className="text-white">Domina Mercados.</span>
                 </motion.h1>
 
                 <motion.p
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                    className="mx-auto max-w-[700px] text-lg md:text-xl text-white/70 mb-8 leading-relaxed"
+                    className="mx-auto max-w-[700px] text-lg md:text-xl text-white/70 mb-8 leading-relaxed font-light"
                 >
-                    No somos otra agencia de "diseño bonito". Somos ingenieros de conversión.
-                    Creamos sistemas de venta automatizados y webs que venden por ti 24/7.
+                    Diseñamos ecosistemas de conversión y automatizamos tu crecimiento.
+                    Dejarás de competir por precio para convertirte en la <span className="text-white font-medium">única opción lógica</span>.
                 </motion.p>
 
                 <motion.div
@@ -66,16 +66,16 @@ export function HeroSection() {
                 >
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Button size="lg" className="h-12 px-8 text-base bg-white text-black hover:bg-white/90 rounded-full transition-all hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
-                            Agendar Auditoría (15 min)
+                            Iniciar Proyecto
                             <ArrowRight className="ml-2 h-4 w-4" />
                         </Button>
                         <Button size="lg" variant="outline" className="h-12 px-8 text-base border-white/20 hover:bg-white/10 rounded-full backdrop-blur-sm">
-                            Ver Casos de Éxito
+                            Ver Ecosistemas
                             <Sparkles className="ml-2 h-4 w-4" />
                         </Button>
                     </div>
                     <p className="text-xs text-white/40 font-light tracking-wide">
-                        *Plazas limitadas para Q1 2026. <span className="text-emerald-400 font-medium">Garantía de Resultados por Contrato.</span>
+                        *Aceptamos solo 4 nuevos partners por trimestre para garantizar <span className="text-emerald-400 font-medium">calidad obsesiva.</span>
                     </p>
                 </motion.div>
             </motion.div>
@@ -101,7 +101,7 @@ export function HeroSection() {
                     {/* Floating Pulse Dot */}
                     <div className="absolute top-6 right-6 z-20 flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
                         <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
-                        <span className="text-[10px] font-mono text-white/70 uppercase tracking-widest">Live: Conversion System</span>
+                        <span className="text-[10px] font-mono text-white/70 uppercase tracking-widest">System Active: Scaling</span>
                     </div>
                 </div>
 

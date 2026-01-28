@@ -7,16 +7,19 @@ export function Footer() {
             <div className="container mx-auto px-4">
                 <div className="grid md:grid-cols-4 gap-8 mb-8">
                     <div className="space-y-4">
-                        <h3 className="text-white font-bold text-xl">Nexo</h3>
-                        <p className="text-sm">Agencia de Transformación Digital.</p>
+                        <h3 className="text-white font-black text-2xl tracking-tighter">NEXO<span className="text-violet-500">.</span></h3>
+                        <p className="text-sm leading-relaxed max-w-xs text-white/50">
+                            Partner de Crecimiento para marcas que buscan dominar su nicho.
+                            Ingeniería de conversión, diseño y automatización.
+                        </p>
                     </div>
 
                     <div>
-                        <h4 className="text-white font-bold mb-4">Servicios</h4>
+                        <h4 className="text-white font-bold mb-4">Soluciones</h4>
                         <ul className="space-y-2 text-sm">
-                            <li><Link href="#" className="hover:text-white transition-colors">Desarrollo Web</Link></li>
-                            <li><Link href="#" className="hover:text-white transition-colors">Automatización</Link></li>
-                            <li><Link href="#" className="hover:text-white transition-colors">Producción Media</Link></li>
+                            <li><Link href="#" className="hover:text-white transition-colors">Ecosistemas Digitales</Link></li>
+                            <li><Link href="#" className="hover:text-white transition-colors">Automatización de Ventas</Link></li>
+                            <li><Link href="#" className="hover:text-white transition-colors">Contenido Estratégico</Link></li>
                         </ul>
                     </div>
 
