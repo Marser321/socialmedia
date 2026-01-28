@@ -7,6 +7,7 @@ import { Servicio } from '@/types';
 import { Layers, Monitor, Smartphone, Video, Share2, ChevronRight, ChevronLeft, ShoppingCart, Bookmark } from 'lucide-react';
 import { MOCK_SERVICES } from '@/data/services';
 import { cn } from '@/lib/utils';
+import { ReflectionFloor } from '@/components/ui/ReflectionFloor';
 
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -38,6 +39,7 @@ export function ServicesCatalog() {
         setBookmarks((prev) => (prev.includes(id) ? prev.filter((b) => b !== id) : [...prev, id]));
     };
     const [selectedService, setSelectedService] = React.useState<Servicio | null>(null);
+    const [hoveredPilar, setHoveredPilar] = React.useState<'tech' | 'media' | 'growth' | null>(null);
 
 
     const scrollRef = React.useRef<HTMLDivElement>(null);
@@ -60,6 +62,9 @@ export function ServicesCatalog() {
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px]" />
                 <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[120px]" />
             </div>
+
+            {/* Reflection Floor - "The WOW Effect" */}
+            <ReflectionFloor pilar={hoveredPilar} />
 
             {/* Content Container - Restore Pointer Events */}
             <div className="container mx-auto px-4 mb-16 relative z-10 pointer-events-auto">
@@ -107,6 +112,7 @@ export function ServicesCatalog() {
                             toggleBookmark={toggleBookmark}
                             isBookmarked={bookmarks.includes(service.id)}
                             onSelect={() => setSelectedService(service)}
+                            onHover={(isHovering) => setHoveredPilar(isHovering ? service.pilar as any : null)}
                         />
                     ))}
                 </div>
@@ -126,13 +132,15 @@ function ServiceCard({
     index,
     toggleBookmark,
     isBookmarked,
-    onSelect
+    onSelect,
+    onHover
 }: {
     service: Servicio;
     index: number;
     toggleBookmark: (id: string) => void;
     isBookmarked: boolean;
     onSelect: () => void;
+    onHover: (isHovering: boolean) => void;
 }) {
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
@@ -154,6 +162,8 @@ function ServiceCard({
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ delay: index * 0.1, duration: 0.5 }}
             viewport={{ once: true }}
+            onMouseEnter={() => onHover(true)}
+            onMouseLeave={() => onHover(false)}
         >
             <div
                 className={cn(
