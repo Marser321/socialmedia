@@ -16,9 +16,9 @@ export function ProblemSolution() {
     // "Freeze" the problem layer: Keep it fully visible (1 opacity, 1 scale)
     // while the green solution layer CLIP PATH expands over it.
     // We only fade it out at the very end (0.9 to 1.0) when it's fully covered.
-    const problemScale = useTransform(scrollYProgress, [0, 0.9], [1, 1]);
-    const problemBlur = useTransform(scrollYProgress, [0, 0.9], ["blur(0px)", "blur(0px)"]);
-    const problemOpacity = useTransform(scrollYProgress, [0, 0.9], [1, 1]);
+    const problemScale = useTransform(scrollYProgress, [0, 1], [1, 1]);
+    const problemBlur = useTransform(scrollYProgress, [0, 1], ["blur(0px)", "blur(0px)"]);
+    const problemOpacity = useTransform(scrollYProgress, [0, 1], [1, 1]);
 
     // Slight Z push to ensure it stays behind properly
     const problemZ = useTransform(scrollYProgress, [0, 1], [0, 0]);
@@ -28,7 +28,7 @@ export function ProblemSolution() {
     // Start at 0 to feel instant.
     const revealClipPath = useTransform(
         scrollYProgress,
-        [0, 0.9],
+        [0, 1],
         ["circle(0% at 50% 50%)", "circle(250% at 50% 50%)"]
     );
 
@@ -61,7 +61,7 @@ export function ProblemSolution() {
     const textScale = useTransform(scrollYProgress, [0, 0.2], [1, 1.2]);
 
     return (
-        <div ref={containerRef} className="relative w-full h-[200vh] bg-black">
+        <div ref={containerRef} className="relative w-full h-[200vh] bg-[#022c22]">
             {/* STICKY CONTAINER: Frame for the transition */}
             <div className="sticky top-0 h-screen w-full overflow-hidden">
 
@@ -72,7 +72,8 @@ export function ProblemSolution() {
                         filter: problemBlur,
                         opacity: problemOpacity,
                         z: problemZ,
-                        perspective: "1000px"
+                        perspective: "1000px",
+                        willChange: "transform"
                     }}
                     className="absolute inset-0 z-0 bg-gradient-to-b from-[#1a0505] to-[#0A0000] flex items-center justify-center p-4 md:p-8"
                 >
@@ -111,7 +112,8 @@ export function ProblemSolution() {
                         top: 0,
                         left: 0,
                         right: 0,
-                        bottom: 0
+                        bottom: 0,
+                        willChange: "clip-path"
                     }}
                     className="z-10 bg-[#022c22] flex items-center justify-center border-t border-emerald-500/10 shadow-[0_-50px_100px_rgba(16,185,129,0.1)]"
                 >
