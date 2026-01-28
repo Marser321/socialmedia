@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { motion, useMotionValue, useMotionTemplate } from 'framer-motion';
 import { ServiceModal } from '@/components/shared/ServiceModal';
-import { Servicio } from '@/types';
+import { Servicio, Pilar } from '@/types';
 import { Layers, Monitor, Smartphone, Video, Share2, ChevronRight, ChevronLeft, ShoppingCart, Bookmark } from 'lucide-react';
 import { MOCK_SERVICES } from '@/data/services';
 import { cn } from '@/lib/utils';
@@ -47,12 +47,19 @@ export function ServicesCatalog() {
         localStorage.setItem('nexo_bookmarks', JSON.stringify(bookmarks));
     }, [bookmarks, isLoaded]);
 
-    const toggleBookmark = (id: string) => {
+    const toggleBookmark = React.useCallback((id: string) => {
         setBookmarks((prev) => (prev.includes(id) ? prev.filter((b) => b !== id) : [...prev, id]));
-    };
+    }, []);
     const [selectedService, setSelectedService] = React.useState<Servicio | null>(null);
     const [hoveredPilar, setHoveredPilar] = React.useState<'tech' | 'media' | 'growth' | null>(null);
 
+    const handleSelectService = React.useCallback((service: Servicio) => {
+        setSelectedService(service);
+    }, []);
+
+    const handleHoverPilar = React.useCallback((pilar: Pilar | null) => {
+        setHoveredPilar(pilar);
+    }, []);
 
     const scrollRef = React.useRef<HTMLDivElement>(null);
 
@@ -132,8 +139,8 @@ export function ServicesCatalog() {
                             index={index}
                             toggleBookmark={toggleBookmark}
                             isBookmarked={bookmarks.includes(service.id)}
-                            onSelect={() => setSelectedService(service)}
-                            onHover={(isHovering) => setHoveredPilar(isHovering ? service.pilar as any : null)}
+                            onSelect={handleSelectService}
+                            onHover={handleHoverPilar}
                         />
                     ))}
                 </div>
@@ -148,7 +155,7 @@ export function ServicesCatalog() {
     );
 }
 
-function ServiceCard({
+const ServiceCard = React.memo(function ServiceCard({
     service,
     index,
     toggleBookmark,
@@ -160,8 +167,8 @@ function ServiceCard({
     index: number;
     toggleBookmark: (id: string) => void;
     isBookmarked: boolean;
-    onSelect: () => void;
-    onHover: (isHovering: boolean) => void;
+    onSelect: (service: Servicio) => void;
+    onHover: (pilar: Pilar | null) => void;
 }) {
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
@@ -172,7 +179,6 @@ function ServiceCard({
         mouseY.set(clientY - top);
     };
 
-    const color = service.pilar === 'tech' ? 'blue' : service.pilar === 'media' ? 'violet' : 'emerald';
     const borderClass = service.pilar === 'tech' ? 'group-hover/card:border-blue-500/50' : service.pilar === 'media' ? 'group-hover/card:border-violet-500/50' : 'group-hover/card:border-emerald-500/50';
     const shadowClass = service.pilar === 'tech' ? 'group-hover/card:shadow-blue-500/20' : service.pilar === 'media' ? 'group-hover/card:shadow-violet-500/20' : 'group-hover/card:shadow-emerald-500/20';
 
@@ -183,8 +189,8 @@ function ServiceCard({
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ delay: index * 0.1, duration: 0.5 }}
             viewport={{ once: true }}
-            onMouseEnter={() => onHover(true)}
-            onMouseLeave={() => onHover(false)}
+            onMouseEnter={() => onHover(service.pilar)}
+            onMouseLeave={() => onHover(null)}
         >
             <div
                 className={cn(
@@ -260,7 +266,7 @@ function ServiceCard({
                                 </span>
                             </div>
                             <button
-                                onClick={onSelect}
+                                onClick={() => onSelect(service)}
                                 className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center border border-white/5 group-hover/card:bg-white group-hover/card:text-black hover:!scale-110 transition-all duration-300"
                             >
                                 <ChevronRight className="w-6 h-6" />
@@ -271,4 +277,4 @@ function ServiceCard({
             </div>
         </motion.div>
     );
-}
+});
