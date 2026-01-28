@@ -23,6 +23,15 @@ export function ContactForm() {
         e.preventDefault();
         setSubmitting(true);
 
+        const leadData: Lead = {
+            nombre,
+            email,
+            telefono: telefono || undefined,
+            empresa: empresa || undefined,
+            servicios_interes: [interes],
+            mensaje: mensaje || undefined
+        };
+
         // Format the message for WhatsApp
         const waMessage = `Hola Nexo! 👋 Quiero escalar mi negocio.\n\n` +
             `*Nombre:* ${nombre}\n` +
@@ -30,16 +39,25 @@ export function ContactForm() {
             `*Prioridad:* ${interes}\n` +
             `*Detalles:* ${mensaje || 'Sin detalles adicionales'}`;
 
-        const waNumber = "5491136515838"; // Placeholder for user's WhatsApp
+        const waNumber = "5491136515838";
         const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
 
         try {
+            // Save to DB in background or await? "MVP DB" implies we want it saved.
+            // We await to ensure we capture the lead before redirecting off page (though _blank opens new tab).
+            const result = await submitLead(leadData);
+
+            if (!result.success) {
+                console.error("Failed to save lead:", result.error);
+                // We proceed to WhatsApp anyway as fallback
+            }
+
             // Redirect to WhatsApp
             window.open(waUrl, '_blank');
             setIsSubmitted(true);
-            setSubmitting(false);
         } catch (err) {
             console.error(err);
+        } finally {
             setSubmitting(false);
         }
     };
