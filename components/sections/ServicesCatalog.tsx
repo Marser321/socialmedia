@@ -10,6 +10,8 @@ import { cn } from '@/lib/utils';
 import { ReflectionFloor } from '@/components/ui/ReflectionFloor';
 
 
+import { MobileServiceStack } from '@/components/sections/MobileServiceStack';
+
 const iconMap: Record<string, React.ReactNode> = {
     Monitor: <Monitor className="w-8 h-8" />,
     ShoppingCart: <ShoppingCart className="w-8 h-8" />,
@@ -20,26 +22,20 @@ const iconMap: Record<string, React.ReactNode> = {
 };
 
 export function ServicesCatalog() {
-    const [bookmarks, setBookmarks] = React.useState<string[]>([]);
-    const [isLoaded, setIsLoaded] = React.useState(false);
-
-    React.useEffect(() => {
+    const [bookmarks, setBookmarks] = React.useState<string[]>(() => {
+        if (typeof window === 'undefined') return [] as string[];
         try {
             const raw = localStorage.getItem('nexo_bookmarks');
-            if (raw) {
-                setBookmarks(JSON.parse(raw) as string[]);
-            }
+            return raw ? (JSON.parse(raw) as string[]) : [];
         } catch {
-            // ignore error
-        } finally {
-            setIsLoaded(true);
+            return [];
         }
-    }, []);
+    });
 
     React.useEffect(() => {
-        if (!isLoaded) return;
+        if (typeof window === 'undefined') return;
         localStorage.setItem('nexo_bookmarks', JSON.stringify(bookmarks));
-    }, [bookmarks, isLoaded]);
+    }, [bookmarks]);
 
     const toggleBookmark = (id: string) => {
         setBookmarks((prev) => (prev.includes(id) ? prev.filter((b) => b !== id) : [...prev, id]));
@@ -69,11 +65,13 @@ export function ServicesCatalog() {
                 <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[120px]" />
             </div>
 
-            {/* Reflection Floor - "The WOW Effect" */}
-            <ReflectionFloor pilar={hoveredPilar} />
+            {/* Reflection Floor - "The WOW Effect" (Desktop Only) */}
+            <div className="hidden md:block">
+                <ReflectionFloor pilar={hoveredPilar} />
+            </div>
 
             {/* Content Container - Restore Pointer Events */}
-            <div className="container mx-auto px-4 mb-16 relative z-10 pointer-events-auto">
+            <div className="container mx-auto px-4 mb-8 md:mb-16 relative z-10 pointer-events-auto">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -92,8 +90,15 @@ export function ServicesCatalog() {
                 </motion.div>
             </div>
 
-            {/* Scroll Container */}
-            <div className="relative w-full z-20 group/scroll pl-4 md:pl-[10vw] pointer-events-auto">
+            {/* Mobile Vertical Stack */}
+            <MobileServiceStack
+                bookmarks={bookmarks}
+                toggleBookmark={toggleBookmark}
+                onSelect={setSelectedService}
+            />
+
+            {/* Scroll Container (Desktop Only) */}
+            <div className="hidden md:block relative w-full z-20 group/scroll pl-4 md:pl-[10vw] pointer-events-auto">
 
                 {/* Navigation Buttons */}
                 <div className="flex justify-end gap-2 pr-4 md:pr-[10vw] mb-4">

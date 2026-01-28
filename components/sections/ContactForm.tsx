@@ -69,7 +69,7 @@ export function ContactForm() {
     };
 
     return (
-        <section id="contacto" className="py-24 relative overflow-hidden">
+        <section id="contact" className="py-24 bg-background relative overflow-hidden">
             {/* Background Glows */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-emerald-500/5 rounded-full blur-[120px] -z-10" />
 

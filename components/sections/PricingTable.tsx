@@ -69,7 +69,7 @@ export function PricingTable() {
     const [isMonthly, setIsMonthly] = React.useState(true);
 
     return (
-        <section id="planes" className="py-24 relative overflow-hidden">
+        <section id="pricing" className="py-32 bg-background relative overflow-hidden">
             {/* Background Gradients */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-violet-600/10 rounded-full blur-[120px] pointer-events-none" />
 

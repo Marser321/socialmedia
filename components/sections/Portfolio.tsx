@@ -7,6 +7,7 @@ import { AnimatedCard } from '@/components/shared/AnimatedCard';
 import { ArrowUpRight, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
+import { supabase } from '@/lib/supabase';
 
 const CATEGORIES = ['Todos', 'E-commerce', 'Apps', 'Contenido'];
 
@@ -144,10 +145,38 @@ function ProjectCard({ project }: { project: typeof PROJECTS[0] }) {
 
 export function Portfolio() {
     const [activeCategory, setActiveCategory] = React.useState('Todos');
+    const [dbProjects, setDbProjects] = React.useState<typeof PROJECTS>([]);
+
+    React.useEffect(() => {
+        const fetchProjects = async () => {
+            const { data } = await supabase
+                .from('projects')
+                .select('*')
+                .eq('is_featured', true)
+                .order('created_at', { ascending: false });
+
+            if (data) {
+                // explicit type for db row
+                const mapped = (data as any[]).map((p: any) => ({
+                    id: p.id,
+                    title: p.title,
+                    category: p.category,
+                    image: p.image_url,
+                    desc: p.description,
+                    metric: p.metric || 'New',
+                    color: p.metric_color || 'from-blue-500/20'
+                }));
+                setDbProjects(mapped);
+            }
+        };
+        fetchProjects();
+    }, []);
+
+    const allProjects = [...PROJECTS, ...dbProjects];
 
     const filteredProjects = activeCategory === 'Todos'
-        ? PROJECTS
-        : PROJECTS.filter(p => p.category === activeCategory);
+        ? allProjects
+        : allProjects.filter(p => p.category === activeCategory);
 
     return (
         <section id="portfolio" className="py-32 bg-background relative overflow-hidden">

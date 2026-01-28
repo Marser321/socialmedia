@@ -69,14 +69,26 @@ export function HeroSection() {
                         className="flex flex-col items-center gap-6"
                     >
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <Button size="lg" className="h-12 px-8 text-base bg-white text-black hover:bg-white/90 rounded-full transition-all hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
-                                Iniciar Proyecto
-                                <ArrowRight className="ml-2 h-4 w-4" />
-                            </Button>
-                            <Button size="lg" variant="outline" className="h-12 px-8 text-base border-white/20 hover:bg-white/10 rounded-full backdrop-blur-sm">
-                                Ver Ecosistemas
-                                <Sparkles className="ml-2 h-4 w-4" />
-                            </Button>
+                            <m.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                                className="group relative px-8 py-4 bg-white text-black rounded-full font-bold text-lg overflow-hidden"
+                            >
+                                <span className="relative z-10 flex items-center gap-2">
+                                    Iniciar Proyecto <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                                </span>
+                                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-violet-400 to-emerald-400 opacity-0 group-hover:opacity-10 transition-opacity" />
+                            </m.button>
+
+                            <m.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
+                                className="px-8 py-4 rounded-full font-bold text-lg border border-white/10 hover:bg-white/5 backdrop-blur-sm transition-colors text-white"
+                            >
+                                Ver Inversión
+                            </m.button>
                         </div>
                         <p className="text-xs text-white/40 font-light tracking-wide">
                             *Aceptamos solo 4 nuevos partners por trimestre para garantizar <span className="text-emerald-400 font-medium">calidad obsesiva.</span>
