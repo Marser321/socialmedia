@@ -56,18 +56,40 @@ function ProjectCard({ project }: { project: typeof PROJECTS[0] }) {
     const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [10, -10]), { damping: 20 });
     const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-10, 10]), { damping: 20 });
 
-    function onMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+    const rectRef = React.useRef<{ width: number; height: number; left: number; top: number } | null>(null);
+
+    const onMouseEnter = React.useCallback((e: React.MouseEvent<HTMLDivElement>) => {
         const rect = e.currentTarget.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        rectRef.current = {
+            width: rect.width,
+            height: rect.height,
+            left: rect.left + window.scrollX,
+            top: rect.top + window.scrollY
+        };
+    }, []);
+
+    const onMouseMove = React.useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+        if (!rectRef.current) {
+            const rect = e.currentTarget.getBoundingClientRect();
+            rectRef.current = {
+                width: rect.width,
+                height: rect.height,
+                left: rect.left + window.scrollX,
+                top: rect.top + window.scrollY
+            };
+        }
+        const rect = rectRef.current;
+        const x = (e.pageX - rect.left) / rect.width - 0.5;
+        const y = (e.pageY - rect.top) / rect.height - 0.5;
         mouseX.set(x);
         mouseY.set(y);
-    }
+    }, [mouseX, mouseY]);
 
-    function onMouseLeave() {
+    const onMouseLeave = React.useCallback(() => {
         mouseX.set(0);
         mouseY.set(0);
-    }
+        rectRef.current = null;
+    }, [mouseX, mouseY]);
 
     return (
         <motion.div
@@ -75,6 +97,7 @@ function ProjectCard({ project }: { project: typeof PROJECTS[0] }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9 }}
+            onMouseEnter={onMouseEnter}
             onMouseMove={onMouseMove}
             onMouseLeave={onMouseLeave}
             style={{ rotateX, rotateY, perspective: 1000 }}
