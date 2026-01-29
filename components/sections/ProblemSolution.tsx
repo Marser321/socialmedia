@@ -81,13 +81,19 @@ export function ProblemSolution() {
     const textScale = useTransform(scrollYProgress, [0, 0.2], [1, 1.2]);
 
     return (
-        <div ref={containerRef} className="relative w-full h-[135dvh] bg-[#022c22] mb-[-1px]">
-            {/* STICKY CONTAINER: Frame for the transition */}
-            <div className="sticky top-0 h-[100dvh] w-full overflow-hidden">
+        <div ref={containerRef} className="relative w-full md:h-[135dvh] bg-[#022c22] mb-[-1px]">
+            {/* STICKY CONTAINER: Frame for the transition (Desktop only) */}
+            <div className="relative md:sticky md:top-0 md:h-[100dvh] w-full overflow-hidden">
 
                 {/* 1. LAYER A: PROBLEM (Receding 3D) */}
                 <motion.div
-                    style={{
+                    style={isMobile ? {
+                        scale: 1,
+                        filter: "blur(0px)",
+                        opacity: 1,
+                        z: 0,
+                        transform: 'none'
+                    } : {
                         scale: problemScale,
                         filter: problemBlur,
                         opacity: problemOpacity,
@@ -95,7 +101,7 @@ export function ProblemSolution() {
                         perspective: "1000px",
                         willChange: "transform"
                     }}
-                    className="absolute inset-0 z-0 bg-gradient-to-b from-[#1a0505] to-[#0A0000] flex items-center justify-center p-4 md:p-8"
+                    className="relative md:absolute inset-0 z-0 bg-gradient-to-b from-[#1a0505] to-[#0A0000] flex items-center justify-center p-4 md:p-8 min-h-[90vh] md:min-h-0"
                 >
                     <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay pointer-events-none" />
                     <div className="container mx-auto grid lg:grid-cols-2 gap-12 items-center relative z-10">
@@ -108,7 +114,7 @@ export function ProblemSolution() {
                                 <span className="flex h-2 w-2 rounded-full bg-red-500 mr-2 animate-pulse" />
                                 LEGACY SYSTEM DETECTED
                             </motion.div>
-                            <h2 className="text-6xl md:text-8xl font-black tracking-tighter text-white leading-[0.9]">
+                            <h2 className="text-5xl md:text-8xl font-black tracking-tighter text-white leading-[0.9]">
                                 El <span className="text-red-600">Caos</span> <br />
                                 <span className="text-white/40">Te Consume.</span>
                             </h2>
@@ -117,7 +123,7 @@ export function ProblemSolution() {
                             </p>
                         </div>
 
-                        <div className="relative aspect-square">
+                        <div className="relative aspect-square max-w-[300px] md:max-w-none mx-auto md:mx-0">
                             <ChaosGroup scrollYProgress={scrollYProgress} isMobile={isMobile} />
                         </div>
                     </div>
@@ -125,7 +131,12 @@ export function ProblemSolution() {
 
                 {/* 2. LAYER B: SOLUTION (Static "Portal" Reveal) */}
                 <motion.div
-                    style={{
+                    style={isMobile ? {
+                        clipPath: 'none',
+                        opacity: 1,
+                        transform: 'none',
+                        position: 'relative'
+                    } : {
                         clipPath: revealClipPath,
                         opacity: solutionOpacity, // Mobile Only
                         scale: solutionScale, // Mobile Only
@@ -136,7 +147,7 @@ export function ProblemSolution() {
                         bottom: 0,
                         willChange: isMobile ? "opacity, transform" : "clip-path"
                     }}
-                    className="z-10 bg-[#022c22] flex items-center justify-center border-t border-emerald-500/10 shadow-[0_-50px_100px_rgba(16,185,129,0.1)]"
+                    className="relative md:absolute z-10 bg-[#022c22] flex items-center justify-center border-t border-emerald-500/10 shadow-[0_-50px_100px_rgba(16,185,129,0.1)] min-h-[100vh] md:min-h-0 py-20 md:py-0"
                 >
                     {/* Light Sweep Effect */}
                     <motion.div
@@ -149,18 +160,18 @@ export function ProblemSolution() {
                     <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-overlay pointer-events-none" />
                     <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
 
-                    <div className="container mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center relative z-20">
-                        <div className="space-y-8">
+                    <div className="container mx-auto px-4 grid lg:grid-cols-2 gap-8 md:gap-12 items-center relative z-20">
+                        <div className="space-y-6 md:space-y-8">
                             <motion.div
-                                style={{ opacity: solTitleOpacity, y: solTitleY }}
+                                style={isMobile ? {} : { opacity: solTitleOpacity, y: solTitleY }}
                                 className="inline-flex items-center rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-1.5 text-xs text-emerald-400 font-mono tracking-[0.3em] uppercase"
                             >
                                 <span className="flex h-2 w-2 rounded-full bg-emerald-500 mr-3 shadow-[0_0_12px_#10b981]" />
                                 Next-Gen Infrastructure
                             </motion.div>
                             <motion.h2
-                                style={{ opacity: solTitleOpacity, y: solTitleY }}
-                                className="text-6xl md:text-9xl font-black tracking-tighter text-white leading-[0.85]"
+                                style={isMobile ? {} : { opacity: solTitleOpacity, y: solTitleY }}
+                                className="text-5xl md:text-9xl font-black tracking-tighter text-white leading-[0.85]"
                             >
                                 Libertad <br />
                                 <span className="text-transparent bg-clip-text bg-gradient-to-br from-emerald-400 via-cyan-400 to-blue-500">
@@ -168,16 +179,16 @@ export function ProblemSolution() {
                                 </span>
                             </motion.h2>
                             <motion.p
-                                style={{ opacity: solParaOpacity, y: solParaY }}
+                                style={isMobile ? {} : { opacity: solParaOpacity, y: solParaY }}
                                 className="text-xl text-emerald-50 leading-relaxed max-w-lg"
                             >
                                 Convertimos tu operación en un motor autónomo. Automatización de punta a punta para que dejes de trabajar EN tu negocio y empieces a trabajar SOBRE él.
                             </motion.p>
 
-                            <motion.div style={{ opacity: solBtnOpacity, y: solBtnY }}>
+                            <motion.div style={isMobile ? {} : { opacity: solBtnOpacity, y: solBtnY }}>
                                 <Button
                                     onClick={() => document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' })}
-                                    className="bg-emerald-500 hover:bg-white text-black font-black rounded-full px-10 py-8 text-xl group transition-all duration-500"
+                                    className="bg-emerald-500 hover:bg-white text-black font-black rounded-full px-10 py-8 text-xl group transition-all duration-500 w-full md:w-auto"
                                 >
                                     ESCALAR AHORA
                                     <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-2 transition-transform" />
@@ -187,11 +198,14 @@ export function ProblemSolution() {
 
                         {/* Order Metaphor Card */}
                         <motion.div
-                            style={{ rotateX: cardRotateX, rotateY: cardRotateY, perspective: 1000 }}
-                            className="relative perspective-2000"
+                            style={isMobile ? {} : { rotateX: cardRotateX, rotateY: cardRotateY, perspective: 1000 }}
+                            className="relative perspective-2000 mt-8 md:mt-0"
                         >
                             <div className="absolute -inset-10 bg-emerald-500/20 blur-[120px] rounded-full animate-pulse" />
-                            <SystemPulseCard />
+                            {/* Scale down on mobile to fit */}
+                            <div className="origin-top-left md:origin-center scale-90 md:scale-100">
+                                <SystemPulseCard />
+                            </div>
                         </motion.div>
                     </div>
                 </motion.div>
