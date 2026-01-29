@@ -63,10 +63,10 @@ function MobileCard({
 
     return (
         <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ delay: index * 0.1 }}
+            initial={{ opacity: 0.5, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ margin: "-20%", amount: 0.5 }}
+            transition={{ duration: 0.4, ease: "backOut" }}
             className={cn(
                 "relative rounded-3xl border overflow-hidden backdrop-blur-md",
                 borderColor,

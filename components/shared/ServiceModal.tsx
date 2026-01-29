@@ -54,7 +54,7 @@ export function ServiceModal({ isOpen, onClose, service }: ServiceModalProps) {
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
             <DialogContent className={cn(
-                "sm:max-w-[700px] p-0 bg-[#0A0A0A] border transition-colors duration-500 overflow-hidden",
+                "w-[95vw] sm:max-w-[700px] max-h-[90vh] overflow-y-auto p-0 bg-[#0A0A0A] border transition-colors duration-500",
                 theme.border
             )}>
                 {/* Ambient Background Glow */}
