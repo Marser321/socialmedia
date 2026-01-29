@@ -7,30 +7,49 @@ import { useRef, useMemo, useState, useEffect } from 'react';
 
 export function ProblemSolution() {
     const containerRef = useRef<HTMLDivElement>(null);
+
+    // Mobile Detection
+    const [isMobile, setIsMobile] = useState(false);
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start start", "end end"]
     });
 
-    // 10k Dollar Transitions: Interpolations
-    // "Freeze" the problem layer: Keep it fully visible (1 opacity, 1 scale)
-    // while the green solution layer CLIP PATH expands over it.
-    // We only fade it out at the very end (0.9 to 1.0) when it's fully covered.
-    const problemScale = useTransform(scrollYProgress, [0, 1], [1, 1]);
-    const problemBlur = useTransform(scrollYProgress, [0, 1], ["blur(0px)", "blur(0px)"]);
-    const problemOpacity = useTransform(scrollYProgress, [0, 1], [1, 1]);
+    // --- DESKTOP ANIMATIONS (Original High-End) ---
+    // Clip Path Circle Reveal
+    const desktopClipPath = useTransform(scrollYProgress, [0, 1], ["circle(0% at 50% 50%)", "circle(250% at 50% 50%)"]);
+
+    // --- MOBILE ANIMATIONS (Performance Optimized) ---
+    // Instead of ClipPath, use Opacity + Scale for a smooth "Focus" effect
+    // 0 -> 0.4: Red visible. 0.4 -> 0.6: Crossfade. 0.6 -> 1: Green Visible.
+    const mobileOpacityRed = useTransform(scrollYProgress, [0.3, 0.5], [1, 0]);
+    const mobileScaleRed = useTransform(scrollYProgress, [0, 0.5], [1, 0.9]); // Slight shrink
+
+    const mobileOpacityGreen = useTransform(scrollYProgress, [0.3, 0.5], [0, 1]);
+    const mobileScaleGreen = useTransform(scrollYProgress, [0.3, 1], [1.1, 1]); // Zoom in
+
+    // Select based on device
+    const problemOpacityDesktop = useTransform(scrollYProgress, [0, 1], [1, 1]);
+    const problemScaleDesktop = useTransform(scrollYProgress, [0, 1], [1, 1]);
+    const problemBlurDesktop = useTransform(scrollYProgress, [0, 1], ["blur(0px)", "blur(0px)"]);
+
+    const revealClipPath = isMobile ? undefined : desktopClipPath;
+    const problemOpacity = isMobile ? mobileOpacityRed : problemOpacityDesktop;
+    const problemScale = isMobile ? mobileScaleRed : problemScaleDesktop;
+    const problemBlur = isMobile ? "blur(0px)" : problemBlurDesktop;
+
+    const solutionOpacity = isMobile ? mobileOpacityGreen : undefined;
+    const solutionScale = isMobile ? mobileScaleGreen : undefined;
 
     // Slight Z push to ensure it stays behind properly
     const problemZ = useTransform(scrollYProgress, [0, 1], [0, 0]);
-
-    // Liquid Wipe ClipPath: Circle expanding from center
-    // AGGRESSIVE EXPANSION: Go to 250% to ensure corners are covered immediately.
-    // Start at 0 to feel instant.
-    const revealClipPath = useTransform(
-        scrollYProgress,
-        [0, 1],
-        ["circle(0% at 50% 50%)", "circle(250% at 50% 50%)"]
-    );
 
     // Light Sweep overlay during reveal
     const sweepX = useTransform(scrollYProgress, [0.1, 0.5], ["-100%", "200%"]);
@@ -98,9 +117,8 @@ export function ProblemSolution() {
                             </p>
                         </div>
 
-                        {/* 3D Chaos Parallax */}
                         <div className="relative aspect-square">
-                            <ChaosGroup scrollYProgress={scrollYProgress} />
+                            <ChaosGroup scrollYProgress={scrollYProgress} isMobile={isMobile} />
                         </div>
                     </div>
                 </motion.div>
@@ -109,12 +127,14 @@ export function ProblemSolution() {
                 <motion.div
                     style={{
                         clipPath: revealClipPath,
+                        opacity: solutionOpacity, // Mobile Only
+                        scale: solutionScale, // Mobile Only
                         position: 'absolute',
                         top: 0,
                         left: 0,
                         right: 0,
                         bottom: 0,
-                        willChange: "clip-path"
+                        willChange: isMobile ? "opacity, transform" : "clip-path"
                     }}
                     className="z-10 bg-[#022c22] flex items-center justify-center border-t border-emerald-500/10 shadow-[0_-50px_100px_rgba(16,185,129,0.1)]"
                 >
@@ -195,33 +215,29 @@ export function ProblemSolution() {
 }
 
 const DEBRIS_COUNT = 15;
+const MOBILE_DEBRIS_COUNT = 6; // Reduced for performance
 
-function ChaosGroup({ scrollYProgress }: { scrollYProgress: any }) {
+function ChaosGroup({ scrollYProgress, isMobile }: { scrollYProgress: any, isMobile: boolean }) {
     const [debris, setDebris] = useState<any[]>([]);
 
     useEffect(() => {
-        const newDebris = Array.from({ length: DEBRIS_COUNT }).map((_, i) => ({
+        const count = isMobile ? MOBILE_DEBRIS_COUNT : DEBRIS_COUNT;
+        const newDebris = Array.from({ length: count }).map((_, i) => ({
             id: i,
-            // Random start position (Spread across screen instead of clumped)
-            xStart: (Math.random() - 0.5) * 600,
-            yStart: (Math.random() - 0.5) * 400,
-            // Random explosion destination (Even further out)
-            xEnd: (Math.random() - 0.5) * 1200,
-            yEnd: (Math.random() - 0.5) * 1200,
-            // Random rotations
+            xStart: (Math.random() - 0.5) * (isMobile ? 300 : 600), // Tighter spread on mobile
+            yStart: (Math.random() - 0.5) * (isMobile ? 400 : 400),
+            xEnd: (Math.random() - 0.5) * (isMobile ? 600 : 1200),
+            yEnd: (Math.random() - 0.5) * (isMobile ? 800 : 1200),
             rStart: Math.random() * 360,
             rEnd: Math.random() * 720 * (Math.random() > 0.5 ? 1 : -1),
-            // Random scales
-            scaleStart: 0.5 + Math.random() * 0.5,
-            scaleEnd: Math.random() * 0.5, // Shrink as they fly out
-            // Icon selection
+            scaleStart: isMobile ? (0.4 + Math.random() * 0.3) : (0.5 + Math.random() * 0.5), // Smaller on mobile
+            scaleEnd: Math.random() * 0.5,
             Icon: [FileWarning, MessageCircleOff, Hourglass, AlertTriangle, Database, Zap, FileSpreadsheet][i % 7],
-            // Delay for staggered effect (optional, keep tight for explosion)
-            size: Math.random() > 0.7 ? "lg" : "md",
+            size: (isMobile ? Math.random() > 0.8 : Math.random() > 0.7) ? "lg" : "md",
             zDepth: Math.random() * 500
         }));
         setDebris(newDebris);
-    }, []);
+    }, [isMobile]); // Re-run whenever isMobile changes
 
     const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
@@ -248,7 +264,7 @@ function DebrisItem({ item, scrollYProgress }: { item: any, scrollYProgress: any
             style={{ x, y, rotate, scale, z, position: 'absolute' }}
             className="will-change-transform"
         >
-            <div className={`${item.size === 'lg' ? 'w-24 h-24' : 'w-16 h-16'} bg-red-950/40 border border-red-500/30 backdrop-blur-md rounded-2xl flex items-center justify-center shadow-2xl`}>
+            <div className={`${item.size === 'lg' ? 'w-20 h-20' : 'w-12 h-12'} bg-red-950/40 border border-red-500/30 backdrop-blur-md rounded-2xl flex items-center justify-center shadow-2xl`}>
                 <item.Icon className="text-red-500/80 w-1/2 h-1/2" />
             </div>
         </motion.div>
