@@ -134,8 +134,15 @@ function ProjectCard({ project }: { project: typeof PROJECTS[0] }) {
                     </p>
 
                     <div className="flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
-                        <Button variant="outline" size="sm" className="bg-white/5 border-white/10 hover:bg-white/10 text-white rounded-full">
-                            Ver Proyecto <ArrowUpRight className="ml-2 w-4 h-4" />
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            className="bg-white/5 border-white/10 hover:bg-white/10 text-white rounded-full group/btn"
+                            onClick={() => {
+                                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                            }}
+                        >
+                            Ver Detalles <ArrowUpRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
                         </Button>
                     </div>
                 </div>

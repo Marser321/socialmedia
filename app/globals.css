@@ -162,7 +162,22 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground relative min-h-screen antialiased;
+  }
+
+  /* Grain Overlay */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: soft-light;
   }
 }
 
@@ -172,7 +187,7 @@
   }
 
   .glass-panel {
-    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)];
   }
 
   .glass-card {
@@ -181,6 +196,14 @@
 
   .bg-gradient-brand {
     background-image: var(--gradient-brand);
+  }
+
+  .perspective-2000 {
+    perspective: 2000px;
+  }
+
+  .mask-radial {
+    mask-image: radial-gradient(circle at center, black 0%, transparent 100%);
   }
 }
 

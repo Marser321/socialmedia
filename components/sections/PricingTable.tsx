@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Check, Zap, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
@@ -225,25 +225,63 @@ export function PricingTable() {
 
                                 <div className="space-y-4 mb-8 flex-grow">
                                     {service.features.map((feature: string) => (
-                                        <div key={feature} className="flex items-start gap-3">
-                                            <div className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5 bg-white/10 text-cyan-400">
+                                        <motion.div
+                                            key={feature}
+                                            whileHover={{ x: 5 }}
+                                            className="flex items-start gap-3 group/item cursor-default"
+                                        >
+                                            <div className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5 bg-white/10 text-cyan-400 group-hover/item:bg-cyan-500 group-hover/item:text-black transition-colors">
                                                 <Check className="w-3 h-3 stroke-[3]" />
                                             </div>
-                                            <span className="text-white/80 text-sm font-medium">{feature}</span>
-                                        </div>
+                                            <div className="flex flex-col">
+                                                <span className="text-white/80 text-sm font-medium group-hover/item:text-white transition-colors">{feature}</span>
+                                            </div>
+                                        </motion.div>
                                     ))}
                                 </div>
 
+                                {/* Deep Explanation Animation (Hover reveal details) */}
+                                <div className="relative h-24 mb-8 overflow-hidden rounded-2xl bg-white/[0.02] border border-white/5 group/details px-4 py-3">
+                                    <div className="absolute inset-0 bg-gradient-to-br from-violet-600/10 to-transparent opacity-0 group-hover/details:opacity-100 transition-opacity duration-500" />
+                                    <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-white/30 mb-2 relative z-10">Tu Ecosistema Incluye:</h4>
+                                    <div className="relative z-10">
+                                        <AnimatePresence mode="wait">
+                                            <motion.p
+                                                initial={{ opacity: 0, y: 10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                className="text-[11px] text-white/50 leading-relaxed font-medium italic"
+                                            >
+                                                {service.name === 'Web & Landing' ? 'Estructura optimizada para captar leads y proyectar autoridad instantánea.' :
+                                                    service.name === 'E-commerce' ? 'Motor de ventas global con logística integrada y panel de control total.' :
+                                                        service.name === 'Apps a Medida' ? 'Experiencia nativa fluida diseñada para retención y engagement extremo.' :
+                                                            service.name === 'Automatización AI' ? 'Sistemas inteligentes que eliminan tareas repetitivas y escalan tu tiempo.' :
+                                                                'Estrategia de contenido dirigida a dominar el algoritmo y fidelizar audiencia.'}
+                                            </motion.p>
+                                        </AnimatePresence>
+                                    </div>
+                                    <motion.div
+                                        className="absolute bottom-0 left-0 h-[2px] bg-cyan-500 w-0 group-hover/details:w-full transition-all duration-700"
+                                    />
+                                </div>
+
                                 <Button
+                                    onClick={() => {
+                                        const contactSection = document.getElementById('contact');
+                                        if (contactSection) {
+                                            contactSection.scrollIntoView({ behavior: 'smooth' });
+                                            const event = new CustomEvent('selectService', { detail: service.name });
+                                            window.dispatchEvent(event);
+                                        }
+                                    }}
                                     className={cn(
-                                        "w-full h-12 rounded-xl text-sm font-bold tracking-wide transition-all duration-300 mt-auto",
+                                        "w-full h-14 rounded-2xl text-sm font-black tracking-widest transition-all duration-300 uppercase",
                                         service.highlight
-                                            ? "bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white shadow-lg border-0"
+                                            ? "bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white shadow-[0_0_30px_-5px_rgba(124,58,237,0.5)] border-0 translate-y-[-4px] hover:translate-y-[-6px]"
                                             : "bg-white/5 text-white hover:bg-white/10 border border-white/10 hover:border-white/30"
                                     )}
                                 >
                                     <span className="flex items-center gap-2">
-                                        <Zap className="w-4 h-4 fill-current" />
+                                        <Zap className={cn("w-4 h-4", service.highlight ? "fill-current animate-pulse" : "fill-current")} />
                                         {isMonthly ? 'Suscribirse' : 'Cotizar Proyecto'}
                                     </span>
                                 </Button>
