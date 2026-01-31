@@ -13,6 +13,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { supabase } from '@/lib/supabase';
 
 const SERVICES_PRICING = [
     {
@@ -35,8 +36,8 @@ const SERVICES_PRICING = [
         name: 'Apps a Medida',
         description: 'Soluciones nativas para iOS y Android.',
         features: ['Desarrollo Cross-Platform', 'Notificaciones Push', 'Base de Datos Real-time', 'Panel Super Admin'],
-        monthly: { price: '500', label: 'Infraestructura' },
-        oneTime: { price: '5,000+', label: 'MVP Desarrollo' },
+        monthly: { price: '800', label: 'Desde · Infraestructura' },
+        oneTime: { price: '5,000+', label: 'Desde · MVP Desarrollo' },
         highlight: false
     },
     {
@@ -67,6 +68,75 @@ const SERVICES_PRICING = [
 
 export function PricingTable() {
     const [isMonthly, setIsMonthly] = React.useState(true);
+    const [pricingPlans, setPricingPlans] = React.useState<any[]>([]);
+
+    React.useEffect(() => {
+        const fetchPricing = async () => {
+            const { data, error } = await supabase
+                .from('pricing_plans')
+                .select('*')
+                .order('orden', { ascending: true });
+
+            if (!error && data && data.length > 0) {
+                setPricingPlans(data);
+            } else {
+                // Fallback to internal map if DB is empty
+                const fallback = [
+                    {
+                        name: 'Web & Landing',
+                        description: 'Presencia digital de alto impacto y velocidad.',
+                        features: ['Diseño UX/UI Premium', 'SEO Técnico Optimizado', 'Dominio y Hosting (1 año)', 'Integración de Analytics'],
+                        monthly: { price: '150', label: 'Desde · Mantenimiento + SEO' },
+                        oneTime: { price: '1,500', label: 'Desde · Desarrollo Completo' },
+                        highlight: false
+                    },
+                    {
+                        name: 'E-commerce',
+                        description: 'Tiendas online diseñadas para convertir.',
+                        features: ['Catálogo Ilimitado', 'Pasarela de Pagos', 'Panel de Administración', 'Recuperación de Carritos'],
+                        monthly: { price: '300', label: 'Desde · Gestión + Soporte' },
+                        oneTime: { price: '3,500', label: 'Desde · Desarrollo Tienda' },
+                        highlight: true
+                    },
+                    {
+                        name: 'Apps a Medida',
+                        description: 'Soluciones nativas para iOS y Android.',
+                        features: ['Desarrollo Cross-Platform', 'Notificaciones Push', 'Base de Datos Real-time', 'Panel Super Admin'],
+                        monthly: { price: '800', label: 'Desde · Infraestructura' },
+                        oneTime: { price: '5,000+', label: 'Desde · MVP Desarrollo' },
+                        highlight: false
+                    },
+                    {
+                        name: 'Automatización AI',
+                        description: 'Optimiza flujos y ahorra horas de trabajo.',
+                        features: ['Chatbots IA (GPT-4)', 'Conexión CRM', 'Email Marketing Auto', 'Dashboard de Métricas'],
+                        monthly: { price: '200', label: 'Desde · Suscripción + Update' },
+                        oneTime: { price: '800', label: 'Desde · Setup Inicial' },
+                        highlight: false
+                    },
+                    {
+                        name: 'Social Growth',
+                        description: 'Estrategias virales y contenido de valor.',
+                        features: ['Calendario de Contenidos', 'Edición de Reels/TikTok', 'Gestión de Comunidad', 'Reportes de Crecimiento'],
+                        monthly: { price: '600', label: 'Desde · Gestión Mensual' },
+                        oneTime: { price: '500', label: 'Desde · Auditoría + Estrategia' },
+                        highlight: true
+                    },
+                    {
+                        name: 'Producción Media',
+                        description: 'Contenido audiovisual de calidad cinematográfica.',
+                        features: ['Guión y Storyboard', 'Grabación 4K', 'Edición y Color Grading', 'Drones y FPV'],
+                        monthly: { price: '800', label: 'Desde · Pack Recurrente' },
+                        oneTime: { price: '1,200', label: 'Desde · Proyecto Único' },
+                        highlight: false
+                    }
+                ];
+                setPricingPlans(fallback);
+            }
+        };
+
+        fetchPricing();
+    }, []);
 
     return (
         <section id="pricing" className="py-32 bg-background relative overflow-hidden">
@@ -108,8 +178,10 @@ export function PricingTable() {
                 </div>
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
-                    {SERVICES_PRICING.map((service, index) => {
-                        const priceData = isMonthly ? service.monthly : service.oneTime;
+                    {pricingPlans.map((service, index) => {
+                        const priceData = isMonthly
+                            ? (service.monthly || { price: service.monthly_price, label: service.monthly_label })
+                            : (service.oneTime || { price: service.one_time_price, label: service.one_time_label });
 
                         return (
                             <motion.div
@@ -138,6 +210,7 @@ export function PricingTable() {
 
                                 <div className="mb-8 pb-8 border-b border-white/10">
                                     <div className="flex items-baseline gap-1">
+                                        <span className="text-xl font-bold text-white/40 mr-1">Desde</span>
                                         <span className={cn(
                                             "text-4xl font-black text-transparent bg-clip-text bg-gradient-to-br transition-all duration-300",
                                             isMonthly ? "from-cyan-400 to-blue-500" : "from-violet-400 to-purple-500"
@@ -151,7 +224,7 @@ export function PricingTable() {
                                 </div>
 
                                 <div className="space-y-4 mb-8 flex-grow">
-                                    {service.features.map((feature) => (
+                                    {service.features.map((feature: string) => (
                                         <div key={feature} className="flex items-start gap-3">
                                             <div className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5 bg-white/10 text-cyan-400">
                                                 <Check className="w-3 h-3 stroke-[3]" />

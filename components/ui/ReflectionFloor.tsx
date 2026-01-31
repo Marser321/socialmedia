@@ -1,8 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '@/lib/utils';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 
 type Pilar = 'tech' | 'media' | 'growth' | null;
 
@@ -28,8 +27,27 @@ export function ReflectionFloor({ pilar }: ReflectionFloorProps) {
     );
 }
 
+interface Line {
+    id: number;
+    left: string;
+    duration: number;
+    delay: number;
+}
+
 function TechEffect() {
     // "The Circuit Matrix" - Digital rain/circuit lines
+    const [lines, setLines] = useState<Line[]>([]);
+
+    useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setLines([...Array(20)].map((_, i) => ({
+            id: i,
+            left: `${5 + i * 5}%`,
+            duration: 2 + Math.random() * 2,
+            delay: Math.random() * 2
+        })));
+    }, []);
+
     return (
         <motion.div
             initial={{ opacity: 0 }}
@@ -43,12 +61,12 @@ function TechEffect() {
 
             {/* Moving Grid Lines */}
             <div className="absolute inset-x-0 top-0 h-full overflow-hidden perspective-grid">
-                {[...Array(20)].map((_, i) => (
+                {lines.map((line) => (
                     <motion.div
-                        key={i}
+                        key={line.id}
                         className="absolute top-0 w-[1px] bg-gradient-to-b from-blue-500/0 via-blue-400/50 to-blue-500/0"
                         style={{
-                            left: `${5 + i * 5}%`,
+                            left: line.left,
                             height: '100%',
                         }}
                         initial={{ y: '-100%', opacity: 0 }}
@@ -57,10 +75,10 @@ function TechEffect() {
                             opacity: [0, 1, 0]
                         }}
                         transition={{
-                            duration: 2 + Math.random() * 2,
+                            duration: line.duration,
                             repeat: Infinity,
                             ease: 'linear',
-                            delay: Math.random() * 2
+                            delay: line.delay
                         }}
                     />
                 ))}
@@ -105,8 +123,29 @@ function MediaEffect() {
     );
 }
 
+interface Particle {
+    id: number;
+    left: string;
+    yTarget: number;
+    duration: number;
+    delay: number;
+}
+
 function GrowthEffect() {
     // "The Market Graph" - Rising Particles/Bars
+    const [particles, setParticles] = useState<Particle[]>([]);
+
+    useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setParticles([...Array(15)].map((_, i) => ({
+            id: i,
+            left: `${10 + Math.random() * 80}%`,
+            yTarget: -300 - Math.random() * 200,
+            duration: 3 + Math.random() * 2,
+            delay: Math.random() * 2
+        })));
+    }, []);
+
     return (
         <motion.div
             initial={{ opacity: 0 }}
@@ -119,24 +158,24 @@ function GrowthEffect() {
             <div className="absolute inset-0 bg-emerald-500/5 [mask-image:radial-gradient(ellipse_50%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
 
             {/* Rising Particles */}
-            {[...Array(15)].map((_, i) => (
+            {particles.map((p) => (
                 <motion.div
-                    key={i}
+                    key={p.id}
                     className="absolute bottom-0 w-1 h-1 rounded-full bg-emerald-400"
                     style={{
-                        left: `${10 + Math.random() * 80}%`,
+                        left: p.left,
                     }}
                     initial={{ y: 0, opacity: 0, scale: 0 }}
                     animate={{
-                        y: -300 - Math.random() * 200,
+                        y: p.yTarget,
                         opacity: [0, 1, 0],
                         scale: [0, 1.5, 0]
                     }}
                     transition={{
-                        duration: 3 + Math.random() * 2,
+                        duration: p.duration,
                         repeat: Infinity,
                         ease: "easeOut",
-                        delay: Math.random() * 2
+                        delay: p.delay
                     }}
                 />
             ))}

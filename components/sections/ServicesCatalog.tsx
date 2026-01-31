@@ -8,6 +8,7 @@ import { Layers, Monitor, Smartphone, Video, Share2, ChevronRight, ChevronLeft, 
 import { MOCK_SERVICES } from '@/data/services';
 import { cn } from '@/lib/utils';
 import dynamic from 'next/dynamic';
+import { supabase } from '@/lib/supabase';
 
 const ReflectionFloor = dynamic(() => import('@/components/ui/ReflectionFloor').then(mod => mod.ReflectionFloor), {
     ssr: false,
@@ -27,6 +28,25 @@ const iconMap: Record<string, React.ReactNode> = {
 export function ServicesCatalog() {
     const [bookmarks, setBookmarks] = React.useState<string[]>([]);
     const [isLoaded, setIsLoaded] = React.useState(false);
+    const [services, setServices] = React.useState<Servicio[]>([]);
+
+    React.useEffect(() => {
+        const fetchServices = async () => {
+            const { data, error } = await supabase
+                .from('services')
+                .select('*')
+                .order('orden', { ascending: true });
+
+            if (!error && data) {
+                setServices(data as unknown as Servicio[]);
+            } else {
+                // Fallback to mock if DB is empty or fails
+                setServices(MOCK_SERVICES as unknown as Servicio[]);
+            }
+        };
+
+        fetchServices();
+    }, []);
 
     React.useEffect(() => {
         if (typeof window === 'undefined') return;
@@ -125,7 +145,7 @@ export function ServicesCatalog() {
                     className="flex overflow-x-auto py-12 snap-x snap-mandatory gap-6 px-4 pr-[20vw] hide-scrollbar"
                     style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 >
-                    {MOCK_SERVICES.map((service, index) => (
+                    {services.map((service, index) => (
                         <ServiceCard
                             key={service.id}
                             service={service}
@@ -133,7 +153,7 @@ export function ServicesCatalog() {
                             toggleBookmark={toggleBookmark}
                             isBookmarked={bookmarks.includes(service.id)}
                             onSelect={() => setSelectedService(service)}
-                            onHover={(isHovering) => setHoveredPilar(isHovering ? service.pilar as any : null)}
+                            onHover={(isHovering) => setHoveredPilar(isHovering ? (service.pilar as 'tech' | 'media' | 'growth') : null)}
                         />
                     ))}
                 </div>
@@ -172,7 +192,6 @@ function ServiceCard({
         mouseY.set(clientY - top);
     };
 
-    const color = service.pilar === 'tech' ? 'blue' : service.pilar === 'media' ? 'violet' : 'emerald';
     const borderClass = service.pilar === 'tech' ? 'group-hover/card:border-blue-500/50' : service.pilar === 'media' ? 'group-hover/card:border-violet-500/50' : 'group-hover/card:border-emerald-500/50';
     const shadowClass = service.pilar === 'tech' ? 'group-hover/card:shadow-blue-500/20' : service.pilar === 'media' ? 'group-hover/card:shadow-violet-500/20' : 'group-hover/card:shadow-emerald-500/20';
 

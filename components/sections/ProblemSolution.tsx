@@ -1,9 +1,9 @@
 'use client';
 
-import { motion, useScroll, useTransform, useVelocity, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform, useVelocity, useSpring, MotionValue } from 'framer-motion';
 import { Zap, Database, MessageSquare, FileSpreadsheet, Mail, ArrowRight, AlertTriangle, MessageCircleOff, Hourglass, FileWarning } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useRef, useMemo, useState, useEffect } from 'react';
+import { useRef, useMemo, useState, useEffect, ElementType } from 'react';
 
 export function ProblemSolution() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -55,21 +55,19 @@ export function ProblemSolution() {
     const sweepX = useTransform(scrollYProgress, [0.1, 0.5], ["-100%", "200%"]);
     const sweepOpacity = useTransform(scrollYProgress, [0.1, 0.3, 0.4, 0.6], [0, 1, 1, 0]);
 
-    // Staggered Solution Content
-    // Adjusted timing to match the new faster scroll
-    // Added Drift: [Start, Settle, Drift Down]
-    const solTitleY = useTransform(scrollYProgress, [0.2, 0.6, 1], [100, 0, 80]);
-    const solTitleOpacity = useTransform(scrollYProgress, [0.2, 0.5], [0, 1]);
+    // Simplified Solution Content timings for better persistence
+    const solTitleY = useTransform(scrollYProgress, [0.2, 0.5, 0.9], [150, 0, 0]);
+    const solTitleOpacity = useTransform(scrollYProgress, [0.2, 0.4, 0.9], [0, 1, 1]);
 
-    const solParaY = useTransform(scrollYProgress, [0.3, 0.7, 1], [100, 0, 80]);
-    const solParaOpacity = useTransform(scrollYProgress, [0.3, 0.6], [0, 1]);
+    const solParaY = useTransform(scrollYProgress, [0.3, 0.6, 0.9], [150, 0, 0]);
+    const solParaOpacity = useTransform(scrollYProgress, [0.3, 0.5, 0.9], [0, 1, 1]);
 
-    const solBtnY = useTransform(scrollYProgress, [0.4, 0.8, 1], [50, 0, 80]);
-    const solBtnOpacity = useTransform(scrollYProgress, [0.4, 0.7], [0, 1]);
+    const solBtnY = useTransform(scrollYProgress, [0.4, 0.7, 0.9], [100, 0, 0]);
+    const solBtnOpacity = useTransform(scrollYProgress, [0.4, 0.6, 0.9], [0, 1, 1]);
 
     // 3D Card Parallax
-    const cardRotateX = useTransform(scrollYProgress, [0.1, 0.5], [5, -5]);
-    const cardRotateY = useTransform(scrollYProgress, [0.1, 0.5], [10, -10]);
+    const cardRotateX = useTransform(scrollYProgress, [0.1, 0.6], [10, 0]);
+    const cardRotateY = useTransform(scrollYProgress, [0.1, 0.6], [20, 0]);
 
     // Kinetic Magnetic Text
     const scrollVelocity = useVelocity(scrollYProgress);
@@ -81,7 +79,7 @@ export function ProblemSolution() {
     const textScale = useTransform(scrollYProgress, [0, 0.2], [1, 1.2]);
 
     return (
-        <div ref={containerRef} className="relative w-full md:h-[135dvh] bg-[#022c22] mb-[-1px]">
+        <div ref={containerRef} className="relative w-full md:h-[160dvh] bg-[#022c22] mb-[-1px]">
             {/* STICKY CONTAINER: Frame for the transition (Desktop only) */}
             <div className="relative md:sticky md:top-0 md:h-[100dvh] w-full overflow-hidden">
 
@@ -116,10 +114,10 @@ export function ProblemSolution() {
                             </motion.div>
                             <h2 className="text-5xl md:text-8xl font-black tracking-tighter text-white leading-[0.9]">
                                 El <span className="text-red-600">Caos</span> <br />
-                                <span className="text-white/40">Te Consume.</span>
+                                <span className="text-white/40">Manual.</span>
                             </h2>
                             <p className="text-xl text-white/50 leading-relaxed max-w-lg font-light">
-                                Tu negocio depende 100% de tu tiempo. Leads perdidos, procesos manuales y escalabilidad nula. Estás construyendo un autoempleo, no un imperio.
+                                Tu operación te esclaviza. Leads que se pierden y procesos que dependen 100% de tu tiempo. No tienes un imperio, tienes un autoempleo agotador.
                             </p>
                         </div>
 
@@ -228,11 +226,26 @@ export function ProblemSolution() {
     );
 }
 
-const DEBRIS_COUNT = 15;
-const MOBILE_DEBRIS_COUNT = 6; // Reduced for performance
+const DEBRIS_COUNT = 8;
+const MOBILE_DEBRIS_COUNT = 4; // Reduced for performance
 
-function ChaosGroup({ scrollYProgress, isMobile }: { scrollYProgress: any, isMobile: boolean }) {
-    const [debris, setDebris] = useState<any[]>([]);
+interface DebrisData {
+    id: number;
+    xStart: number;
+    yStart: number;
+    xEnd: number;
+    yEnd: number;
+    rStart: number;
+    rEnd: number;
+    scaleStart: number;
+    scaleEnd: number;
+    Icon: ElementType;
+    size: "md" | "lg";
+    zDepth: number;
+}
+
+function ChaosGroup({ scrollYProgress, isMobile }: { scrollYProgress: MotionValue<number>, isMobile: boolean }) {
+    const [debris, setDebris] = useState<DebrisData[]>([]);
 
     useEffect(() => {
         const count = isMobile ? MOBILE_DEBRIS_COUNT : DEBRIS_COUNT;
@@ -247,9 +260,10 @@ function ChaosGroup({ scrollYProgress, isMobile }: { scrollYProgress: any, isMob
             scaleStart: isMobile ? (0.4 + Math.random() * 0.3) : (0.5 + Math.random() * 0.5), // Smaller on mobile
             scaleEnd: Math.random() * 0.5,
             Icon: [FileWarning, MessageCircleOff, Hourglass, AlertTriangle, Database, Zap, FileSpreadsheet][i % 7],
-            size: (isMobile ? Math.random() > 0.8 : Math.random() > 0.7) ? "lg" : "md",
+            size: ((isMobile ? Math.random() > 0.8 : Math.random() > 0.7) ? "lg" : "md") as "md" | "lg",
             zDepth: Math.random() * 500
         }));
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setDebris(newDebris);
     }, [isMobile]); // Re-run whenever isMobile changes
 
@@ -266,7 +280,7 @@ function ChaosGroup({ scrollYProgress, isMobile }: { scrollYProgress: any, isMob
     );
 }
 
-function DebrisItem({ item, scrollYProgress }: { item: any, scrollYProgress: any }) {
+function DebrisItem({ item, scrollYProgress }: { item: DebrisData, scrollYProgress: MotionValue<number> }) {
     const x = useTransform(scrollYProgress, [0, 1], [item.xStart, item.xEnd]);
     const y = useTransform(scrollYProgress, [0, 1], [item.yStart, item.yEnd]);
     const rotate = useTransform(scrollYProgress, [0, 1], [item.rStart, item.rEnd]);

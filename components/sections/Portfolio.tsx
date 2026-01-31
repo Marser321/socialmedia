@@ -144,32 +144,41 @@ function ProjectCard({ project }: { project: typeof PROJECTS[0] }) {
     );
 }
 
+interface DBProject {
+    id: number;
+    title: string;
+    category: string;
+    image_url: string;
+    description: string;
+    metric?: string;
+    metric_color?: string;
+}
+
 export function Portfolio() {
     const [activeCategory, setActiveCategory] = React.useState('Todos');
-    const [dbProjects, setDbProjects] = React.useState<typeof PROJECTS>([]);
+    const [dbProjects, setDbProjects] = React.useState<any[]>([]);
 
     React.useEffect(() => {
         const fetchProjects = async () => {
             const { data } = await supabase
                 .from('projects')
                 .select('*')
-                .eq('is_featured', true)
-                .order('created_at', { ascending: false });
+                .order('orden', { ascending: true });
 
-            if (data) {
-                // explicit type for db row
-                const mapped = (data as any[]).map((p: any) => ({
+            if (data && data.length > 0) {
+                const mapped = data.map((p) => ({
                     id: p.id,
                     title: p.title,
                     category: p.category,
                     image: p.image_url,
                     desc: p.description,
-                    metric: p.metric || 'New',
-                    color: p.metric_color || 'from-blue-500/20'
+                    metric: p.featured ? 'Featured' : 'New',
+                    color: 'from-blue-500/20'
                 }));
                 setDbProjects(mapped);
             }
         };
+
         fetchProjects();
     }, []);
 
@@ -225,7 +234,7 @@ export function Portfolio() {
                 <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
                     <AnimatePresence mode='popLayout'>
                         {filteredProjects.map((project) => (
-                            <ProjectCard key={project.id} project={project} />
+                            <ProjectCard key={project.id} project={project as any} />
                         ))}
                     </AnimatePresence>
                 </div>

@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Check, ArrowRight, Sparkles, Zap, Trophy } from "lucide-react";
 import { Servicio } from "@/types";
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { cn } from "@/lib/utils";
 
 interface ServiceModalProps {
@@ -120,24 +120,7 @@ export function ServiceModal({ isOpen, onClose, service }: ServiceModalProps) {
                         </div>
                     </div>
 
-                    {/* Tech Stack */}
-                    {service.tecnologias && service.tecnologias.length > 0 && (
-                        <div className="mb-10 p-6 rounded-2xl bg-[#0F0F1A]/50 border border-white/5 relative overflow-hidden group">
-                            <div className={cn("absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 bg-gradient-to-br", theme.gradient)} />
 
-                            <h4 className="text-xs font-bold text-white/40 uppercase tracking-widest mb-4 flex items-center gap-2 relative z-10">
-                                <span className={cn("w-1.5 h-1.5 rounded-full animate-pulse", theme.glow.replace('/20', ''))} />
-                                Stack Tecnológico de Elite
-                            </h4>
-                            <div className="flex flex-wrap gap-2 relative z-10">
-                                {service.tecnologias.map((tech, idx) => (
-                                    <Badge key={idx} variant="secondary" className="bg-black/40 text-white/90 border border-white/10 px-3 py-1.5 hover:bg-white/10 transition-colors">
-                                        {tech}
-                                    </Badge>
-                                ))}
-                            </div>
-                        </div>
-                    )}
 
                     <DialogFooter className="md:justify-between items-center gap-4 pt-6 border-t border-white/10">
                         <Button variant="ghost" onClick={onClose} className="text-white/40 hover:text-white hover:bg-white/5">

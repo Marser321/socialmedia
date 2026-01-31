@@ -4,17 +4,44 @@ import { ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { m, useScroll, useTransform, LazyMotion } from 'framer-motion';
 import Image from 'next/image';
-import { useRef } from 'react';
+import { useRef, useState, useEffect, Fragment } from 'react';
+
+import { supabase } from '@/lib/supabase';
 
 const loadFeatures = () =>
     import('framer-motion').then((res) => res.domAnimation);
 
+const FALLBACK_CONTENT = {
+    badge: 'Growth Partner Certificado',
+    title: 'Arquitectura Digital que Domina Mercados.',
+    subtitle: 'Diseñamos ecosistemas de conversión y automatizamos tu crecimiento. Dejarás de competir por precio para convertirte en la única opción lógica.',
+    image_url: '/images/stitch-hero-v2.png',
+    system_status: 'System Active: Scaling'
+};
+
 export function HeroSection() {
     const containerRef = useRef<HTMLDivElement>(null);
+    const [dynamicContent, setDynamicContent] = useState(FALLBACK_CONTENT);
+
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ['start start', 'end start'],
     });
+
+    useEffect(() => {
+        const fetchHero = async () => {
+            const { data } = await supabase
+                .from('site_settings')
+                .select('value')
+                .eq('key', 'hero_content')
+                .single();
+
+            if (data?.value) {
+                setDynamicContent(data.value);
+            }
+        };
+        fetchHero();
+    }, []);
 
     const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
     const scale = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
@@ -38,7 +65,7 @@ export function HeroSection() {
                     >
                         <div className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-white backdrop-blur-xl mb-6">
                             <span className="flex h-2 w-2 rounded-full bg-emerald-500 mr-2 animate-pulse" />
-                            Growth Partner Certificado
+                            {dynamicContent.badge}
                         </div>
                     </m.div>
 
@@ -48,8 +75,12 @@ export function HeroSection() {
                         transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
                         className="text-5xl md:text-8xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60 mb-6 max-w-5xl mx-auto"
                     >
-                        Arquitectura Digital que <br />
-                        <span className="text-white">Domina Mercados.</span>
+                        {dynamicContent.title.split('<br />').map((text, i) => (
+                            <Fragment key={i}>
+                                {text}
+                                {i === 0 && <br />}
+                            </Fragment>
+                        ))}
                     </m.h1>
 
                     <m.p
@@ -58,8 +89,7 @@ export function HeroSection() {
                         transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
                         className="mx-auto max-w-[700px] text-lg md:text-xl text-white/70 mb-8 leading-relaxed font-light"
                     >
-                        Diseñamos ecosistemas de conversión y automatizamos tu crecimiento.
-                        Dejarás de competir por precio para convertirte en la <span className="text-white font-medium">única opción lógica</span>.
+                        {dynamicContent.subtitle}
                     </m.p>
 
                     <m.div
@@ -106,8 +136,8 @@ export function HeroSection() {
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
 
                         <Image
-                            src="/images/stitch-hero-v2.png"
-                            alt="Stitch Creative Studio Interface"
+                            src={dynamicContent.image_url}
+                            alt="Nexo Interface"
                             fill
                             className="object-cover object-center transition-transform duration-1000 group-hover:scale-105"
                             priority
@@ -117,7 +147,7 @@ export function HeroSection() {
                         {/* Floating Pulse Dot */}
                         <div className="absolute top-6 right-6 z-20 flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
                             <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
-                            <span className="text-[10px] font-mono text-white/70 uppercase tracking-widest">System Active: Scaling</span>
+                            <span className="text-[10px] font-mono text-white/70 uppercase tracking-widest">{dynamicContent.system_status}</span>
                         </div>
                     </div>
 

@@ -38,6 +38,12 @@ export default function RootLayout({
     <html lang="es" suppressHydrationWarning>
       <body className={`${inter.className} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <a
+            href="#content"
+            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-[100] bg-white text-black px-4 py-2 rounded-full font-bold shadow-2xl transition-all"
+          >
+            Saltar al contenido
+          </a>
           <SmoothScroll>
             {children}
           </SmoothScroll>
