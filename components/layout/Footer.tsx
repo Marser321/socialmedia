@@ -42,8 +42,8 @@ export function Footer() {
                     </div>
                 </div>
 
-                <div className="pt-8 border-t border-white/5 text-center text-xs">
-                    © {new Date().getFullYear()} Nexo Digital Agency. Todos los derechos reservados.
+                <div className="pt-8 border-t border-white/5 text-center text-[10px] font-mono tracking-widest text-white/20">
+                    © {new Date().getFullYear()} NEXO DIGITAL AGENCY // SYSTEM_v2.0.1_STABLE
                 </div>
             </div>
         </footer>
