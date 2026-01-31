@@ -18,6 +18,16 @@ export default function LoginPage() {
 
     const [isRegistering, setIsRegistering] = React.useState(false);
 
+    React.useEffect(() => {
+        const checkUser = async () => {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (user) {
+                router.push('/admin');
+            }
+        };
+        checkUser();
+    }, [router]);
+
     const handleGoogleLogin = async () => {
         setLoading(true);
         setError(null);
