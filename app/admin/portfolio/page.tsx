@@ -69,38 +69,58 @@ export default function PortfolioAdmin() {
             external_link: formData.get('external_link'),
             featured: formData.get('featured') === 'true',
             orden: parseInt(formData.get('orden') as string || '0'),
+            updated_at: new Date().toISOString()
         };
 
-        let error;
-        if (editingProject) {
-            const { error: err } = await supabase
-                .from('projects')
-                .update(projectData)
-                .eq('id', editingProject.id);
-            error = err;
-        } else {
-            const { error: err } = await supabase
-                .from('projects')
-                .insert([projectData]);
-            error = err;
-        }
+        console.log('🚀 Intentando guardar proyecto:', projectData);
 
-        if (!error) {
-            setIsDialogOpen(false);
-            setEditingProject(null);
-            fetchProjects();
+        let error;
+        try {
+            if (editingProject) {
+                const { error: err } = await supabase
+                    .from('projects')
+                    .update(projectData)
+                    .eq('id', editingProject.id);
+                error = err;
+            } else {
+                const { error: err } = await supabase
+                    .from('projects')
+                    .insert([projectData]);
+                error = err;
+            }
+
+            if (error) {
+                console.error('❌ Error de Supabase:', error);
+                alert(`Error al guardar: ${error.message}`);
+            } else {
+                console.log('✅ Proyecto guardado correctamente');
+                setIsDialogOpen(false);
+                setEditingProject(null);
+                fetchProjects();
+            }
+        } catch (err: any) {
+            console.error('💥 Error inesperado:', err);
+            alert(`Error inesperado: ${err.message}`);
         }
     };
 
     const handleDelete = async (id: string) => {
         if (!confirm('¿Estás seguro de eliminar este proyecto?')) return;
-        const { error } = await supabase
-            .from('projects')
-            .delete()
-            .eq('id', id);
 
-        if (!error) {
-            fetchProjects();
+        try {
+            const { error } = await supabase
+                .from('projects')
+                .delete()
+                .eq('id', id);
+
+            if (error) {
+                console.error('❌ Error al eliminar proyecto:', error);
+                alert(`Error al eliminar: ${error.message}`);
+            } else {
+                fetchProjects();
+            }
+        } catch (err: any) {
+            alert(`Error crítico al eliminar: ${err.message}`);
         }
     };
 

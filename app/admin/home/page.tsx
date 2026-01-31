@@ -40,6 +40,8 @@ export default function HomeSettingsAdmin() {
 
     const handleSave = async () => {
         setSaving(true);
+        console.log('🚀 Guardando configuración de Hero:', content);
+
         const { error } = await supabase
             .from('site_settings')
             .upsert({
@@ -48,7 +50,11 @@ export default function HomeSettingsAdmin() {
                 updated_at: new Date().toISOString()
             }, { onConflict: 'key' });
 
-        if (!error) {
+        if (error) {
+            console.error('❌ Error de Supabase:', error);
+            alert(`Error al guardar: ${error.message}`);
+        } else {
+            console.log('✅ Configuración guardada correctamente');
             alert('Configuración guardada correctamente.');
         }
         setSaving(false);

@@ -69,6 +69,10 @@ export default function ServicesAdmin() {
     const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
+
+        // Helper to parse comma separated strings into arrays
+        const parseArray = (val: string) => val ? val.split(',').map(s => s.trim()).filter(s => s !== '') : [];
+
         const serviceData = {
             nombre: formData.get('nombre'),
             descripcion: formData.get('descripcion'),
@@ -76,39 +80,62 @@ export default function ServicesAdmin() {
             pilar: formData.get('pilar'),
             icono: formData.get('icono'),
             precio_base: formData.get('precio_base') ? parseFloat(formData.get('precio_base') as string) : null,
+            tipo_pago: formData.get('tipo_pago'),
+            caracteristicas: parseArray(formData.get('caracteristicas') as string),
+            tecnologias: parseArray(formData.get('tecnologias') as string),
             orden: parseInt(formData.get('orden') as string || '0'),
+            updated_at: new Date().toISOString()
         };
 
-        let error;
-        if (editingService) {
-            const { error: err } = await supabase
-                .from('services')
-                .update(serviceData)
-                .eq('id', editingService.id);
-            error = err;
-        } else {
-            const { error: err } = await supabase
-                .from('services')
-                .insert([serviceData]);
-            error = err;
-        }
+        console.log('🚀 Intentando guardar servicio:', serviceData);
 
-        if (!error) {
-            setIsDialogOpen(false);
-            setEditingService(null);
-            fetchServices();
+        let error;
+        try {
+            if (editingService) {
+                const { error: err } = await supabase
+                    .from('services')
+                    .update(serviceData)
+                    .eq('id', editingService.id);
+                error = err;
+            } else {
+                const { error: err } = await supabase
+                    .from('services')
+                    .insert([serviceData]);
+                error = err;
+            }
+
+            if (error) {
+                console.error('❌ Error de Supabase:', error);
+                alert(`Error al guardar: ${error.message}\nVerifica los permisos RLS o el formato de los datos.`);
+            } else {
+                console.log('✅ Servicio guardado con éxito');
+                setIsDialogOpen(false);
+                setEditingService(null);
+                fetchServices();
+            }
+        } catch (err: any) {
+            console.error('💥 Error inesperado:', err);
+            alert(`Error inesperado: ${err.message}`);
         }
     };
 
     const handleDelete = async (id: string) => {
         if (!confirm('¿Estás seguro de eliminar este servicio?')) return;
-        const { error } = await supabase
-            .from('services')
-            .delete()
-            .eq('id', id);
 
-        if (!error) {
-            fetchServices();
+        try {
+            const { error } = await supabase
+                .from('services')
+                .delete()
+                .eq('id', id);
+
+            if (error) {
+                console.error('❌ Error al eliminar:', error);
+                alert(`No se pudo eliminar: ${error.message}`);
+            } else {
+                fetchServices();
+            }
+        } catch (err: any) {
+            alert(`Error crítico al eliminar: ${err.message}`);
         }
     };
 
@@ -169,6 +196,27 @@ export default function ServicesAdmin() {
                                     <Input name="descripcion_corta" defaultValue={editingService?.descripcion_corta} className="bg-white/5 border-white/10 rounded-xl focus:border-violet-500/50" required />
                                 </div>
                                 <div className="space-y-2">
+                                    <Label className="text-white/60 font-bold uppercase text-[10px] tracking-widest">Tipo de Pago</Label>
+                                    <Select name="tipo_pago" defaultValue={editingService?.tipo_pago || 'mensual'}>
+                                        <SelectTrigger className="bg-white/5 border-white/10 rounded-xl">
+                                            <SelectValue placeholder="Tipo de pago" />
+                                        </SelectTrigger>
+                                        <SelectContent className="bg-[#0A0A0A] border-white/10 text-white">
+                                            <SelectItem value="mensual">Mensual (Suscripción)</SelectItem>
+                                            <SelectItem value="unico">Pago Único (Proyecto)</SelectItem>
+                                            <SelectItem value="ambos">Ambos / Híbrido</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                                <div className="col-span-2 space-y-2">
+                                    <Label className="text-white/60 font-bold uppercase text-[10px] tracking-widest">Características (Separadas por coma)</Label>
+                                    <Input name="caracteristicas" defaultValue={editingService?.caracteristicas?.join(', ')} placeholder="Ej: Auditoría Pro, Soporte 24/7, Dashboard IA" className="bg-white/5 border-white/10 rounded-xl focus:border-violet-500/50" />
+                                </div>
+                                <div className="col-span-2 space-y-2">
+                                    <Label className="text-white/60 font-bold uppercase text-[10px] tracking-widest">Tecnologías (Separadas por coma)</Label>
+                                    <Input name="tecnologias" defaultValue={editingService?.tecnologias?.join(', ')} placeholder="Ej: Next.js, Supabase, n8n, OpenAI" className="bg-white/5 border-white/10 rounded-xl focus:border-violet-500/50" />
+                                </div>
+                                <div className="space-y-2">
                                     <Label className="text-white/60 font-bold uppercase text-[10px] tracking-widest">Icono (Lucide name)</Label>
                                     <Input name="icono" defaultValue={editingService?.icono || 'Monitor'} className="bg-white/5 border-white/10 rounded-xl focus:border-violet-500/50" />
                                 </div>
@@ -181,9 +229,11 @@ export default function ServicesAdmin() {
                                     <Input name="orden" type="number" defaultValue={editingService?.orden || 0} className="bg-white/5 border-white/10 rounded-xl focus:border-violet-500/50" />
                                 </div>
                             </div>
-                            <DialogFooter>
+                            <DialogFooter className="bg-white/[0.02] -mx-6 -mb-6 p-6 border-t border-white/5 mt-8">
                                 <Button type="button" variant="ghost" onClick={() => setIsDialogOpen(false)} className="text-white/40 hover:text-white">Cancelar</Button>
-                                <Button type="submit" className="bg-violet-600 hover:bg-violet-500 text-white rounded-xl font-bold px-8">Guardar Cambios</Button>
+                                <Button type="submit" className="bg-violet-600 hover:bg-violet-500 text-white rounded-xl font-bold px-8 shadow-[0_0_20px_rgba(139,92,246,0.3)]">
+                                    {editingService ? 'Actualizar Servicio' : 'Crear Arquitectura de Servicio'}
+                                </Button>
                             </DialogFooter>
                         </form>
                     </DialogContent>

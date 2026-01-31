@@ -78,39 +78,59 @@ export default function PricingAdmin() {
             one_time_label: formData.get('one_time_label'),
             highlight: formData.get('highlight') === 'on',
             orden: parseInt(formData.get('orden') as string || '0'),
-            features: (formData.get('features') as string).split(',').map(f => f.trim()).filter(f => f !== '')
+            features: (formData.get('features') as string).split(',').map(f => f.trim()).filter(f => f !== ''),
+            updated_at: new Date().toISOString()
         };
 
-        let error;
-        if (editingPlan) {
-            const { error: err } = await supabase
-                .from('pricing_plans')
-                .update(planData)
-                .eq('id', editingPlan.id);
-            error = err;
-        } else {
-            const { error: err } = await supabase
-                .from('pricing_plans')
-                .insert([planData]);
-            error = err;
-        }
+        console.log('🚀 Intentando guardar plan de precios:', planData);
 
-        if (!error) {
-            setIsDialogOpen(false);
-            setEditingPlan(null);
-            fetchPlans();
+        let error;
+        try {
+            if (editingPlan) {
+                const { error: err } = await supabase
+                    .from('pricing_plans')
+                    .update(planData)
+                    .eq('id', editingPlan.id);
+                error = err;
+            } else {
+                const { error: err } = await supabase
+                    .from('pricing_plans')
+                    .insert([planData]);
+                error = err;
+            }
+
+            if (error) {
+                console.error('❌ Error de Supabase:', error);
+                alert(`Error al guardar plan: ${error.message}`);
+            } else {
+                console.log('✅ Plan guardado correctamente');
+                setIsDialogOpen(false);
+                setEditingPlan(null);
+                fetchPlans();
+            }
+        } catch (err: any) {
+            console.error('💥 Error inesperado:', err);
+            alert(`Error inesperado: ${err.message}`);
         }
     };
 
     const handleDelete = async (id: string) => {
         if (!confirm('¿Estás seguro de eliminar este plan de precios?')) return;
-        const { error } = await supabase
-            .from('pricing_plans')
-            .delete()
-            .eq('id', id);
 
-        if (!error) {
-            fetchPlans();
+        try {
+            const { error } = await supabase
+                .from('pricing_plans')
+                .delete()
+                .eq('id', id);
+
+            if (error) {
+                console.error('❌ Error al eliminar plan:', error);
+                alert(`Error al eliminar: ${error.message}`);
+            } else {
+                fetchPlans();
+            }
+        } catch (err: any) {
+            alert(`Error crítico al eliminar: ${err.message}`);
         }
     };
 

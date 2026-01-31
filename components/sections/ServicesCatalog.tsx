@@ -240,7 +240,7 @@ function ServiceCard({
                             service.pilar === 'tech' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' :
                                 service.pilar === 'media' ? 'bg-violet-500/10 text-violet-400 border border-violet-500/20' : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
                         )}>
-                            {iconMap[service.icono]}
+                            {iconMap[service.icono] || <Layers className="w-8 h-8" />}
                         </div>
                         <button
                             onClick={(e) => { e.stopPropagation(); toggleBookmark(service.id); }}
