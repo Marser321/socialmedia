@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Mail, Database, MessageSquare, Calendar, DollarSign, ArrowRight, Sparkles } from 'lucide-react';
+import { Mail, Database, MessageSquare, Calendar, DollarSign, ArrowRight, Sparkles, Share2, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export function Automations() {
