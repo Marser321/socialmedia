@@ -1,4 +1,3 @@
--- Create Projects Table
 create table public.projects (
   id uuid default gen_random_uuid() primary key,
   created_at timestamp with time zone default timezone('utc'::text, now()) not null,
@@ -10,7 +9,8 @@ create table public.projects (
   is_featured boolean default false,
   metric text, -- e.g. "+240% Sales"
   metric_color text default 'from-blue-500/20', -- Tailwind gradient class
-  tags text[] -- Array of strings for tech stack
+  tags text[], -- Array of strings for tech stack
+  orden integer default 0
 );
 
 -- Enable RLS

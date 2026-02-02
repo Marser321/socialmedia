@@ -107,17 +107,17 @@ export function ProblemSolution() {
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
-                                className="inline-flex items-center rounded-full border border-red-500/20 bg-red-500/10 px-3 py-1 text-sm text-red-500/80 font-mono tracking-widest"
+                                className="inline-flex items-center rounded-full border border-red-500/20 bg-red-500/10 px-4 py-1.5 text-[10px] text-red-500 font-mono tracking-[0.3em] uppercase"
                             >
-                                <span className="flex h-2 w-2 rounded-full bg-red-500 mr-2 animate-pulse" />
-                                LEGACY SYSTEM DETECTED
+                                <span className="flex h-1.5 w-1.5 rounded-full bg-red-500 mr-3 animate-pulse" />
+                                Legacy Operation Detected
                             </motion.div>
-                            <h2 className="text-5xl md:text-8xl font-black tracking-tighter text-white leading-[0.9]">
-                                El <span className="text-red-600">Caos</span> <br />
-                                <span className="text-white/40">Manual.</span>
+                            <h2 className="text-6xl md:text-[7rem] font-bold tracking-tight text-white leading-tight md:leading-[0.85]">
+                                La Trampa del <br />
+                                <span className="text-red-600">Esfuerzo Manual.</span>
                             </h2>
-                            <p className="text-xl text-white/50 leading-relaxed max-w-lg font-light">
-                                Tu operación te esclaviza. Leads que se pierden y procesos que dependen 100% de tu tiempo. No tienes un imperio, tienes un autoempleo agotador.
+                            <p className="text-xl text-white/60 md:text-white/40 leading-relaxed max-w-lg font-light">
+                                Si tu negocio se detiene cuando tú te detienes, no has construido una empresa, has construido una jaula de oro. El crecimiento lineal es el enemigo de la libertad.
                             </p>
                         </div>
 
@@ -162,25 +162,25 @@ export function ProblemSolution() {
                         <div className="space-y-6 md:space-y-8">
                             <motion.div
                                 style={isMobile ? {} : { opacity: solTitleOpacity, y: solTitleY }}
-                                className="inline-flex items-center rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-1.5 text-xs text-emerald-400 font-mono tracking-[0.3em] uppercase"
+                                className="inline-flex items-center rounded-full border border-emerald-500/20 bg-emerald-500/10 px-5 py-2 text-[10px] text-emerald-400 font-mono tracking-[0.4em] uppercase"
                             >
-                                <span className="flex h-2 w-2 rounded-full bg-emerald-500 mr-3 shadow-[0_0_12px_#10b981]" />
-                                Next-Gen Infrastructure
+                                <span className="flex h-1.5 w-1.5 rounded-full bg-emerald-500 mr-3 shadow-[0_0_12px_#10b981]" />
+                                Authority Infrastructure
                             </motion.div>
                             <motion.h2
                                 style={isMobile ? {} : { opacity: solTitleOpacity, y: solTitleY }}
-                                className="text-5xl md:text-9xl font-black tracking-tighter text-white leading-[0.85]"
+                                className="text-6xl md:text-[7rem] font-bold tracking-tight text-white leading-tight md:leading-[0.85]"
                             >
-                                Libertad <br />
-                                <span className="text-transparent bg-clip-text bg-gradient-to-br from-emerald-400 via-cyan-400 to-blue-500">
-                                    Escalable.
+                                Arquitectura <br />
+                                <span className="text-transparent bg-clip-text bg-gradient-to-br from-emerald-400 via-white to-white/40">
+                                    de Dominio.
                                 </span>
                             </motion.h2>
                             <motion.p
                                 style={isMobile ? {} : { opacity: solParaOpacity, y: solParaY }}
-                                className="text-xl text-emerald-50 leading-relaxed max-w-lg"
+                                className="text-xl text-white/70 md:text-white/50 leading-relaxed max-w-lg font-light"
                             >
-                                Convertimos tu operación en un motor autónomo. Automatización de punta a punta para que dejes de trabajar EN tu negocio y empieces a trabajar SOBRE él.
+                                Ingeniería de software diseñada para reemplazar la voluntad humana por la precisión algorítmica. Escalabilidad sin límites y autoridad absoluta en tu sector.
                             </motion.p>
 
                             <motion.div style={isMobile ? {} : { opacity: solBtnOpacity, y: solBtnY }}>
@@ -251,10 +251,10 @@ function ChaosGroup({ scrollYProgress, isMobile }: { scrollYProgress: MotionValu
         const count = isMobile ? MOBILE_DEBRIS_COUNT : DEBRIS_COUNT;
         const newDebris = Array.from({ length: count }).map((_, i) => ({
             id: i,
-            xStart: (Math.random() - 0.5) * (isMobile ? 300 : 600), // Tighter spread on mobile
-            yStart: (Math.random() - 0.5) * (isMobile ? 400 : 400),
-            xEnd: (Math.random() - 0.5) * (isMobile ? 600 : 1200),
-            yEnd: (Math.random() - 0.5) * (isMobile ? 800 : 1200),
+            xStart: (Math.random() - 0.5) * (isMobile ? 350 : 600), // Adjusted spread for mobile
+            yStart: (Math.random() - 0.5) * (isMobile ? 600 : 400),
+            xEnd: (Math.random() - 0.5) * (isMobile ? 800 : 1200),
+            yEnd: (Math.random() - 0.5) * (isMobile ? 1200 : 1200),
             rStart: Math.random() * 360,
             rEnd: Math.random() * 720 * (Math.random() > 0.5 ? 1 : -1),
             scaleStart: isMobile ? (0.4 + Math.random() * 0.3) : (0.5 + Math.random() * 0.5), // Smaller on mobile

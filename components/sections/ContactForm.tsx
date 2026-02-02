@@ -83,24 +83,24 @@ export function ContactForm() {
                     <div className="grid lg:grid-cols-5 gap-16 items-start">
                         <div className="lg:col-span-2 space-y-8">
                             <div>
-                                <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-white mb-6">
-                                    ¿Listo para <span className="text-emerald-500">Escalar?</span>
+                                <h2 className="text-5xl md:text-7xl font-bold tracking-tight text-white mb-8 mb-10 leading-[1.1] md:leading-[0.9]">
+                                    Diseñemos el <br /><span className="text-emerald-500">Próximo Nivel.</span>
                                 </h2>
-                                <p className="text-lg text-white/60 leading-relaxed">
-                                    No somos una agencia más. Somos tu partner tecnológico.
+                                <p className="text-xl text-white/50 leading-relaxed font-light">
+                                    Buscamos proyectos con visión de futuro y empresas listas para expandir su impacto. Si tu meta es liderar mediante ingeniería y diseño de vanguardia, hablemos.
                                     <br /><br />
-                                    Cuéntanos tu cuello de botella y te construiremos la solución.
+                                    <span className="text-white/80 font-medium italic">"La mediocridad es cara; la excelencia es una inversión en tu futuro."</span>
                                 </p>
                             </div>
 
-                            <div className="space-y-4">
-                                <div className="flex items-center gap-4 text-white/40">
-                                    <div className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" />
-                                    <span className="text-sm font-mono uppercase tracking-widest">Respuesta en {`<`} 24h</span>
+                            <div className="space-y-6 pt-4">
+                                <div className="flex items-center gap-5 text-white/30">
+                                    <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-[0_0_12px_#10b981]" />
+                                    <span className="text-[10px] font-mono uppercase tracking-[0.3em]">Acceso Directo a Ingeniería</span>
                                 </div>
-                                <div className="flex items-center gap-4 text-white/40">
-                                    <div className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" />
-                                    <span className="text-sm font-mono uppercase tracking-widest">Auditoría Gratuita</span>
+                                <div className="flex items-center gap-5 text-white/30">
+                                    <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-[0_0_12px_#10b981]" />
+                                    <span className="text-[10px] font-mono uppercase tracking-[0.3em]">Auditoría de Dominio Digital</span>
                                 </div>
                             </div>
                         </div>
@@ -154,11 +154,13 @@ export function ContactForm() {
                                         <Textarea id="message" value={mensaje} onChange={(e) => setMensaje(e.target.value)} placeholder="Breve descripción de tu negocio y objetivos..." className="min-h-[120px] bg-white/5 border-white/10 text-white focus:border-emerald-500/50 rounded-xl py-4" />
                                     </div>
 
-                                    <Button type="submit" className="w-full h-14 bg-emerald-500 text-black hover:bg-emerald-400 font-bold text-lg rounded-xl transition-all shadow-[0_0_20px_rgba(16,185,129,0.2)]" disabled={submitting}>
-                                        {submitting ? 'Analizando...' : 'Solicitar Auditoría Gratuita'}
-                                        <Send className="w-4 h-4 ml-2" />
+                                    <Button type="submit" className="w-full h-16 bg-white text-black hover:bg-emerald-500 hover:text-white font-bold text-xl rounded-2xl transition-all duration-500 shadow-2xl group" disabled={submitting}>
+                                        {submitting ? 'Enviando invitación...' : 'Empezar Ahora'}
+                                        <Send className="w-5 h-5 ml-3 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                                     </Button>
-                                    <p className="text-[10px] text-center text-white/20 uppercase tracking-[0.2em]">Respuesta garantizada en menos de 24 horas laborables</p>
+                                    <p className="text-[10px] text-center text-white/10 uppercase tracking-[0.3em] mt-4">
+                                        *Cupos limitados para garantizar la excelencia en cada despliegue.
+                                    </p>
                                 </form>
                             )}
                         </div>

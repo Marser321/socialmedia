@@ -42,17 +42,17 @@ export function Automations() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                     >
-                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-md">
-                            <Sparkles className="w-4 h-4 text-blue-400" />
-                            <span className="text-sm font-bold text-white uppercase tracking-widest">Infraestructura de Escalamiento</span>
+                        <div className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white/[0.02] border border-white/5 mb-8 backdrop-blur-md">
+                            <Sparkles className="w-4 h-4 text-emerald-500" />
+                            <span className="text-[10px] font-bold text-white/60 uppercase tracking-[0.4em]">Engineered Growth Architecture</span>
                         </div>
-                        <h2 className="text-5xl md:text-8xl font-black text-white mb-8 tracking-tighter uppercase leading-none">
-                            Ecosistema <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-emerald-500 to-cyan-500 animate-pulse">Autónomo</span>
+                        <h2 className="text-6xl md:text-[8rem] font-bold text-white mb-10 tracking-tight uppercase leading-[0.85]">
+                            Ecosistema <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-white to-white/20">Autónomo.</span>
                         </h2>
-                        <div className="max-w-3xl mx-auto p-8 rounded-[2rem] bg-white/5 border border-white/10 backdrop-blur-2xl relative overflow-hidden group">
-                            <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-transparent to-blue-500/10 opacity-50" />
-                            <p className="text-xl md:text-2xl text-white/90 font-light leading-relaxed relative z-10">
-                                No es magia, es <span className="text-emerald-400 font-bold">ingeniería de precisión.</span> Diseñamos infraestructuras de crecimiento que <span className="text-white font-medium">convierten</span> leads en revenue de forma 100% automática.
+                        <div className="max-w-4xl mx-auto p-12 rounded-[3rem] bg-white/[0.01] border border-white/5 backdrop-blur-3xl relative overflow-hidden group">
+                            <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-white/5 opacity-30" />
+                            <p className="text-xl md:text-2xl text-white/50 font-light leading-relaxed relative z-10">
+                                La automatización no es una opción, es el estándar de la élite digital. Diseñamos infraestructuras de crecimiento que <span className="text-white font-medium">convierten</span> leads en activos de alto valor de forma 100% autónoma.
                             </p>
                         </div>
                     </motion.div>

@@ -201,24 +201,24 @@ export function Portfolio() {
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-violet-600/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2" />
 
             <div className="container mx-auto px-4 relative z-10">
-                <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
-                    <div className="max-w-2xl">
+                <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-12">
+                    <div className="max-w-3xl">
                         <motion.span
                             initial={{ opacity: 0, x: -20 }}
                             whileInView={{ opacity: 1, x: 0 }}
-                            className="text-primary font-bold tracking-[0.3em] uppercase text-sm mb-4 block"
+                            className="text-emerald-500 font-bold tracking-[0.4em] uppercase text-[10px] mb-6 block"
                         >
-                            Nuestro Trabajo
+                            Casos de Estudio
                         </motion.span>
-                        <h2 className="text-5xl md:text-7xl font-black text-white mb-6 uppercase tracking-tighter leading-none">
-                            Casos de <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400">Éxito Nexo</span>
+                        <h2 className="text-6xl md:text-8xl font-bold text-white mb-8 uppercase tracking-tighter leading-[0.9]">
+                            Proyectos con <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-white/40">Impacto Real</span>
                         </h2>
-                        <p className="text-xl text-white/40 font-light leading-relaxed max-w-xl">
-                            No solo creamos interfaces, construimos <span className="text-white font-medium">motores de crecimiento</span> digital que dominan el mercado.
+                        <p className="text-xl text-white/40 font-light leading-relaxed max-w-2xl">
+                            Ingeniería digital diseñada para líderes que no aceptan el promedio. <span className="text-white/80 font-medium">Resultados, no promesas.</span>
                         </p>
                     </div>
 
-                    <div className="flex flex-wrap gap-2 bg-white/5 p-1.5 rounded-2xl backdrop-blur-xl border border-white/5">
+                    <div className="flex flex-wrap gap-3 bg-white/[0.02] p-2 rounded-2xl backdrop-blur-xl border border-white/5">
                         {CATEGORIES.map((cat) => (
                             <Button
                                 key={cat}
@@ -226,13 +226,13 @@ export function Portfolio() {
                                 size="sm"
                                 onClick={() => setActiveCategory(cat)}
                                 className={cn(
-                                    "rounded-xl transition-all duration-300",
+                                    "rounded-xl transition-all duration-500 px-6",
                                     activeCategory === cat
-                                        ? 'bg-white/10 text-white shadow-xl'
+                                        ? 'bg-white text-black shadow-2xl hover:bg-white/90'
                                         : 'text-white/40 hover:text-white hover:bg-white/5'
                                 )}
                             >
-                                {cat}
+                                <span className="text-[10px] uppercase tracking-widest font-black">{cat}</span>
                             </Button>
                         ))}
                     </div>

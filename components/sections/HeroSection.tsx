@@ -12,11 +12,11 @@ const loadFeatures = () =>
     import('framer-motion').then((res) => res.domAnimation);
 
 const FALLBACK_CONTENT = {
-    badge: 'Growth Partner Certificado',
-    title: 'Arquitectura Digital que Domina Mercados.',
-    subtitle: 'Diseñamos ecosistemas de conversión y automatizamos tu crecimiento. Dejarás de competir por precio para convertirte en la única opción lógica.',
+    badge: 'Agenda Abierta: Nuevos Proyectos de Impacto',
+    title: 'Arquitectura Digital <br />para Líderes de Industria.',
+    subtitle: 'No diseñamos simples páginas web; construimos ecosistemas de conversión y herramientas de crecimiento escalable. Potenciamos tu marca para convertirla en el referente de tu mercado.',
     image_url: '/images/stitch-hero-v2.png',
-    system_status: 'System Active: Scaling'
+    system_status: 'Engineering Growth: Active'
 };
 
 export function HeroSection() {
@@ -51,20 +51,20 @@ export function HeroSection() {
         <LazyMotion features={loadFeatures}>
             <section ref={containerRef} className="relative h-[120vh] overflow-hidden flex flex-col items-center pt-32">
                 {/* Background Gradients (Glow) */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-blue-500/20 rounded-full blur-[120px] -z-10" />
-                <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-[100px] -z-10" />
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-emerald-500/5 rounded-full blur-[160px] -z-10" />
+                <div className="absolute bottom-0 right-0 w-[600px] h-[400px] bg-white/5 rounded-full blur-[140px] -z-10" />
 
                 <m.div
                     style={{ opacity }}
-                    className="container px-4 md:px-6 relative z-10 text-center mb-12"
+                    className="container px-4 md:px-6 relative z-10 text-center mb-16"
                 >
                     <m.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                     >
-                        <div className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-white backdrop-blur-xl mb-6">
-                            <span className="flex h-2 w-2 rounded-full bg-emerald-500 mr-2 animate-pulse" />
+                        <div className="inline-flex items-center rounded-full border border-white/5 bg-white/[0.03] px-4 py-1.5 text-xs font-medium text-white/60 backdrop-blur-xl mb-8 tracking-widest uppercase">
+                            <span className="flex h-1.5 w-1.5 rounded-full bg-emerald-500 mr-3 animate-pulse" />
                             {dynamicContent.badge}
                         </div>
                     </m.div>
@@ -73,7 +73,7 @@ export function HeroSection() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                        className="text-5xl md:text-8xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60 mb-6 max-w-5xl mx-auto"
+                        className="text-6xl md:text-[7rem] font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white to-white/40 mb-8 max-w-6xl mx-auto leading-[0.9]"
                     >
                         {dynamicContent.title.split('<br />').map((text, i) => (
                             <Fragment key={i}>
@@ -87,7 +87,7 @@ export function HeroSection() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                        className="mx-auto max-w-[700px] text-lg md:text-xl text-white/70 mb-8 leading-relaxed font-light"
+                        className="mx-auto max-w-[800px] text-lg md:text-xl text-white/50 mb-12 leading-relaxed font-light"
                     >
                         {dynamicContent.subtitle}
                     </m.p>
@@ -96,32 +96,31 @@ export function HeroSection() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                        className="flex flex-col items-center gap-6"
+                        className="flex flex-col items-center gap-8"
                     >
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                        <div className="flex flex-col sm:flex-row gap-5 justify-center">
                             <m.button
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                                 onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                                className="group relative px-8 py-4 bg-white text-black rounded-full font-bold text-lg overflow-hidden"
+                                className="group btn-hover-lift relative px-10 py-5 bg-white text-black rounded-full font-bold text-lg overflow-hidden shadow-2xl"
                             >
                                 <span className="relative z-10 flex items-center gap-2">
                                     Iniciar Proyecto <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                                 </span>
-                                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-violet-400 to-emerald-400 opacity-0 group-hover:opacity-10 transition-opacity" />
                             </m.button>
 
                             <m.button
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                                 onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
-                                className="px-8 py-4 rounded-full font-bold text-lg border border-white/10 hover:bg-white/5 backdrop-blur-sm transition-colors text-white"
+                                className="btn-hover-lift px-10 py-5 rounded-full font-bold text-lg border border-white/10 hover:bg-white/5 backdrop-blur-sm transition-colors text-white"
                             >
                                 Ver Inversión
                             </m.button>
                         </div>
-                        <p className="text-xs text-white/40 font-light tracking-wide">
-                            *Aceptamos solo 4 nuevos partners por trimestre para garantizar <span className="text-emerald-400 font-medium">calidad obsesiva.</span>
+                        <p className="text-[10px] text-white/30 font-medium tracking-[0.2em] uppercase">
+                            *Solo 4 nuevos partners por trimestre para garantizar <span className="text-emerald-500">calidad obsesiva.</span>
                         </p>
                     </m.div>
                 </m.div>

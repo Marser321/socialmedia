@@ -9,18 +9,17 @@ export function InteractiveValue() {
     return (
         <section className="py-32 bg-black relative overflow-hidden">
             <div className="container mx-auto px-4 relative z-10">
-                <div className="text-center mb-24">
+                <div className="text-center mb-28">
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-4xl md:text-7xl font-black text-white mb-6 uppercase tracking-tighter"
+                        className="text-5xl md:text-8xl font-bold text-white mb-8 uppercase tracking-tight leading-[0.9]"
                     >
-                        Ingeniería que <span className="text-blue-500">Factura</span>
+                        Ingeniería que <span className="text-emerald-500">Domina</span>
                     </motion.h2>
-                    <p className="text-xl text-white/40 max-w-2xl mx-auto font-light">
-                        No solo creamos código, construimos sistemas de rentabilidad probada.
-                        Usa nuestra calculadora para proyectar tu crecimiento.
+                    <p className="text-xl text-white/40 max-w-3xl mx-auto font-light leading-relaxed">
+                        No fabricamos código; construimos sistemas de rentabilidad probada. Nuestra ingeniería es el motor que impulsa tu autoridad digital.
                     </p>
                 </div>
 

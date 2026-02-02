@@ -141,43 +141,40 @@ export function PricingTable() {
     return (
         <section id="pricing" className="py-32 bg-background relative overflow-hidden">
             {/* Background Gradients */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-violet-600/10 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-emerald-500/[0.03] rounded-full blur-[160px] pointer-events-none" />
 
             <div className="container mx-auto px-4 relative z-10">
-                <div className="text-center mb-16">
+                <div className="text-center mb-20">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                     >
-                        <h2 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tighter uppercase">
-                            Servicios <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 animate-pulse">Flexibles</span>
+                        <h2 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight uppercase">
+                            Servicios <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-600">Premium</span>
                         </h2>
-                        <p className="text-xl text-white/60 max-w-2xl mx-auto font-light leading-relaxed">
-                            Desde desarrollos puntuales hasta acompañamiento continuo. Tú eliges cómo trabajar.
+                        <p className="text-xl text-white/40 max-w-2xl mx-auto font-light leading-relaxed">
+                            Desde desarrollos puntuales hasta acompañamiento continuo de alto nivel.
                         </p>
                     </motion.div>
 
-                    <div className="flex items-center justify-center gap-6 mt-12 bg-white/5 w-fit mx-auto px-8 py-4 rounded-full border border-white/10 backdrop-blur-sm">
-                        <Label htmlFor="pricing-mode" className={cn("text-lg cursor-pointer transition-colors font-bold tracking-tight", isMonthly ? "text-cyan-400" : "text-white/40")}>
-                            Modalidad Mensual
+                    <div className="flex items-center justify-center gap-6 mt-12 bg-white/[0.02] w-fit mx-auto px-8 py-4 rounded-full border border-white/5 backdrop-blur-sm">
+                        <Label htmlFor="pricing-mode" className={cn("text-sm uppercase tracking-widest cursor-pointer transition-colors font-bold", isMonthly ? "text-emerald-400" : "text-white/20")}>
+                            Suscripción
                         </Label>
                         <Switch
                             id="pricing-mode"
                             checked={!isMonthly}
                             onCheckedChange={(c) => setIsMonthly(!c)}
-                            className="scale-125 data-[state=checked]:bg-violet-600 data-[state=unchecked]:bg-cyan-500"
+                            className="data-[state=checked]:bg-white/20 data-[state=unchecked]:bg-emerald-500"
                         />
-                        <Label htmlFor="pricing-mode" className={cn("text-lg cursor-pointer transition-colors font-bold tracking-tight", !isMonthly ? "text-violet-400" : "text-white/40")}>
-                            Pago Único
+                        <Label htmlFor="pricing-mode" className={cn("text-sm uppercase tracking-widest cursor-pointer transition-colors font-bold", !isMonthly ? "text-white" : "text-white/20")}>
+                            Proyecto Único
                         </Label>
                     </div>
-                    <p className="text-white/30 text-xs mt-3 font-medium tracking-wider uppercase">
-                        {isMonthly ? 'Mantenimiento, Gestión y Soporte' : 'Desarrollo, Setup y Proyectos'}
-                    </p>
                 </div>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
                     {pricingPlans.map((service, index) => {
                         const priceData = isMonthly
                             ? (service.monthly || { price: service.monthly_price, label: service.monthly_label })
@@ -191,77 +188,49 @@ export function PricingTable() {
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.05 }}
                                 className={cn(
-                                    "relative p-8 rounded-3xl border backdrop-blur-md transition-all duration-500 group flex flex-col",
+                                    "relative p-10 rounded-[2.5rem] border backdrop-blur-xl transition-all duration-700 group flex flex-col btn-hover-lift",
                                     service.highlight
-                                        ? "bg-white/10 border-violet-500/50 shadow-[0_0_50px_-10px_rgba(124,58,237,0.4)] z-10"
-                                        : "bg-white/5 border-white/5 hover:border-white/20 hover:bg-white/[0.07] hover:shadow-xl"
+                                        ? "bg-white/[0.05] border-emerald-500/20 shadow-[0_40px_80px_-15px_rgba(0,0,0,0.5)] z-10"
+                                        : "bg-white/[0.02] border-white/5 hover:border-white/10"
                                 )}
                             >
                                 {service.highlight && (
-                                    <div className="absolute -top-4 left-8 bg-gradient-to-r from-violet-600 to-cyan-500 px-4 py-1 rounded-full text-[10px] font-black tracking-widest text-white shadow-lg uppercase">
-                                        Más Popular
+                                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-white text-black px-5 py-1.5 rounded-full text-[10px] font-black tracking-[0.2em] shadow-2xl uppercase">
+                                        Recomendado
                                     </div>
                                 )}
 
-                                <div className="mb-6">
-                                    <h3 className="text-2xl font-black text-white mb-2 tracking-tight">{service.name}</h3>
-                                    <p className="text-white/60 text-sm leading-relaxed min-h-[40px] font-light">{service.description}</p>
+                                <div className="mb-8">
+                                    <h3 className="text-2xl font-bold text-white mb-3 tracking-tight">{service.name}</h3>
+                                    <p className="text-white/40 text-sm leading-relaxed min-h-[48px] font-light">{service.description}</p>
                                 </div>
 
-                                <div className="mb-8 pb-8 border-b border-white/10">
-                                    <div className="flex items-baseline gap-1">
-                                        <span className="text-xl font-bold text-white/40 mr-1">Desde</span>
+                                <div className="mb-10 pb-10 border-b border-white/[0.05]">
+                                    <div className="flex items-baseline gap-2">
+                                        <span className="text-sm font-bold text-white/20 uppercase tracking-widest">Desde</span>
                                         <span className={cn(
-                                            "text-4xl font-black text-transparent bg-clip-text bg-gradient-to-br transition-all duration-300",
-                                            isMonthly ? "from-cyan-400 to-blue-500" : "from-violet-400 to-purple-500"
+                                            "text-5xl font-bold tracking-tighter text-white transition-all duration-300"
                                         )}>
                                             ${priceData.price}
                                         </span>
                                     </div>
-                                    <p className="text-white/40 text-xs font-bold uppercase tracking-wider mt-1">
+                                    <p className="text-white/20 text-[10px] font-bold uppercase tracking-[0.2em] mt-2">
                                         {priceData.label}
                                     </p>
                                 </div>
 
-                                <div className="space-y-4 mb-8 flex-grow">
+                                <div className="space-y-5 mb-10 flex-grow">
                                     {service.features.map((feature: string) => (
-                                        <motion.div
+                                        <div
                                             key={feature}
-                                            whileHover={{ x: 5 }}
-                                            className="flex items-start gap-3 group/item cursor-default"
+                                            className="flex items-start gap-4"
                                         >
-                                            <div className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5 bg-white/10 text-cyan-400 group-hover/item:bg-cyan-500 group-hover/item:text-black transition-colors">
+                                            <div className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5 border border-white/10 text-emerald-500">
                                                 <Check className="w-3 h-3 stroke-[3]" />
                                             </div>
-                                            <div className="flex flex-col">
-                                                <span className="text-white/80 text-sm font-medium group-hover/item:text-white transition-colors">{feature}</span>
-                                            </div>
-                                        </motion.div>
+                                            <span className="text-white/60 text-sm font-light leading-relaxed">{feature}</span>
+                                        </div>
                                     ))}
-                                </div>
-
-                                {/* Deep Explanation Animation (Hover reveal details) */}
-                                <div className="relative h-24 mb-8 overflow-hidden rounded-2xl bg-white/[0.02] border border-white/5 group/details px-4 py-3">
-                                    <div className="absolute inset-0 bg-gradient-to-br from-violet-600/10 to-transparent opacity-0 group-hover/details:opacity-100 transition-opacity duration-500" />
-                                    <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-white/30 mb-2 relative z-10">Tu Ecosistema Incluye:</h4>
-                                    <div className="relative z-10">
-                                        <AnimatePresence mode="wait">
-                                            <motion.p
-                                                initial={{ opacity: 0, y: 10 }}
-                                                animate={{ opacity: 1, y: 0 }}
-                                                className="text-[11px] text-white/50 leading-relaxed font-medium italic"
-                                            >
-                                                {service.name === 'Web & Landing' ? 'Estructura optimizada para captar leads y proyectar autoridad instantánea.' :
-                                                    service.name === 'E-commerce' ? 'Motor de ventas global con logística integrada y panel de control total.' :
-                                                        service.name === 'Apps a Medida' ? 'Experiencia nativa fluida diseñada para retención y engagement extremo.' :
-                                                            service.name === 'Automatización AI' ? 'Sistemas inteligentes que eliminan tareas repetitivas y escalan tu tiempo.' :
-                                                                'Estrategia de contenido dirigida a dominar el algoritmo y fidelizar audiencia.'}
-                                            </motion.p>
-                                        </AnimatePresence>
-                                    </div>
-                                    <motion.div
-                                        className="absolute bottom-0 left-0 h-[2px] bg-cyan-500 w-0 group-hover/details:w-full transition-all duration-700"
-                                    />
                                 </div>
 
                                 <Button
@@ -274,15 +243,14 @@ export function PricingTable() {
                                         }
                                     }}
                                     className={cn(
-                                        "w-full h-14 rounded-2xl text-sm font-black tracking-widest transition-all duration-300 uppercase",
+                                        "w-full h-16 rounded-2xl text-[10px] font-black tracking-[0.3em] transition-all duration-500 uppercase",
                                         service.highlight
-                                            ? "bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white shadow-[0_0_30px_-5px_rgba(124,58,237,0.5)] border-0 translate-y-[-4px] hover:translate-y-[-6px]"
-                                            : "bg-white/5 text-white hover:bg-white/10 border border-white/10 hover:border-white/30"
+                                            ? "bg-white text-black hover:bg-white/90 shadow-2xl"
+                                            : "bg-white/[0.05] text-white hover:bg-white/10 border border-white/10"
                                     )}
                                 >
-                                    <span className="flex items-center gap-2">
-                                        <Zap className={cn("w-4 h-4", service.highlight ? "fill-current animate-pulse" : "fill-current")} />
-                                        {isMonthly ? 'Suscribirse' : 'Cotizar Proyecto'}
+                                    <span className="flex items-center gap-3">
+                                        {isMonthly ? 'Iniciar Proyecto' : 'Cotizar Proyecto'}
                                     </span>
                                 </Button>
                             </motion.div>

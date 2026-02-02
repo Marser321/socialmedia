@@ -1,30 +1,20 @@
-import { MetadataRoute } from 'next'
+import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
+    const baseUrl = 'https://nexo-agency.com';
+
     return [
         {
-            url: 'https://nexo-agency.com',
+            url: baseUrl,
             lastModified: new Date(),
             changeFrequency: 'weekly',
             priority: 1,
         },
         {
-            url: 'https://nexo-agency.com/#servicios',
+            url: `${baseUrl}/admin`,
             lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.9,
+            changeFrequency: 'monthly',
+            priority: 0.1,
         },
-        {
-            url: 'https://nexo-agency.com/#pricing',
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.8,
-        },
-        {
-            url: 'https://nexo-agency.com/#portfolio',
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.9,
-        },
-    ]
+    ];
 }
