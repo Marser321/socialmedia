@@ -21,7 +21,7 @@ const FLOATING_PANELS = [
         id: 1,
         title: 'Authority Branding',
         icon: Layout,
-        image: '/Users/mariomorera/.gemini/antigravity/brain/bc650a79-0ccf-4c81-a1ce-7e8320dbbebb/hero_panel_branding_1770038387297.png',
+        image: '/images/hero/panel-branding.png',
         className: 'top-[10%] -left-[5%] md:left-[5%] w-48 md:w-72',
         rotate: -6,
         delay: 0.2
@@ -30,7 +30,7 @@ const FLOATING_PANELS = [
         id: 2,
         title: 'AI Automation',
         icon: Cpu,
-        image: '/Users/mariomorera/.gemini/antigravity/brain/bc650a79-0ccf-4c81-a1ce-7e8320dbbebb/hero_panel_ai_nodes_1770038631182.png',
+        image: '/images/hero/panel-ai.png',
         className: 'top-[40%] -right-[10%] md:right-[5%] w-56 md:w-80',
         rotate: 4,
         delay: 0.4
@@ -39,7 +39,7 @@ const FLOATING_PANELS = [
         id: 3,
         title: 'Strategic Growth',
         icon: Activity,
-        image: '/Users/mariomorera/.gemini/antigravity/brain/bc650a79-0ccf-4c81-a1ce-7e8320dbbebb/hero_panel_dashboard_v2_1770038995663.png',
+        image: '/images/hero/panel-dashboard.png',
         className: 'bottom-[5%] left-[10%] md:left-[20%] w-52 md:w-72',
         rotate: -2,
         delay: 0.6
